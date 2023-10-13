@@ -2,6 +2,7 @@ package com.example.makemytrip;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+
 
     Button loginbtn;
     EditText usernameEdt,passwordEdt;
@@ -23,13 +25,22 @@ public class MainActivity extends AppCompatActivity {
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String userName=usernameEdt.getText().toString();
-                String pass=passwordEdt.getText().toString();
-                if(userName.length()<6 || pass.length()<6){
-                    Toast.makeText(MainActivity.this, "username and password length must be greater than 6", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(MainActivity.this, "username : "+userName+" password : "+pass, Toast.LENGTH_SHORT).show();
+                // Get the entered username and password
+                String enteredUsername = usernameEdt.getText().toString();
+                String enteredPassword = passwordEdt.getText().toString();
 
+                // Check if the entered credentials are valid
+                if (enteredUsername.equals("harsh") && enteredPassword.equals("123456")) {
+                    // If valid, start the next activity
+                    Intent stm = new Intent(MainActivity.this, home.class);
+                    startActivity(stm);
+                } else {
+                    // If invalid, show a message or handle it as needed
+                    // For simplicity, you can display a toast message
+                    // indicating that the login failed
+                    // You may want to use a more secure authentication method
+                    // in a real-world scenario
+                    Toast.makeText(MainActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
                 }
             }
         });
