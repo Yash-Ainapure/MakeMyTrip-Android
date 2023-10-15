@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<group android:checkableBehavior="single">
+    <item android:id="@+id/nav_account"
+        android:title="MY Account"
+        android:icon="@drawable/user"/>
+</group>
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_trip" android:title="My Trips" >
+            <menu>
+                <group>
+                    <item android:id="@+id/view_manage"
+                        android:title="View/Manage Trips"
+                        android:icon="@drawable/managetrip"/>
+                    <item android:id="@+id/wishlist"
+                        android:title="Wishlist"
+                        android:icon="@drawable/wishlist"/>
+                </group>
+            </menu>
+        </item>
+    </group>
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_settings" android:title="Settings" >
+            <menu>
+                <group>
+                    <item android:id="@+id/language"
+                        android:title="Language"
+                        android:icon="@drawable/languages"/>
+                    <item android:id="@+id/country"
+                        android:title="Country"
+                        android:icon="@drawable/flag"/>
+                </group>
+            </menu>
+        </item>
+    </group>
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/logout"
+            android:title="Logout"
+            android:icon="@drawable/logout"/>
+    </group>
+</menu>

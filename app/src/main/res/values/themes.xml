@@ -1,15 +1,27 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.MakeMyTrip" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Base.Theme.MakeMyTrip" parent="Theme.Material3.DayNight">
+        <!-- Customize your base theme here if needed -->
     </style>
 
+    <!-- Use the base theme for the default theme -->
     <style name="Theme.MakeMyTrip" parent="Base.Theme.MakeMyTrip" />
 
+    <!-- This style is not necessary if you want to use the action bar in all activities -->
+    <!--
     <style name="Theme.MakeMyTrip.NoActionBar">
-        <item name="windowActionBar">false</item>
+        <item name="windowActionBar">true</item>
         <item name="windowNoTitle">true</item>
+    </style>
+    -->
+
+    <!-- New style for a theme with an action bar -->
+    <style name="Theme.MakeMyTrip.WithActionBar" parent="Base.Theme.MakeMyTrip">
+        <!-- Set windowActionBar to true to include the action bar -->
+        <item name="windowActionBar">true</item>
+        <!-- Set windowNoTitle to true to hide the title if needed -->
+        <item name="windowNoTitle">false</item>
+        <!-- Add any specific customization for the action bar if needed -->
     </style>
 
     <style name="Theme.MakeMyTrip.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

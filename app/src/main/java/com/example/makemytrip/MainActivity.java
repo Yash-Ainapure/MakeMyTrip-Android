@@ -6,8 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -54,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
                     .addOnCompleteListener(MainActivity.this, task -> {
                         if (task.isSuccessful()) {
                             // If valid, start the next activity
+                            Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                             Intent stm = new Intent(MainActivity.this, home.class);
                             startActivity(stm);
                         } else {
@@ -61,5 +65,19 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
         });
+
+        TextView title = findViewById(R.id.textView6);
+        EditText username = findViewById(R.id.usernameedt);
+        EditText pass = findViewById(R.id.passwordedt);
+        Button login = findViewById(R.id.loginbtn);
+        Animation a1= AnimationUtils.loadAnimation(this,R.anim.fadein);
+        Animation a2= AnimationUtils.loadAnimation(this,R.anim.lefttoright);
+
+        title.startAnimation(a1);
+        username.startAnimation(a2);
+        pass.startAnimation(a2);
+        login.startAnimation(a2);
+
+
     }
 }
