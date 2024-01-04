@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             String password = passwordEdt.getText().toString();
 
 
-            //email: harsh@gmail.com
+            //email: prajval@gmail.com
             //password : 123456
 
 
@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             // Sign in with email and password
+
             mAuth.signInWithEmailAndPassword(username,password)
                     .addOnCompleteListener(MainActivity.this, task -> {
                         if (task.isSuccessful()) {
