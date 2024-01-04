@@ -3,7 +3,8 @@
 <group android:checkableBehavior="single">
     <item android:id="@+id/nav_account"
         android:title="MY Account"
-        android:icon="@drawable/user"/>
+        android:icon="@drawable/user"
+        />
 </group>
     <group android:checkableBehavior="single">
         <item android:id="@+id/nav_trip" android:title="My Trips" >

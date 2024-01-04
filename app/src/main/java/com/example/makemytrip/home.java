@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -23,7 +25,7 @@ public class home extends AppCompatActivity {
     NavigationView navigationView;
     Toolbar toolbar;
     ActionBarDrawerToggle actionBarDrawerTogg1e;
-
+    LinearLayout hotel_tab;
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (actionBarDrawerTogg1e.onOptionsItemSelected(item)) {
@@ -40,6 +42,7 @@ public class home extends AppCompatActivity {
             super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        hotel_tab = findViewById(R.id.hotel_tab);
 
           drawerLayout = findViewById(R.id.drawer_layout);
        navigationView = findViewById(R.id.navigationView);
@@ -49,41 +52,41 @@ public class home extends AppCompatActivity {
        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-      /*  navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
 
-                switch (item.getItemId()){
-                    case R.id.nav_account:
-                        Log.i("MENU_DRAWER_TAG","Account is clicked");
-                        drawerLayout.closeDrawer(GravityCompat.START);
-                        break;
-                    case R.id.view_manage:
-                        Log.i("MENU_DRAWER_TAG","View/Manage is clicked");
-                        drawerLayout.closeDrawer(GravityCompat.START);
-                        break;
-                    case R.id.wishlist:
-                        Log.i("MENU_DRAWER_TAG","Wishlist is clicked");
-                        drawerLayout.closeDrawer(GravityCompat.START);
-                        break;
-                    case R.id.language:
-                        Log.i("MENU_DRAWER_TAG","Language is clicked");
-                        drawerLayout.closeDrawer(GravityCompat.START);
-                        break;
-                    case R.id.country:
-                        Log.i("MENU_DRAWER_TAG","Country is clicked");
-                        drawerLayout.closeDrawer(GravityCompat.START);
-                        break;
-                    case R.id.logout:
-                        Log.i("MENU_DRAWER_TAG","Logout is clicked");
-                        drawerLayout.closeDrawer(GravityCompat.START);
-                        break;
+                if (itemId == R.id.nav_account) {
+                    Log.i("MENU_DRAWER_TAG", "Account is clicked");
+                } else if (itemId == R.id.view_manage) {
+                    Log.i("MENU_DRAWER_TAG", "View/Manage is clicked");
+                } else if (itemId == R.id.wishlist) {
+                    Log.i("MENU_DRAWER_TAG", "Wishlist is clicked");
+                } else if (itemId == R.id.language) {
+                    Log.i("MENU_DRAWER_TAG", "Language is clicked");
+                } else if (itemId == R.id.country) {
+                    Log.i("MENU_DRAWER_TAG", "Country is clicked");
+                } else if (itemId == R.id.logout) {
+                    Log.i("MENU_DRAWER_TAG", "Logout is clicked");
                 }
 
+                drawerLayout.closeDrawer(GravityCompat.START);
 
                 return true;
             }
-        });*/
+        });
+
+        hotel_tab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(home.this, HotelPage.class);
+                startActivity(i);
+                Toast.makeText(home.this, "clicked hotles", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
 

@@ -121,6 +121,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginHorizontal="5dp"
                             android:layout_weight="1"
+                            android:id="@+id/hotel_tab"
                             android:background="@drawable/tabs_bg"
                             android:orientation="vertical">
 
