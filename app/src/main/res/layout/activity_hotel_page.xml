@@ -9,7 +9,19 @@
     tools:context=".MainActivity">
 
     <!-- Your other UI elements or views can be added above or below the RecyclerView -->
-
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchEdt"
+        android:layout_margin="5px"
+        android:hint="locationEdt"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="search"
+        android:layout_margin="5px"
+        android:layout_marginBottom="10px"
+        android:id="@+id/searchBtn"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
