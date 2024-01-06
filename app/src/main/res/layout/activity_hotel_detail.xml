@@ -50,30 +50,49 @@
         android:id="@+id/textViewSelectDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select Date Range"
+        android:text="Select Starting Date "
         android:textSize="16sp"
         android:layout_marginTop="16dp"/>
-
+    <TextView
+        android:id="@+id/textViewSelectedDates"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_marginTop="8dp">
+    </TextView>
     <Button
         android:id="@+id/buttonDatePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Choose Dates"/>
+            <TextView
+                android:id="@+id/textViewSelectNumberOfDates"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select Number of Days you need"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"/>
 
-    <!-- Number of Rooms Selector -->
-    <TextView
-        android:id="@+id/textViewSelectRooms"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Select Number of Rooms"
-        android:textSize="16sp"
-        android:layout_marginTop="16dp"/>
+            <NumberPicker
+                android:id="@+id/numberPickerDays"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"/>
 
-    <NumberPicker
-        android:id="@+id/numberPickerRooms"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"/>
+            <!-- Number of Rooms Selector -->
+            <TextView
+                android:id="@+id/textViewSelectRooms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select Number of Rooms"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"/>
+
+            <NumberPicker
+                android:id="@+id/numberPickerRooms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"/>
 
     <!-- Book Hotel Button -->
     <Button
