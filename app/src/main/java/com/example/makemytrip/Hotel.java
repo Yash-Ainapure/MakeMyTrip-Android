@@ -1,6 +1,9 @@
 package com.example.makemytrip;
 
-public class Hotel {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Hotel implements Parcelable {
     private String name;
     private String address;
     private String imageUrl;
@@ -10,6 +13,37 @@ public class Hotel {
         this.address = address;
         this.imageUrl = imageUrl;
     }
+
+    protected Hotel(Parcel in){
+        name=in.readString();
+        address=in.readString();
+        imageUrl=in.readString();
+    }
+
+    public static final Creator<Hotel> CREATOR = new Creator<Hotel>() {
+        @Override
+        public Hotel createFromParcel(Parcel in) {
+            return new Hotel(in);
+        }
+
+        @Override
+        public Hotel[] newArray(int size) {
+            return new Hotel[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(address);
+        dest.writeString(imageUrl);
+    }
+
 
     public Hotel() {
     }
