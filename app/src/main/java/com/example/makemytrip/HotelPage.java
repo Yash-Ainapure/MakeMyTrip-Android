@@ -65,7 +65,9 @@ public class HotelPage extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                loadData();
+                if (adapter != null) {
+                    loadData();
+                }
             }
 
             @Override
@@ -75,7 +77,7 @@ public class HotelPage extends AppCompatActivity {
             }
         });
 
-        // Handle search button click
+        // perform search when button clicked
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,11 +94,21 @@ public class HotelPage extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Hotel hotel = dataSnapshot.getValue(Hotel.class);
                     if (hotel != null) {
+                        // Set the isLiked field based on the database value
+                        hotel.setLiked(dataSnapshot.child("isLiked").getValue(Boolean.class));
                         hotelList.add(hotel);
                     }
                 }
                 adapter = new HotelCardAdapter(hotelList);
                 recyclerView.setAdapter(adapter);
+
+                // Set the database reference for the adapter
+                adapter.setDatabaseReference(databaseReference);
+
+                // Update the isLiked field for each hotel in the adapter
+                for (Hotel hotel : hotelList) {
+                    adapter.updateIsLikedInFirebase(hotel.getId(), hotel.isLiked());
+                }
             }
 
             @Override
@@ -107,6 +119,9 @@ public class HotelPage extends AppCompatActivity {
         });
     }
 
+
+    //in search logic like/unlike is not set so it just displays the default unlike button will make changes in future
+    // Search feature logic
     private void performSearch() {
         String queryText = searchEdt.getText().toString().trim();
 
@@ -141,9 +156,11 @@ public class HotelPage extends AppCompatActivity {
                                         }
                                     }
 
-                                    // Update the adapter with the combined search results
-                                    adapter = new HotelCardAdapter(searchResult);
-                                    recyclerView.setAdapter(adapter);
+                                    // Update the existing adapter with the combined search results
+                                    if (adapter != null) {
+                                        adapter.setHotelList(searchResult);
+                                        adapter.notifyDataSetChanged();
+                                    }
                                 }
 
                                 @Override
@@ -163,74 +180,4 @@ public class HotelPage extends AppCompatActivity {
         }
     }
 
-
-    //previous working search feature
-//private void performSearch() {
-//    String location = searchEdt.getText().toString().trim();
-//
-//    if (TextUtils.isEmpty(location)) {
-//        // Empty search query, load all hotels
-//        loadData();
-//    } else {
-//        // Perform a search based on the location
-//        Query searchQuery = databaseReference.orderByChild("address").startAt(location).endAt(location + "\uf8ff");
-//
-//        searchQuery.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                List<Hotel> searchResult = new ArrayList<>();
-//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                    Hotel hotel = dataSnapshot.getValue(Hotel.class);
-//                    if (hotel != null) {
-//                        searchResult.add(hotel);
-//                    }
-//                }
-//                adapter = new HotelCardAdapter(searchResult);
-//                recyclerView.setAdapter(adapter);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                // Handle error
-//                Toast.makeText(HotelPage.this, "Search Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
-//}
-
-//first version
-
-//        searchBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String searchInput=searchEdt.getText().toString();
-//                if (searchInput.isEmpty()) {
-//                    Toast.makeText(HotelPage.this, "Please enter location to search", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//
-//            }
-//        });
-//
-//        // Add a ValueEventListener to update the adapter when data changes
-//        databaseReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                List<Hotel> hotelList = new ArrayList<>();
-//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                    Hotel hotel = dataSnapshot.getValue(Hotel.class);
-//                    if (hotel != null) {
-//                        hotelList.add(hotel);
-//                    }
-//                }
-//                adapter = new HotelCardAdapter(hotelList);
-//                recyclerView.setAdapter(adapter);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                // Handle error
-//                Toast.makeText(HotelPage.this, "Database Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-    }
+}

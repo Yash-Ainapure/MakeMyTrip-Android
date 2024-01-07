@@ -4,22 +4,35 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Hotel implements Parcelable {
+    private String id;
     private String name;
     private String address;
     private String imageUrl;
+    private boolean isLiked;
 
-    public Hotel(String name, String address, String imageUrl) {
+    // Default constructor
+    public Hotel() {
+    }
+
+    // Parameterized constructor
+    public Hotel(String id, String name, String address, String imageUrl, boolean isLiked) {
+        this.id = id;
         this.name = name;
         this.address = address;
         this.imageUrl = imageUrl;
+        this.isLiked = isLiked;
     }
 
-    protected Hotel(Parcel in){
-        name=in.readString();
-        address=in.readString();
-        imageUrl=in.readString();
+    // Parcelable constructor
+    protected Hotel(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        address = in.readString();
+        imageUrl = in.readString();
+        isLiked = in.readByte() != 0;
     }
 
+    // Parcelable creator
     public static final Creator<Hotel> CREATOR = new Creator<Hotel>() {
         @Override
         public Hotel createFromParcel(Parcel in) {
@@ -32,22 +45,16 @@ public class Hotel implements Parcelable {
         }
     };
 
-    @Override
-    public int describeContents() {
-        return 0;
+    // Getter and setter for ID
+    public String getId() {
+        return id;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeString(address);
-        dest.writeString(imageUrl);
+    public void setId(String id) {
+        this.id = id;
     }
 
-
-    public Hotel() {
-    }
-
+    // Getter and setter for name
     public String getName() {
         return name;
     }
@@ -56,6 +63,7 @@ public class Hotel implements Parcelable {
         this.name = name;
     }
 
+    // Getter and setter for address
     public String getAddress() {
         return address;
     }
@@ -64,6 +72,7 @@ public class Hotel implements Parcelable {
         this.address = address;
     }
 
+    // Getter and setter for image URL
     public String getImageUrl() {
         return imageUrl;
     }
@@ -71,7 +80,32 @@ public class Hotel implements Parcelable {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
-// Add other necessary fields
 
-    // Constructors, getters, and setters
+    // Getter and setter for isLiked
+    public boolean isLiked() {
+        return isLiked;
+    }
+    public void setIsLiked(boolean isLiked) {
+        this.isLiked = isLiked;
+    }
+
+    public void setLiked(boolean liked) {
+        this.isLiked = liked;
+    }
+
+    // Parcelable methods
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(address);
+        dest.writeString(imageUrl);
+        dest.writeByte((byte) (isLiked ? 1 : 0));
+    }
 }
+

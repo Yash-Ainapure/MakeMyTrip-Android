@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/calendar" /><!-- Provide a placeholder image -->
+        android:src="@drawable/calendar" />
     />
 
     <TextView
@@ -28,4 +28,15 @@
         android:layout_height="wrap_content"
         android:textSize="14sp"
         android:layout_marginTop="4dp"/>
+
+    <ToggleButton
+        android:id="@+id/likeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:textOff=""
+        android:textOn=""
+        android:button="@drawable/ic_heart_unselected"
+        android:layout_gravity="end" />
+
 </LinearLayout>
