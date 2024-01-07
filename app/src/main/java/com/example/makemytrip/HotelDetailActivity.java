@@ -13,17 +13,28 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.Calendar;
+import java.util.Date;
 
 public class HotelDetailActivity extends AppCompatActivity {
 
     NumberPicker numberPickerRooms,numberPickerDays;
     private String selectedDates;
-    Button buttonDatePicker;
+    Button buttonDatePicker, buttonBookHotel;
+    FirebaseAuth mAuth;
+    DatabaseReference databaseReference;
+    TextView textViewHotelName, textViewHotelAddress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hotel_detail);
+
+        mAuth = FirebaseAuth.getInstance();
 
         // Retrieve hotel details from intent
         Intent intent = getIntent();
@@ -68,6 +79,35 @@ public class HotelDetailActivity extends AppCompatActivity {
                 showDatePickerDialog();
             }
         });
+
+
+        buttonBookHotel = findViewById(R.id.buttonBookHotel);
+        textViewHotelName = findViewById(R.id.textViewHotelName);
+        textViewHotelAddress = findViewById(R.id.textViewHotelAddress);
+        TextView textViewSelectedDates = findViewById(R.id.textViewSelectedDates);
+        buttonBookHotel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(HotelDetailActivity.this, "Hotel Booked", Toast.LENGTH_SHORT).show();
+                //save this hotel booked details under logged in user in firebase realtime database
+                //get email of person logged in
+                //get hotel name, address, image url, dates, rooms, days staying
+                //save this data under user email in firebase realtime database
+                FirebaseUser user = mAuth.getCurrentUser();
+                if(user!=null){
+                    String LoggedUserEmail = user.getUid();
+                    databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(LoggedUserEmail).child("bookedHotels");
+                    String UserId=databaseReference.push().getKey();
+                    Date selectedDate = new Date(selectedDates);
+                    HotelBookedInfo hotelBookedInfo = new HotelBookedInfo(textViewHotelName.getText().toString(),textViewHotelAddress.getText().toString(),numberPickerRooms.getValue(),numberPickerDays.getValue(),selectedDates);
+                    databaseReference.child(UserId).setValue(hotelBookedInfo);
+
+                }else{
+                    Toast.makeText(HotelDetailActivity.this, "Error: No user logged in", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
     }
 
     private void showDatePickerDialog() {
@@ -82,13 +122,11 @@ public class HotelDetailActivity extends AppCompatActivity {
                 textViewSelectedDates.setText(selectedDates);
             }
         };
-
         // Get the current date
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-
         // Create and show the DatePickerDialog
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 HotelDetailActivity.this,

@@ -54,6 +54,7 @@ public class home extends AppCompatActivity {
 
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            Intent intent;
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int itemId = item.getItemId();
@@ -62,6 +63,9 @@ public class home extends AppCompatActivity {
                     Log.i("MENU_DRAWER_TAG", "Account is clicked");
                 } else if (itemId == R.id.view_manage) {
                     Log.i("MENU_DRAWER_TAG", "View/Manage is clicked");
+                    intent = new Intent(home.this, ViewManageTrips.class);
+                    startActivity(intent);
+
                 } else if (itemId == R.id.wishlist) {
                     Log.i("MENU_DRAWER_TAG", "Wishlist is clicked");
                 } else if (itemId == R.id.language) {

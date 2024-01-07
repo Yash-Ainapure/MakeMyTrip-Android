@@ -13,6 +13,9 @@
         android:theme="@style/Theme.MakeMyTrip"
         tools:targetApi="31">
         <activity
+            android:name=".ViewManageTrips"
+            android:exported="false" />
+        <activity
             android:name=".HotelDetailActivity"
             android:exported="false" />
         <activity
