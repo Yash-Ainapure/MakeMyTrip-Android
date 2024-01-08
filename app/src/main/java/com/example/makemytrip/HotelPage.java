@@ -118,9 +118,10 @@ public class HotelPage extends AppCompatActivity {
             }
         });
     }
+    // BUGS TO REMOVE
+    //when we delete card from wishlist the liked value should be changed to false in hotels node
+    //in search logic like/unlike is not set so it just displays the default unlike button,should also render like button in search results
 
-
-    //in search logic like/unlike is not set so it just displays the default unlike button will make changes in future
     // Search feature logic
     private void performSearch() {
         String queryText = searchEdt.getText().toString().trim();

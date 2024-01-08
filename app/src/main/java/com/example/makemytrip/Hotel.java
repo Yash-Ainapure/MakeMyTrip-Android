@@ -89,8 +89,8 @@ public class Hotel implements Parcelable {
         this.isLiked = isLiked;
     }
 
-    public void setLiked(boolean liked) {
-        this.isLiked = liked;
+    public void setLiked(boolean isLiked) {
+        this.isLiked = isLiked;
     }
 
     // Parcelable methods
