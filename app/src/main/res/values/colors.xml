@@ -2,4 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="hotel_card_bg">#FFFFFF</color>
+    <color name="rating_bg">#3F51B5</color>
+    <color name="app_bg">#EFEFEF</color>
+    <color name="hotel_search_bg">#C8E1E1E1</color>
+    <color name="hotel_search_border">#BDBDBD</color>
 </resources>

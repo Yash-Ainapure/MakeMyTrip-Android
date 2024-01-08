@@ -18,14 +18,15 @@
             android:layout_width="76dp"
             android:layout_height="73dp"
 
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
             android:scaleType="centerCrop"
+            android:src="@drawable/person"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.104"
+            app:layout_constraintEnd_toStartOf="@+id/textView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5"
-            tools:src="@drawable/person" />
+            app:layout_constraintVertical_bias="0.505" />
 
         <TextView
             android:id="@+id/textView"

@@ -117,11 +117,11 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/hotel_tab"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginHorizontal="5dp"
                             android:layout_weight="1"
-                            android:id="@+id/hotel_tab"
                             android:background="@drawable/tabs_bg"
                             android:orientation="vertical">
 
@@ -228,7 +228,7 @@
                             android:id="@+id/textView4"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Welcome Offer, Yash"
+                            android:text="Welcome Offer, Prajval"
                             android:textSize="20sp"
                             android:textStyle="bold" />
 

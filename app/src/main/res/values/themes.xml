@@ -1,19 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <!-- Base application theme. -->
-    <style name="Base.Theme.MakeMyTrip" parent="Theme.Material3.DayNight">
+    <style name="Base.Theme.MakeMyTrip" parent="Theme.AppCompat.Light">
+
+<!--    <style name="Base.Theme.MakeMyTrip" parent="Theme.Material3.DayNight">-->
         <!-- Customize your base theme here if needed -->
     </style>
 
     <!-- Use the base theme for the default theme -->
-    <style name="Theme.MakeMyTrip" parent="Base.Theme.MakeMyTrip" />
-
-    <!-- This style is not necessary if you want to use the action bar in all activities -->
-    <!--
-    <style name="Theme.MakeMyTrip.NoActionBar">
-        <item name="windowActionBar">true</item>
-        <item name="windowNoTitle">true</item>
+    <style name="Theme.MakeMyTrip" parent="Base.Theme.MakeMyTrip">
+        <!-- Customize your theme here if needed -->
     </style>
-    -->
 
     <!-- New style for a theme with an action bar -->
     <style name="Theme.MakeMyTrip.WithActionBar" parent="Base.Theme.MakeMyTrip">
@@ -24,7 +21,5 @@
         <!-- Add any specific customization for the action bar if needed -->
     </style>
 
-    <style name="Theme.MakeMyTrip.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="Theme.MakeMyTrip.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
