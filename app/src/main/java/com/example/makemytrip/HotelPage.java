@@ -118,9 +118,6 @@ public class HotelPage extends AppCompatActivity {
             }
         });
     }
-    // BUGS TO REMOVE
-    //when we delete card from wishlist the liked value should be changed to false in hotels node
-    //in search logic like/unlike is not set so it just displays the default unlike button,should also render like button in search results
 
     // Search feature logic
     private void performSearch() {
@@ -140,6 +137,7 @@ public class HotelPage extends AppCompatActivity {
                     for (DataSnapshot nameDataSnapshot : nameSnapshot.getChildren()) {
                         Hotel hotel = nameDataSnapshot.getValue(Hotel.class);
                         if (hotel != null && hotel.getName().contains(queryText)) {
+                            hotel.setLiked(nameDataSnapshot.child("isLiked").getValue(Boolean.class));
                             searchResult.add(hotel);
                         }
                     }
@@ -153,6 +151,7 @@ public class HotelPage extends AppCompatActivity {
                                         Hotel hotel = addressDataSnapshot.getValue(Hotel.class);
                                         if (hotel != null && hotel.getAddress().contains(queryText) && !searchResult.contains(hotel)) {
                                             // Avoid duplicate entries
+                                            hotel.setLiked(addressDataSnapshot.child("isLiked").getValue(Boolean.class));
                                             searchResult.add(hotel);
                                         }
                                     }
@@ -167,7 +166,7 @@ public class HotelPage extends AppCompatActivity {
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError error) {
                                     // Handle error
-                                    Toast.makeText(HotelPage.this, "Search Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(HotelPage.this, "Search Error: problem during address searching" + error.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             });
                 }
@@ -175,7 +174,7 @@ public class HotelPage extends AppCompatActivity {
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                     // Handle error
-                    Toast.makeText(HotelPage.this, "Search Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HotelPage.this, "Search Error: problem during name searching" + error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }

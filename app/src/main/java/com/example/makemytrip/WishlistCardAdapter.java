@@ -120,6 +120,29 @@ public class WishlistCardAdapter extends RecyclerView.Adapter<WishlistCardAdapte
                                 // Handle error
                             }
                         });
+
+                        //make isLiked value to false
+                        DatabaseReference hotelRef = FirebaseDatabase.getInstance().getReference().child("hotels");
+                        Query query1=hotelRef.orderByChild("name").equalTo(hotel.getName());
+                        query1.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for (DataSnapshot hotelSnapshot : dataSnapshot.getChildren()) {
+                                    String hotelPushId = hotelSnapshot.getKey();
+                                    if (hotelPushId != null) {
+                                        // Remove hotel by its push ID
+                                        hotelRef.child(hotelPushId).child("isLiked").setValue(false);
+                                        // You can break the loop if you assume that hotel names are unique
+                                        break;
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                // Handle error
+                            }
+                        });
                     }
                     else{
                         Toast.makeText(v.getContext(), "Please Login to add to wishlist", Toast.LENGTH_SHORT).show();
