@@ -3,16 +3,25 @@ package com.example.makemytrip;
 public class HotelBookedInfo {
     private String hotelName,hotelAddress;
     private int numberOfRooms,numberOfDays;
-    private String startingDate;
+    private String startingDate,imageUrl;
 
     public HotelBookedInfo() {
     }
-    public HotelBookedInfo(String hotelName, String hotelAddress, int numberOfRooms, int numberOfDays, String startingDate) {
+    public HotelBookedInfo(String hotelName, String hotelAddress, int numberOfRooms, int numberOfDays, String startingDate, String imageUrl) {
         this.hotelName = hotelName;
         this.hotelAddress = hotelAddress;
         this.numberOfRooms = numberOfRooms;
         this.numberOfDays = numberOfDays;
         this.startingDate = startingDate;
+        this.imageUrl = imageUrl;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getHotelName() {

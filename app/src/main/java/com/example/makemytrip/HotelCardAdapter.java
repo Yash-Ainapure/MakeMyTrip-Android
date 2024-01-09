@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.Date;
 import java.util.List;
@@ -73,8 +74,6 @@ public class HotelCardAdapter extends RecyclerView.Adapter<HotelCardAdapter.Hote
                 // Update the local hotelList
                 hotel.setLiked(newState);
 
-                // Update the UI
-                //holder.likeButton.setChecked(newState);
 
                 // Set the appropriate drawable for the like button
                 int drawableRes = newState ? R.drawable.ic_heart_selected : R.drawable.ic_heart_unselected;
@@ -137,7 +136,7 @@ public class HotelCardAdapter extends RecyclerView.Adapter<HotelCardAdapter.Hote
             @Override
             public void onClick(View v) {
                 // Handle click event - Display name, address, and imageUrl in a toast
-                Toast.makeText(v.getContext(), "Name: " + hotel.getName() + "\nAddress: " + hotel.getAddress() + "\nImageUrl: " + hotel.getImageUrl(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(v.getContext(), "Name: " + hotel.getName() + "\nAddress: " + hotel.getAddress() + "\nImageUrl: " + hotel.getImageUrl(), Toast.LENGTH_SHORT).show();
 
                 // Handle click event - Open HotelDetailActivity with hotel details
                 Intent intent = new Intent(v.getContext(), HotelDetailActivity.class);
@@ -173,7 +172,7 @@ public class HotelCardAdapter extends RecyclerView.Adapter<HotelCardAdapter.Hote
 
             // Load image using a library like Picasso or Glide
             // Example using Picasso:
-            // Picasso.get().load(hotel.getImageUrl()).into(hotelImage);
+             Picasso.get().load(hotel.getImageUrl()).into(hotelImage);
         }
     }
 

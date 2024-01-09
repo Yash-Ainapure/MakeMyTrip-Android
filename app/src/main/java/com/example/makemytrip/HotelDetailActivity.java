@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -52,7 +53,7 @@ public class HotelDetailActivity extends AppCompatActivity {
             // You may want to use a library like Picasso or Glide for image loading
             // For simplicity, assuming 'getImageUrl()' returns a valid image URL
 
-            //Picasso.get().load(hotel.getImageUrl()).into(imageViewHotel);
+            Picasso.get().load(hotel.getImageUrl()).into(imageViewHotel);
         } else {
             // Handle the case where no hotel details are provided
             Toast.makeText(this, "Error: No hotel details found", Toast.LENGTH_SHORT).show();
@@ -89,6 +90,12 @@ public class HotelDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(HotelDetailActivity.this, "Hotel Booked", Toast.LENGTH_SHORT).show();
+                Intent intent = getIntent();
+                String ImageUrl="demo2";
+                if (intent != null && intent.hasExtra("hotel")) {
+                    Hotel hotel = intent.getParcelableExtra("hotel");
+                    ImageUrl=hotel.getImageUrl();
+                }
                 //save this hotel booked details under logged in user in firebase realtime database
                 //get email of person logged in
                 //get hotel name, address, image url, dates, rooms, days staying
@@ -99,7 +106,7 @@ public class HotelDetailActivity extends AppCompatActivity {
                     databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(LoggedUserEmail).child("bookedHotels");
                     String UserId=databaseReference.push().getKey();
                     Date selectedDate = new Date(selectedDates);
-                    HotelBookedInfo hotelBookedInfo = new HotelBookedInfo(textViewHotelName.getText().toString(),textViewHotelAddress.getText().toString(),numberPickerRooms.getValue(),numberPickerDays.getValue(),selectedDates);
+                    HotelBookedInfo hotelBookedInfo = new HotelBookedInfo(textViewHotelName.getText().toString(),textViewHotelAddress.getText().toString(),numberPickerRooms.getValue(),numberPickerDays.getValue(),selectedDates,ImageUrl);
                     databaseReference.child(UserId).setValue(hotelBookedInfo);
 
                 }else{

@@ -1,6 +1,9 @@
 package com.example.makemytrip;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 public class BookedHotelCardAdapter extends RecyclerView.Adapter<BookedHotelCardAdapter.ViewHolder> {
@@ -58,7 +64,20 @@ public class BookedHotelCardAdapter extends RecyclerView.Adapter<BookedHotelCard
         HotelBookedInfo bookedHotel = bookedHotels.get(position);
 
         // Set the hotel image (Replace R.drawable.placeholder_image with your actual image resource)
-        holder.hotelImageView.setImageResource(R.drawable.calendar);
+        //holder.hotelImageView.setImageResource(R.drawable.calendar);
+        //Picasso.get().load(bookedHotel.getImageUrl()).into(holder.hotelImageView);
+
+        if (bookedHotel.getImageUrl() != null && !bookedHotel.getImageUrl().isEmpty()) {
+            // Load image using Picasso
+            Picasso.get()
+                    .load(bookedHotel.getImageUrl()).into(holder.hotelImageView);
+        } else {
+            // Handle the case where the image URL is empty or null
+            // You can set a default image or hide the ImageView
+            holder.hotelImageView.setImageResource(R.drawable.calendar);
+            Log.i(TAG, "onBindViewHolder: image url is null : "+bookedHotel.getImageUrl());
+            // or holder.hotelImage.setVisibility(View.GONE);
+        }
 
         holder.hotelNameTextView.setText(bookedHotel.getHotelName());
         holder.hotelAddressTextView.setText(bookedHotel.getHotelAddress());

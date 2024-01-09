@@ -29,6 +29,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -202,7 +203,7 @@ public class WishlistCardAdapter extends RecyclerView.Adapter<WishlistCardAdapte
 
             // Load image using a library like Picasso or Glide
             // Example using Picasso:
-            // Picasso.get().load(hotel.getImageUrl()).into(hotelImage);
+             Picasso.get().load(hotel.getImageUrl()).into(hotelImage);
         }
     }
 
