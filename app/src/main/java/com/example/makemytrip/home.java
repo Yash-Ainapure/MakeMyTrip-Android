@@ -88,7 +88,7 @@ public class home extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i=new Intent(home.this, HotelPage.class);
                 startActivity(i);
-                Toast.makeText(home.this, "clicked hotles", Toast.LENGTH_SHORT).show();
+                Toast.makeText(home.this, "clicked hotels", Toast.LENGTH_SHORT).show();
             }
         });
 

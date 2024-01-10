@@ -56,7 +56,7 @@
 
                     <LinearLayout
                         android:id="@+id/linearLayout2"
-                        android:layout_width="411dp"
+                        android:layout_width="0dp"
                         android:layout_height="217dp"
                         android:layout_marginTop="1dp"
                         android:orientation="horizontal"
@@ -228,18 +228,61 @@
                             android:id="@+id/textView4"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Welcome Offer, Prajval"
+                            android:text="Welcome, Prajval"
                             android:textSize="20sp"
                             android:textStyle="bold" />
 
-                        <ImageView
-                            android:id="@+id/imageView4"
-                            android:layout_width="368dp"
-                            android:layout_height="180dp"
-                            android:layout_marginTop="20dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/photo1"
-                            />
+                        <HorizontalScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal" >
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:id="@+id/imageView8"
+                                    android:layout_width="368dp"
+                                    android:layout_height="180dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginRight="10dp"
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/photo1"
+                                    app:shapeAppearanceOverlay="@style/circular" />
+
+                                 <com.google.android.material.imageview.ShapeableImageView
+                                    android:id="@+id/imageView12"
+                                    android:layout_width="368dp"
+                                    android:layout_height="180dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginRight="10dp"
+                                    app:shapeAppearanceOverlay="@style/circular"
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/photo2" />
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:id="@+id/imageView11"
+                                    android:layout_width="368dp"
+                                    android:layout_height="180dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginRight="10dp"
+                                    app:shapeAppearanceOverlay="@style/circular"
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/photo3" />
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:id="@+id/imageView10"
+                                    android:layout_width="368dp"
+                                    android:layout_height="180dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginRight="10dp"
+                                    app:shapeAppearanceOverlay="@style/circular"
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/photo4" />
+                            </LinearLayout>
+                        </HorizontalScrollView>
+
                     </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -255,6 +298,7 @@
         app:menu="@menu/main_menu"
         android:fitsSystemWindows="true"
         android:layout_gravity="start"
+        app:theme="@style/AppTheme.Navigation"
         >
 
     </com.google.android.material.navigation.NavigationView>

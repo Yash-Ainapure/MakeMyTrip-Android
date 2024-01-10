@@ -74,7 +74,7 @@ public class BookedHotelCardAdapter extends RecyclerView.Adapter<BookedHotelCard
         } else {
             // Handle the case where the image URL is empty or null
             // You can set a default image or hide the ImageView
-            holder.hotelImageView.setImageResource(R.drawable.calendar);
+            holder.hotelImageView.setImageResource(R.drawable.calendarimg);
             Log.i(TAG, "onBindViewHolder: image url is null : "+bookedHotel.getImageUrl());
             // or holder.hotelImage.setVisibility(View.GONE);
         }

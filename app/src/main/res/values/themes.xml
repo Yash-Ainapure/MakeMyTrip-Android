@@ -2,13 +2,16 @@
 
     <!-- Base application theme. -->
     <style name="Base.Theme.MakeMyTrip" parent="Theme.AppCompat.Light">
-
+        <item name="android:statusBarColor">@color/app_bg</item>
 <!--    <style name="Base.Theme.MakeMyTrip" parent="Theme.Material3.DayNight">-->
         <!-- Customize your base theme here if needed -->
     </style>
 
     <!-- Use the base theme for the default theme -->
     <style name="Theme.MakeMyTrip" parent="Base.Theme.MakeMyTrip">
+        <!-- Customize your theme here if needed -->
+    </style>
+    <style name="AppTheme.Navigation" parent="Theme.Material3.DayNight">
         <!-- Customize your theme here if needed -->
     </style>
 

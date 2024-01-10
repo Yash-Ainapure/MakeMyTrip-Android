@@ -13,10 +13,10 @@
         android:layout_height="match_parent"
         android:background="@drawable/header_bg">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imageView"
             android:layout_width="76dp"
-            android:layout_height="73dp"
+            android:layout_height="71dp"
 
             android:layout_marginStart="16dp"
             android:layout_marginEnd="8dp"
@@ -26,7 +26,8 @@
             app:layout_constraintEnd_toStartOf="@+id/textView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.505" />
+            app:layout_constraintVertical_bias="0.505"
+            app:shapeAppearanceOverlay="@style/round" />
 
         <TextView
             android:id="@+id/textView"
@@ -36,30 +37,26 @@
             android:fontFamily="@font/roboto_bold"
             android:text="Hi Prajval Chavan"
             android:textColor="@color/white"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.322" />
+            app:layout_constraintVertical_bias="0.338" />
 
         <TextView
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="28dp"
             android:fontFamily="@font/roboto_light"
             android:text="7242145231"
             android:textColor="#F1F1F1"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
             app:layout_constraintStart_toStartOf="@+id/textView"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.624" />
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

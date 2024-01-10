@@ -85,7 +85,7 @@ public class HotelDetailActivity extends AppCompatActivity {
         buttonBookHotel = findViewById(R.id.buttonBookHotel);
         textViewHotelName = findViewById(R.id.textViewHotelName);
         textViewHotelAddress = findViewById(R.id.textViewHotelAddress);
-        TextView textViewSelectedDates = findViewById(R.id.textViewSelectedDates);
+//        TextView textViewSelectedDates = findViewById(R.id.textViewSelectedDates);
         buttonBookHotel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,8 +125,9 @@ public class HotelDetailActivity extends AppCompatActivity {
                 selectedDates = dayOfMonth + "/" + (month + 1) + "/" + year;
                 // Update the UI or perform any other actions based on the selected date
                 // For example, you can display the selected date in a TextView
-                TextView textViewSelectedDates = findViewById(R.id.textViewSelectedDates);
-                textViewSelectedDates.setText(selectedDates);
+//                TextView textViewSelectedDates = findViewById(R.id.textViewSelectedDates);
+//                textViewSelectedDates.setText(selectedDates);
+                buttonDatePicker.setText(selectedDates);
             }
         };
         // Get the current date
