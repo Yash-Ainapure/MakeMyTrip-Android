@@ -2,7 +2,9 @@ package com.example.makemytrip;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +12,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -21,6 +33,7 @@ public class BookedHotelCardAdapter extends RecyclerView.Adapter<BookedHotelCard
 
     private List<HotelBookedInfo> bookedHotels;
     private Context context;
+    private FirebaseAuth mAuth;
 
     // Constructor to initialize the adapter with a list of booked hotels
     public BookedHotelCardAdapter(Context context, List<HotelBookedInfo> bookedHotels) {
@@ -89,8 +102,8 @@ public class BookedHotelCardAdapter extends RecyclerView.Adapter<BookedHotelCard
         holder.cancelBookingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Handle the cancel booking action here
-                // You may want to show a confirmation dialog before canceling the booking
+
+                showConfirmationDialog(bookedHotel.getHotelName());
             }
         });
     }
@@ -100,4 +113,63 @@ public class BookedHotelCardAdapter extends RecyclerView.Adapter<BookedHotelCard
         // Return the size of the bookedHotels list
         return bookedHotels.size();
     }
+
+    private void showConfirmationDialog(String hotelName) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Cancel Booking");
+        builder.setMessage("Are you sure you want to cancel this booking?");
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // User confirmed, proceed to cancel booking
+                cancelBooking(hotelName);
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // User canceled, do nothing
+            }
+        });
+
+        builder.show();
+    }
+
+    private void cancelBooking(String hotelName) {
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+
+            String LoggedUserId = user.getUid();
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(LoggedUserId).child("bookedHotels");
+            Query query = databaseReference.orderByChild("hotelName").equalTo(hotelName);
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot bookedHotelSnapshot : dataSnapshot.getChildren()) {
+                        // Assuming 'bookedHotelsRef' is DatabaseReference to the booked hotels node
+                        bookedHotelSnapshot.getRef().removeValue();
+                        // You can break the loop if you assume that hotel names are unique
+                        break;
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    // Handle error
+                }
+            });
+
+            // Notify the adapter about the removal so that it updates the UI
+            notifyDataSetChanged();
+        }
+        else{
+            Toast.makeText(context, "Please Login to cancel booking", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 }
