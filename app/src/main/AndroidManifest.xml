@@ -13,6 +13,9 @@
         android:theme="@style/Theme.MakeMyTrip"
         tools:targetApi="31">
         <activity
+            android:name=".RegisterPage"
+            android:exported="false" />
+        <activity
             android:name=".Wishlist"
             android:exported="false" />
         <activity
@@ -23,9 +26,6 @@
             android:exported="false" />
         <activity
             android:name=".HotelPage"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity2"
             android:exported="false" />
         <activity
             android:name=".home"

@@ -1,6 +1,5 @@
 package com.example.makemytrip;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -21,8 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    Button loginbtn;
+    Button loginbtn,registerbtn;
     EditText usernameEdt,passwordEdt;
     FirebaseAuth mAuth;
     @Override
@@ -37,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         usernameEdt=(EditText) findViewById(R.id.usernameedt);
         passwordEdt=(EditText) findViewById(R.id.passwordedt);
         loginbtn=(Button) findViewById(R.id.loginbtn);
+        registerbtn=(Button) findViewById(R.id.registerbtn);
 
         loginbtn.setOnClickListener(view -> {
             // Get the entered username and password
@@ -65,6 +64,11 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(MainActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
                         }
                     });
+        });
+
+        registerbtn.setOnClickListener(view -> {
+            Intent stm = new Intent(MainActivity.this, RegisterPage.class);
+            startActivity(stm);
         });
 
         TextView title = findViewById(R.id.textView6);
