@@ -46,14 +46,25 @@ public class HotelDetailActivity extends AppCompatActivity {
             TextView textViewHotelName = findViewById(R.id.textViewHotelName);
             TextView textViewHotelAddress = findViewById(R.id.textViewHotelAddress);
             ImageView imageViewHotel = findViewById(R.id.imageViewHotel);
+//            ImageView otherImages=findViewById(R.id.otherImages);
+
+            ImageView otherImage1=findViewById(R.id.otherImage1);
+            ImageView otherImage2=findViewById(R.id.otherImage2);
+            if (hotel.getOtherImages() != null && hotel.getOtherImages().size() > 0) {
+                Picasso.get().load(hotel.getOtherImages().get(0)).into(otherImage1);
+                Picasso.get().load(hotel.getOtherImages().get(1)).into(otherImage2);
+            }
+
 
             textViewHotelName.setText(hotel.getName());
             textViewHotelAddress.setText(hotel.getAddress());
 
-            // You may want to use a library like Picasso or Glide for image loading
-            // For simplicity, assuming 'getImageUrl()' returns a valid image URL
 
             Picasso.get().load(hotel.getImageUrl()).into(imageViewHotel);
+
+//            if (hotel.getOtherImages() != null && hotel.getOtherImages().size() > 0) {
+//                Picasso.get().load(hotel.getOtherImages().get(0)).into(otherImages);
+//            }
         } else {
             // Handle the case where no hotel details are provided
             Toast.makeText(this, "Error: No hotel details found", Toast.LENGTH_SHORT).show();
@@ -123,10 +134,6 @@ public class HotelDetailActivity extends AppCompatActivity {
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 // Handle the selected date
                 selectedDates = dayOfMonth + "/" + (month + 1) + "/" + year;
-                // Update the UI or perform any other actions based on the selected date
-                // For example, you can display the selected date in a TextView
-//                TextView textViewSelectedDates = findViewById(R.id.textViewSelectedDates);
-//                textViewSelectedDates.setText(selectedDates);
                 buttonDatePicker.setText(selectedDates);
             }
         };

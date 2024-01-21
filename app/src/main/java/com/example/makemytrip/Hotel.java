@@ -3,24 +3,48 @@ package com.example.makemytrip;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Hotel implements Parcelable {
     private String id;
     private String name;
     private String address;
     private String imageUrl;
     private boolean isLiked;
+    private int price;
+    private List<String> otherImages;
+
+
+    public List<String> getOtherImages() {
+        return otherImages;
+    }
+
+    public void setOtherImages(List<String> otherImages) {
+        this.otherImages = otherImages;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
 
     // Default constructor
     public Hotel() {
     }
 
     // Parameterized constructor
-    public Hotel(String id, String name, String address, String imageUrl, boolean isLiked) {
+    public Hotel(String id, String name, String address, String imageUrl, boolean isLiked,int price,List<String> otherImages) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.imageUrl = imageUrl;
         this.isLiked = isLiked;
+        this.price=price;
+        this.otherImages=otherImages;
     }
 
     // Parcelable constructor
@@ -30,6 +54,9 @@ public class Hotel implements Parcelable {
         address = in.readString();
         imageUrl = in.readString();
         isLiked = in.readByte() != 0;
+        price=in.readInt();
+        otherImages = new ArrayList<>();
+        in.readList(otherImages, String.class.getClassLoader());
     }
 
     // Parcelable creator
@@ -106,6 +133,8 @@ public class Hotel implements Parcelable {
         dest.writeString(address);
         dest.writeString(imageUrl);
         dest.writeByte((byte) (isLiked ? 1 : 0));
+        dest.writeInt(price);
+        dest.writeList(otherImages);
     }
 }
 

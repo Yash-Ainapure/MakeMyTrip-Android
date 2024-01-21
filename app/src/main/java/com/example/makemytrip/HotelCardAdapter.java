@@ -89,7 +89,7 @@ public class HotelCardAdapter extends RecyclerView.Adapter<HotelCardAdapter.Hote
                         String LoggedUserId = user.getUid();
                         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(LoggedUserId).child("hotelsWishlist");
                         String UserId=databaseReference.push().getKey();
-                        Hotel newHotel=new Hotel(hotel.getId(),hotel.getName(),hotel.getAddress(),hotel.getImageUrl(),hotel.isLiked());
+                        Hotel newHotel=new Hotel(hotel.getId(),hotel.getName(),hotel.getAddress(),hotel.getImageUrl(),hotel.isLiked(),hotel.getPrice(), hotel.getOtherImages());
                         databaseReference.child(UserId).setValue(newHotel);
                     }
                     else{
@@ -156,6 +156,7 @@ public class HotelCardAdapter extends RecyclerView.Adapter<HotelCardAdapter.Hote
         private TextView hotelName;
         private TextView hotelAddress;
         private ToggleButton likeButton;
+        private TextView hotelPrice;
 
         public HotelViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -163,6 +164,7 @@ public class HotelCardAdapter extends RecyclerView.Adapter<HotelCardAdapter.Hote
             hotelName = itemView.findViewById(R.id.textViewHotelName);
             hotelAddress = itemView.findViewById(R.id.textViewHotelAddress);
             likeButton = itemView.findViewById(R.id.likeButton);
+            hotelPrice=itemView.findViewById(R.id.hotelPrice);
         }
 
         public void bindData(Hotel hotel) {
@@ -170,7 +172,9 @@ public class HotelCardAdapter extends RecyclerView.Adapter<HotelCardAdapter.Hote
             hotelName.setText(hotel.getName());
             hotelAddress.setText(hotel.getAddress());
 
-            // Load image using a library like Picasso or Glide
+            //here hotel.getPrice() returns int which then is converted to string format
+            hotelPrice.setText(String.valueOf(hotel.getPrice()));
+
             // Example using Picasso:
              Picasso.get().load(hotel.getImageUrl()).into(hotelImage);
         }

@@ -88,7 +88,7 @@ public class WishlistCardAdapter extends RecyclerView.Adapter<WishlistCardAdapte
                         String LoggedUserId = user.getUid();
                         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(LoggedUserId).child("hotelsWishlist");
                         String UserId=databaseReference.push().getKey();
-                        Hotel newHotel=new Hotel(hotel.getId(),hotel.getName(),hotel.getAddress(),hotel.getImageUrl(),hotel.isLiked());
+                        Hotel newHotel=new Hotel(hotel.getId(),hotel.getName(),hotel.getAddress(),hotel.getImageUrl(),hotel.isLiked(),hotel.getPrice(), hotel.getOtherImages());
                         databaseReference.child(UserId).setValue(newHotel);
                     }
                     else{
@@ -187,6 +187,7 @@ public class WishlistCardAdapter extends RecyclerView.Adapter<WishlistCardAdapte
         private TextView hotelName;
         private TextView hotelAddress;
         private ToggleButton likeButton;
+        private TextView hotelPrice;
 
         public WishlistViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -194,12 +195,15 @@ public class WishlistCardAdapter extends RecyclerView.Adapter<WishlistCardAdapte
             hotelName = itemView.findViewById(R.id.textViewHotelName);
             hotelAddress = itemView.findViewById(R.id.textViewHotelAddress);
             likeButton = itemView.findViewById(R.id.likeButton);
+            hotelPrice=itemView.findViewById(R.id.hotelPrice);
         }
 
         public void bindData(Hotel hotel) {
             // Bind data to UI elements
             hotelName.setText(hotel.getName());
             hotelAddress.setText(hotel.getAddress());
+
+            hotelPrice.setText(String.valueOf(hotel.getPrice()));
 
             // Load image using a library like Picasso or Glide
             // Example using Picasso:
