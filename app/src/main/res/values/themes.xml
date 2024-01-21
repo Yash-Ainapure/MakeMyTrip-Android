@@ -6,7 +6,10 @@
 <!--    <style name="Base.Theme.MakeMyTrip" parent="Theme.Material3.DayNight">-->
         <!-- Customize your base theme here if needed -->
     </style>
-
+    <style name="Theme.MakeMyTrip1" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here if needed -->
+        <item name="android:statusBarColor">@color/transparent</item>
+    </style>
     <!-- Use the base theme for the default theme -->
     <style name="Theme.MakeMyTrip" parent="Base.Theme.MakeMyTrip">
         <!-- Customize your theme here if needed -->

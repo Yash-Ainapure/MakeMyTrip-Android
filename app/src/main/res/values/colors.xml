@@ -9,4 +9,5 @@
     <color name="hotel_search_border">#BDBDBD</color>
     <color name="gray">#E1C6C6C6</color>
     <color name="calbtn">#2196F3</color>
+    <color name="transparent">#00000000</color>
 </resources>
