@@ -46,9 +46,10 @@ public class BookedHotelCardAdapter extends RecyclerView.Adapter<BookedHotelCard
         ImageView hotelImageView;
         TextView hotelNameTextView;
         TextView hotelAddressTextView;
-        TextView numberOfDaysTextView;
+//        TextView numberOfDaysTextView;
         TextView numberOfRoomsTextView;
         TextView startingDateTextView;
+        TextView endingDateTextView;
         Button cancelBookingButton;
 
         public ViewHolder(@NonNull View itemView) {
@@ -56,9 +57,10 @@ public class BookedHotelCardAdapter extends RecyclerView.Adapter<BookedHotelCard
             hotelImageView = itemView.findViewById(R.id.hotelImageView);
             hotelNameTextView = itemView.findViewById(R.id.hotelNameTextView);
             hotelAddressTextView = itemView.findViewById(R.id.hotelAddressTextView);
-            numberOfDaysTextView = itemView.findViewById(R.id.numberOfDaysTextView);
+//            numberOfDaysTextView = itemView.findViewById(R.id.numberOfDaysTextView);
             numberOfRoomsTextView = itemView.findViewById(R.id.numberOfRoomsTextView);
             startingDateTextView = itemView.findViewById(R.id.startingDateTextView);
+            endingDateTextView = itemView.findViewById(R.id.endingDateTextView);
             cancelBookingButton = itemView.findViewById(R.id.cancelBookingButton);
         }
     }
@@ -94,9 +96,10 @@ public class BookedHotelCardAdapter extends RecyclerView.Adapter<BookedHotelCard
 
         holder.hotelNameTextView.setText(bookedHotel.getHotelName());
         holder.hotelAddressTextView.setText(bookedHotel.getHotelAddress());
-        holder.numberOfDaysTextView.setText("Number of Days: " + bookedHotel.getNumberOfDays());
+//        holder.numberOfDaysTextView.setText("Number of Days: " + bookedHotel.getNumberOfDays());
         holder.numberOfRoomsTextView.setText("Number of Rooms: " + bookedHotel.getNumberOfRooms());
         holder.startingDateTextView.setText("Starting Date: " + bookedHotel.getStartingDate());
+        holder.endingDateTextView.setText("Ending Date: " + bookedHotel.getEndingDate());
 
         // Set a click listener for the cancel booking button
         holder.cancelBookingButton.setOnClickListener(new View.OnClickListener() {

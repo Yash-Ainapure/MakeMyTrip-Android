@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -24,9 +25,10 @@ import java.util.Date;
 
 public class HotelDetailActivity extends AppCompatActivity {
 
-    NumberPicker numberPickerRooms,numberPickerDays;
-    private String selectedDates;
-    Button buttonDatePicker, buttonBookHotel;
+    NumberPicker numberPickerRooms;
+    private String selectedDates="1/02/2024";
+    private int Price=0;
+    Button buttonDatePicker, buttonBookHotel,buttonDatePicker2;
     FirebaseAuth mAuth;
     DatabaseReference databaseReference;
     TextView textViewHotelName, textViewHotelAddress;
@@ -42,11 +44,11 @@ public class HotelDetailActivity extends AppCompatActivity {
         if (intent != null && intent.hasExtra("hotel")) {
             Hotel hotel = intent.getParcelableExtra("hotel");
 
+            Price=hotel.getPrice();
             // Now you have the 'hotel' object, you can display its details in the activity
             TextView textViewHotelName = findViewById(R.id.textViewHotelName);
             TextView textViewHotelAddress = findViewById(R.id.textViewHotelAddress);
             ImageView imageViewHotel = findViewById(R.id.imageViewHotel);
-//            ImageView otherImages=findViewById(R.id.otherImages);
 
             ImageView otherImage1=findViewById(R.id.otherImage1);
             ImageView otherImage2=findViewById(R.id.otherImage2);
@@ -62,9 +64,6 @@ public class HotelDetailActivity extends AppCompatActivity {
 
             Picasso.get().load(hotel.getImageUrl()).into(imageViewHotel);
 
-//            if (hotel.getOtherImages() != null && hotel.getOtherImages().size() > 0) {
-//                Picasso.get().load(hotel.getOtherImages().get(0)).into(otherImages);
-//            }
         } else {
             // Handle the case where no hotel details are provided
             Toast.makeText(this, "Error: No hotel details found", Toast.LENGTH_SHORT).show();
@@ -77,18 +76,36 @@ public class HotelDetailActivity extends AppCompatActivity {
         numberPickerRooms.setMaxValue(10); // Set your desired maximum value here
         numberPickerRooms.setValue(1); // Set an initial value
 
-        //set min and max values to days staying picker
-        numberPickerDays = findViewById(R.id.numberPickerDays);
-        numberPickerDays.setMinValue(1);
-        numberPickerDays.setMaxValue(10); // Set your desired maximum value here
-        numberPickerDays.setValue(1); // Set an initial value
+        numberPickerRooms.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                v.setBackgroundResource(R.drawable.np_number_picker_pressed);
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                v.setBackgroundResource(R.drawable.np_number_picker_default);
+            }
+            return false;
+        });
+
+        numberPickerRooms.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                v.setBackgroundResource(R.drawable.np_number_picker_focused);
+            } else {
+                v.setBackgroundResource(R.drawable.np_number_picker_default);
+            }
+        });
 
         //choose dates functionality
         buttonDatePicker = findViewById(R.id.buttonDatePicker);
+        buttonDatePicker2 = findViewById(R.id.buttonDatePicker2);
         buttonDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDatePickerDialog();
+                showDatePickerDialog(buttonDatePicker);
+            }
+        });
+        buttonDatePicker2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(buttonDatePicker2);
             }
         });
 
@@ -117,7 +134,8 @@ public class HotelDetailActivity extends AppCompatActivity {
                     databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(LoggedUserEmail).child("bookedHotels");
                     String UserId=databaseReference.push().getKey();
                     Date selectedDate = new Date(selectedDates);
-                    HotelBookedInfo hotelBookedInfo = new HotelBookedInfo(textViewHotelName.getText().toString(),textViewHotelAddress.getText().toString(),numberPickerRooms.getValue(),numberPickerDays.getValue(),selectedDates,ImageUrl);
+                    HotelBookedInfo hotelBookedInfo = new HotelBookedInfo(textViewHotelName.getText().toString(),textViewHotelAddress.getText().toString(),numberPickerRooms.getValue()
+                            ,buttonDatePicker.getText().toString(),buttonDatePicker2.getText().toString(),ImageUrl);
                     databaseReference.child(UserId).setValue(hotelBookedInfo);
 
                 }else{
@@ -128,13 +146,14 @@ public class HotelDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void showDatePickerDialog() {
+    private void showDatePickerDialog(Button buttonDatePickerx) {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 // Handle the selected date
                 selectedDates = dayOfMonth + "/" + (month + 1) + "/" + year;
-                buttonDatePicker.setText(selectedDates);
+                //buttonDatePicker.setText(selectedDates);
+                buttonDatePickerx.setText(selectedDates);
             }
         };
         // Get the current date

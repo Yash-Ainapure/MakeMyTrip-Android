@@ -126,7 +126,21 @@
             android:drawableLeft="@drawable/calendar_icon"
             android:drawablePadding="10dp"
             android:padding="10dp"
-            android:text="Choose Dates"
+            android:text="Choose starting date"
+            android:textColor="@color/calbtn"
+            android:textStyle="bold"
+
+            />
+        <Button
+            android:id="@+id/buttonDatePicker2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/borderbtn"
+            android:drawableLeft="@drawable/calendar_icon"
+            android:drawablePadding="10dp"
+            android:padding="10dp"
+            android:text="Choose ending date"
             android:textColor="@color/calbtn"
             android:textStyle="bold"
 
@@ -146,19 +160,19 @@
         <!--                android:text="No Date Selected"-->
         <!--                android:textSize="16sp"-->
         <!--                android:layout_marginTop="16dp"/>-->
-        <TextView
-            android:id="@+id/textViewSelectNumberOfDates"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Select Number of Days you need"
-            android:textSize="16sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/textViewSelectNumberOfDates"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:text="Select Number of Days you need"-->
+<!--            android:textSize="16sp" />-->
 
-        <NumberPicker
-            android:id="@+id/numberPickerDays"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" />
+<!--        <NumberPicker-->
+<!--            android:id="@+id/numberPickerDays"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="8dp" />-->
 
         <!-- Number of Rooms Selector -->
         <TextView
@@ -169,11 +183,17 @@
             android:text="Select Number of Rooms"
             android:textSize="16sp" />
 
+<!--        <NumberPicker-->
+<!--            android:id="@+id/numberPickerRooms"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="8dp" />-->
         <NumberPicker
             android:id="@+id/numberPickerRooms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:background="@drawable/np_number_picker_default" />
 
         <Button
             android:id="@+id/buttonBookHotel"

@@ -1,0 +1,5 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Customize the focused state background -->
+    <solid android:color="#B0B0B0" />
+    <corners android:radius="8dp" />
+</shape>

@@ -135,10 +135,6 @@ public class HotelCardAdapter extends RecyclerView.Adapter<HotelCardAdapter.Hote
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Handle click event - Display name, address, and imageUrl in a toast
-                //Toast.makeText(v.getContext(), "Name: " + hotel.getName() + "\nAddress: " + hotel.getAddress() + "\nImageUrl: " + hotel.getImageUrl(), Toast.LENGTH_SHORT).show();
-
-                // Handle click event - Open HotelDetailActivity with hotel details
                 Intent intent = new Intent(v.getContext(), HotelDetailActivity.class);
                 intent.putExtra("hotel", hotel);
                 v.getContext().startActivity(intent);

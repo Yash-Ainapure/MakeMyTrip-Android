@@ -2,18 +2,25 @@ package com.example.makemytrip;
 
 public class HotelBookedInfo {
     private String hotelName,hotelAddress;
-    private int numberOfRooms,numberOfDays;
-    private String startingDate,imageUrl;
+    private int numberOfRooms;
+    private String startingDate,imageUrl,endingDate;
 
     public HotelBookedInfo() {
     }
-    public HotelBookedInfo(String hotelName, String hotelAddress, int numberOfRooms, int numberOfDays, String startingDate, String imageUrl) {
+    public HotelBookedInfo(String hotelName, String hotelAddress, int numberOfRooms, String startingDate,String endingDate, String imageUrl) {
         this.hotelName = hotelName;
         this.hotelAddress = hotelAddress;
         this.numberOfRooms = numberOfRooms;
-        this.numberOfDays = numberOfDays;
         this.startingDate = startingDate;
+        this.endingDate=endingDate;
         this.imageUrl = imageUrl;
+    }
+
+    public String getEndingDate() {
+        return endingDate;
+    }
+    public void setEndingDate(String endingDate) {
+        this.endingDate = endingDate;
     }
 
     public String getImageUrl() {
@@ -46,14 +53,6 @@ public class HotelBookedInfo {
 
     public void setNumberOfRooms(int numberOfRooms) {
         this.numberOfRooms = numberOfRooms;
-    }
-
-    public int getNumberOfDays() {
-        return numberOfDays;
-    }
-
-    public void setNumberOfDays(int numberOfDays) {
-        this.numberOfDays = numberOfDays;
     }
 
     public String getStartingDate() {
