@@ -46,7 +46,8 @@ public class RegisterPage extends AppCompatActivity {
                         Toast.makeText(RegisterPage.this,"SignUp Unsuccessful, Please Try Again",Toast.LENGTH_SHORT).show();
                     }
                     else{
-                        startActivity(new Intent(RegisterPage.this, home.class));
+                        startActivity(new Intent(RegisterPage.this, MainActivity.class));
+                        Toast.makeText(this, "registered successfully,now you can login with the credentials", Toast.LENGTH_SHORT).show();
                     }
                 });
             }

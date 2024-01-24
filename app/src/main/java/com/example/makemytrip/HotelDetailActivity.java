@@ -117,6 +117,11 @@ public class HotelDetailActivity extends AppCompatActivity {
         buttonBookHotel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(buttonDatePicker.getText().toString().equals("Choose starting date") || buttonDatePicker2.getText().toString().equals("Choose ending date")){
+                    Toast.makeText(HotelDetailActivity.this, "choose the duration", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Toast.makeText(HotelDetailActivity.this, "Hotel Booked", Toast.LENGTH_SHORT).show();
                 Intent intent = getIntent();
                 String ImageUrl="demo2";

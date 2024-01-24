@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                             // If valid, start the next activity
                             Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                             Intent stm = new Intent(MainActivity.this, home.class);
+                            stm.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(stm);
                         } else {
                             Toast.makeText(MainActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
