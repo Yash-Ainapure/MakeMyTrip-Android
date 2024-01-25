@@ -10,22 +10,34 @@ import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.File;
+import java.io.IOException;
 
 public class home extends AppCompatActivity {
     DrawerLayout drawerLayout;
@@ -76,10 +88,36 @@ public class home extends AppCompatActivity {
         getSupportActionBar().setTitle("Home");
         View headerView = navigationView.getHeaderView(0);
        username=headerView.findViewById(R.id.username);
-       //username.setText("yash patil");
+
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         username.setText(user.getEmail());
+
+        //set profile image
+        ImageView profileImage=headerView.findViewById(R.id.imageView);
+        StorageReference storageReference;
+        FirebaseAuth mAuth2 = FirebaseAuth.getInstance();
+        String Uid=mAuth2.getCurrentUser().getUid();
+        storageReference= FirebaseStorage.getInstance().getReference("UserProfileImages/"+Uid);
+        try {
+            File localfile= File.createTempFile("tempfile",".jpg");
+            storageReference.getFile(localfile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    DisplayMetrics dm=new DisplayMetrics();
+                    Bitmap bitmap= BitmapFactory.decodeFile(localfile.getAbsolutePath());
+                    profileImage.setImageBitmap(bitmap);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(home.this, "failed to load profile image", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             Intent intent;
@@ -88,7 +126,7 @@ public class home extends AppCompatActivity {
                 int itemId = item.getItemId();
 
                 if (itemId == R.id.nav_account) {
-                    Log.i("MENU_DRAWER_TAG", "Account is clicked");
+                    startActivity(new Intent(home.this,MyAccount.class));
                 } else if (itemId == R.id.view_manage) {
                     Log.i("MENU_DRAWER_TAG", "View/Manage is clicked");
                     intent = new Intent(home.this, ViewManageTrips.class);
