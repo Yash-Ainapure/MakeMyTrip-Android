@@ -122,30 +122,37 @@ public class HotelDetailActivity extends AppCompatActivity {
                     return;
                 }
 
-                Toast.makeText(HotelDetailActivity.this, "Hotel Booked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HotelDetailActivity.this, "payment gateway", Toast.LENGTH_SHORT).show();
                 Intent intent = getIntent();
                 String ImageUrl="demo2";
                 if (intent != null && intent.hasExtra("hotel")) {
                     Hotel hotel = intent.getParcelableExtra("hotel");
                     ImageUrl=hotel.getImageUrl();
+                    Intent intent1 = new Intent(HotelDetailActivity.this, PaymentGateway.class);
+                    HotelBookedInfo hotelBookedInfo = new HotelBookedInfo(textViewHotelName.getText().toString(),textViewHotelAddress.getText().toString(),numberPickerRooms.getValue()
+                           ,buttonDatePicker.getText().toString(),buttonDatePicker2.getText().toString(),ImageUrl);
+                    intent1.putExtra("hotel",hotel);
+                    intent1.putExtra("hotelBookedInfo",hotelBookedInfo);
+                    startActivity(intent1);
                 }
+
                 //save this hotel booked details under logged in user in firebase realtime database
                 //get email of person logged in
                 //get hotel name, address, image url, dates, rooms, days staying
                 //save this data under user email in firebase realtime database
-                FirebaseUser user = mAuth.getCurrentUser();
-                if(user!=null){
-                    String LoggedUserEmail = user.getUid();
-                    databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(LoggedUserEmail).child("bookedHotels");
-                    String UserId=databaseReference.push().getKey();
-                    Date selectedDate = new Date(selectedDates);
-                    HotelBookedInfo hotelBookedInfo = new HotelBookedInfo(textViewHotelName.getText().toString(),textViewHotelAddress.getText().toString(),numberPickerRooms.getValue()
-                            ,buttonDatePicker.getText().toString(),buttonDatePicker2.getText().toString(),ImageUrl);
-                    databaseReference.child(UserId).setValue(hotelBookedInfo);
-
-                }else{
-                    Toast.makeText(HotelDetailActivity.this, "Error: No user logged in", Toast.LENGTH_SHORT).show();
-                }
+//                FirebaseUser user = mAuth.getCurrentUser();
+//                if(user!=null){
+//                    String LoggedUserEmail = user.getUid();
+//                    databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(LoggedUserEmail).child("bookedHotels");
+//                    String UserId=databaseReference.push().getKey();
+//                    Date selectedDate = new Date(selectedDates);
+//                    HotelBookedInfo hotelBookedInfo = new HotelBookedInfo(textViewHotelName.getText().toString(),textViewHotelAddress.getText().toString(),numberPickerRooms.getValue()
+//                            ,buttonDatePicker.getText().toString(),buttonDatePicker2.getText().toString(),ImageUrl);
+//                    databaseReference.child(UserId).setValue(hotelBookedInfo);
+//
+//                }else{
+//                    Toast.makeText(HotelDetailActivity.this, "Error: No user logged in", Toast.LENGTH_SHORT).show();
+//                }
 
             }
         });

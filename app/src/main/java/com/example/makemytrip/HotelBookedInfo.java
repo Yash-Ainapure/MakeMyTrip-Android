@@ -1,6 +1,8 @@
 package com.example.makemytrip;
 
-public class HotelBookedInfo {
+import java.io.Serializable;
+
+public class HotelBookedInfo implements Serializable {
     private String hotelName,hotelAddress;
     private int numberOfRooms;
     private String startingDate,imageUrl,endingDate;
