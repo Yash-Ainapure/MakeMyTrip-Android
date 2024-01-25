@@ -2,6 +2,7 @@ package com.example.makemytrip;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.ObjectAnimator;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -156,6 +157,23 @@ public class HotelDetailActivity extends AppCompatActivity {
 
             }
         });
+
+
+        buttonBookHotel.setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    // Button pressed, scale down
+                    scaleButton(buttonBookHotel, 0.95f);
+                    break;
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    // Button released or touch canceled, scale back to the original size
+                    scaleButton(buttonBookHotel, 1f);
+                    break;
+            }
+            return false;
+        });
+
     }
 
     private void showDatePickerDialog(Button buttonDatePickerx) {
@@ -180,6 +198,15 @@ public class HotelDetailActivity extends AppCompatActivity {
                 year, month, day
         );
         datePickerDialog.show();
+    }
+
+    private void scaleButton(Button button, float scale) {
+        ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(button, "scaleX", scale);
+        ObjectAnimator scaleDownY = ObjectAnimator.ofFloat(button, "scaleY", scale);
+        scaleDownX.setDuration(150);
+        scaleDownY.setDuration(150);
+        scaleDownX.start();
+        scaleDownY.start();
     }
 
 }

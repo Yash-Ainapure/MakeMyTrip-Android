@@ -9,9 +9,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,6 +51,7 @@ public class HotelPage extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,8 +100,32 @@ public class HotelPage extends AppCompatActivity {
                 performSearch();
             }
         });
+
+
+        searchBtn.setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    // Button pressed, scale down
+                    scaleButton(searchBtn, 0.95f);
+                    break;
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    // Button released or touch canceled, scale back to the original size
+                    scaleButton(searchBtn, 1f);
+                    break;
+            }
+            return false;
+        });
     }
 
+    private void scaleButton(Button button, float scale) {
+        ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(button, "scaleX", scale);
+        ObjectAnimator scaleDownY = ObjectAnimator.ofFloat(button, "scaleY", scale);
+        scaleDownX.setDuration(150);
+        scaleDownY.setDuration(150);
+        scaleDownX.start();
+        scaleDownY.start();
+    }
     private void loadData() {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override

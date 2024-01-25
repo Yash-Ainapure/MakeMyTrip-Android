@@ -2,6 +2,8 @@ package com.example.makemytrip;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
+import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -25,6 +28,7 @@ public class RegisterPage extends AppCompatActivity {
     Button register;
     DatabaseReference databaseReference;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +81,7 @@ public class RegisterPage extends AppCompatActivity {
             else if(!pass.equals(confirmpass)){
                 Toast.makeText(RegisterPage.this,"Password and Confirm Password are not same",Toast.LENGTH_SHORT).show();
             }
-            else{
+            else {
                 FirebaseAuth.getInstance().createUserWithEmailAndPassword(emailid,pass).addOnCompleteListener(RegisterPage.this, task -> {
                     if(!task.isSuccessful()){
                         Toast.makeText(RegisterPage.this,"SignUp Unsuccessful, Please Try Again",Toast.LENGTH_SHORT).show();
@@ -90,6 +94,7 @@ public class RegisterPage extends AppCompatActivity {
                         Toast.makeText(this, "registered successfully,now you can login with the credentials", Toast.LENGTH_SHORT).show();
                     }
                 });
+
             }
         });
 
@@ -123,6 +128,23 @@ public class RegisterPage extends AppCompatActivity {
                 startIndexPP, endIndexPP, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         // Set the modified text to the TextView
         tcTextView.setText(spannableStringBuilder);
+
+
+        // Button click effect
+        register.setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    // Button pressed, scale down
+                    scaleButton(register, 0.95f);
+                    break;
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    // Button released or touch canceled, scale back to the original size
+                    scaleButton(register, 1f);
+                    break;
+            }
+            return false;
+        });
     }
     private void saveAdditionalUserInfo(String userId, String firstName, String lastName, String phoneNumber, String email) {
 
@@ -135,5 +157,13 @@ public class RegisterPage extends AppCompatActivity {
 //        userRef.child("firstName").setValue(firstName);
 //        userRef.child("lastName").setValue(lastName);
 //        userRef.child("phoneNumber").setValue(phoneNumber);
+    }
+    private void scaleButton(Button button, float scale) {
+        ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(button, "scaleX", scale);
+        ObjectAnimator scaleDownY = ObjectAnimator.ofFloat(button, "scaleY", scale);
+        scaleDownX.setDuration(150);
+        scaleDownY.setDuration(150);
+        scaleDownX.start();
+        scaleDownY.start();
     }
 }
