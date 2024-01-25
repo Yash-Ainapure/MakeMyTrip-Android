@@ -3,6 +3,7 @@ package com.example.makemytrip;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,13 +34,14 @@ public class HotelDetailActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     DatabaseReference databaseReference;
     TextView textViewHotelName, textViewHotelAddress;
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hotel_detail);
 
         mAuth = FirebaseAuth.getInstance();
-
+        getSupportActionBar().setTitle("Hotel Details");
         // Retrieve hotel details from intent
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("hotel")) {

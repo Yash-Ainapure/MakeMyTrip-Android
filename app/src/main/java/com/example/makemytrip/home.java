@@ -73,7 +73,7 @@ public class home extends AppCompatActivity {
         drawerLayout.addDrawerListener(actionBarDrawerTogg1e);
         actionBarDrawerTogg1e.syncState();
        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        getSupportActionBar().setTitle("Home");
         View headerView = navigationView.getHeaderView(0);
        username=headerView.findViewById(R.id.username);
        //username.setText("yash patil");

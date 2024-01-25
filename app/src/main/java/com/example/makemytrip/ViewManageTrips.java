@@ -37,7 +37,7 @@ public class ViewManageTrips extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        getSupportActionBar().setTitle("View & Manage Trips");
         bookedHotels = new ArrayList<>();
         // Initialize the adapter with the list of booked hotels
         adapter = new BookedHotelCardAdapter(this, bookedHotels);

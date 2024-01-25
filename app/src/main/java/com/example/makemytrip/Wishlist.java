@@ -42,7 +42,7 @@ public class Wishlist extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wishlist);
-
+        getSupportActionBar().setTitle("Wishlist");
         // Initialize RecyclerView and Adapter
         recyclerView = findViewById(R.id.recyclerViewWishlist);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

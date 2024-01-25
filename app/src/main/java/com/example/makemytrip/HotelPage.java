@@ -58,7 +58,7 @@ public class HotelPage extends AppCompatActivity {
         setContentView(R.layout.activity_hotel_page);
 
         FirebaseApp.initializeApp(this);
-
+        getSupportActionBar().setTitle("Hotels");
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
