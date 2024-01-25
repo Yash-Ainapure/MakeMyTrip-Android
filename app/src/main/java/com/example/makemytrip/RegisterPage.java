@@ -3,9 +3,15 @@ package com.example.makemytrip;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -13,11 +19,15 @@ import com.google.firebase.auth.FirebaseAuth;
 public class RegisterPage extends AppCompatActivity {
 
     EditText email,password;
+    TextView loginpage;
     Button register;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_page);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
 
         email = findViewById(R.id.editTextEmail);
         password = findViewById(R.id.editTextPassword);
@@ -55,5 +65,35 @@ public class RegisterPage extends AppCompatActivity {
                 Toast.makeText(RegisterPage.this,"Error Occurred!",Toast.LENGTH_SHORT).show();
             }
         });
+        loginpage = findViewById(R.id.loginbtnreg);
+        loginpage.setOnClickListener(view -> {
+            Intent stm = new Intent(RegisterPage.this, MainActivity.class);
+            startActivity(stm);
+        });
+
+        // Set Terms & Conditions text with colored links
+        TextView tcTextView = findViewById(R.id.textView16);
+        String tcText = getString(R.string.TC); // Assuming TC is defined in strings.xml
+
+        // Create a SpannableStringBuilder to modify the text
+        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(tcText);
+
+        // Find the start and end indices of the terms "Terms & Conditions" and "Privacy Policy"
+        int startIndexTC = tcText.indexOf("Terms & Conditions");
+        int endIndexTC = startIndexTC + "Terms & Conditions".length();
+        int startIndexPP = tcText.indexOf("Privacy Policy");
+        int endIndexPP = startIndexPP + "Privacy Policy".length();
+
+        // Apply color to the specific parts of the text
+        spannableStringBuilder.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.calbtn)),
+                startIndexTC, endIndexTC, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableStringBuilder.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.calbtn)),
+                startIndexPP, endIndexPP, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableStringBuilder.setSpan(new StyleSpan(Typeface.BOLD),
+                startIndexTC, endIndexTC, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableStringBuilder.setSpan(new StyleSpan(Typeface.BOLD),
+                startIndexPP, endIndexPP, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        // Set the modified text to the TextView
+        tcTextView.setText(spannableStringBuilder);
     }
 }

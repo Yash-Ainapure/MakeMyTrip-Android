@@ -20,13 +20,17 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button loginbtn,registerbtn;
+    Button loginbtn;
+    TextView registerbtn;
     EditText usernameEdt,passwordEdt;
     FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
 
         //initialise firebase
         FirebaseApp.initializeApp(this);
@@ -35,8 +39,7 @@ public class MainActivity extends AppCompatActivity {
         usernameEdt=(EditText) findViewById(R.id.usernameedt);
         passwordEdt=(EditText) findViewById(R.id.passwordedt);
         loginbtn=(Button) findViewById(R.id.loginbtn);
-        registerbtn=(Button) findViewById(R.id.registerbtn);
-
+        registerbtn= findViewById(R.id.registerbtnlogin);
         loginbtn.setOnClickListener(view -> {
             // Get the entered username and password
             String username = usernameEdt.getText().toString();
