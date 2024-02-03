@@ -30,14 +30,19 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class home extends AppCompatActivity {
     DrawerLayout drawerLayout;
@@ -47,7 +52,7 @@ public class home extends AppCompatActivity {
     LinearLayout hotel_tab;
     TextView username;
     private DatabaseReference databaseReference;
-    private FirebaseAuth mAuth;
+    String UserId;
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (actionBarDrawerTogg1e.onOptionsItemSelected(item)) {
@@ -77,10 +82,13 @@ public class home extends AppCompatActivity {
             super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        UserId=FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+
         hotel_tab = findViewById(R.id.hotel_tab);
 
-          drawerLayout = findViewById(R.id.drawer_layout);
-       navigationView = findViewById(R.id.navigationView);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.navigationView);
         actionBarDrawerTogg1e = new ActionBarDrawerToggle(this , drawerLayout , R.string.menu_open, R.string.menu_close);
         drawerLayout.addDrawerListener(actionBarDrawerTogg1e);
         actionBarDrawerTogg1e.syncState();
@@ -89,16 +97,32 @@ public class home extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
        username=headerView.findViewById(R.id.username);
 
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-        username.setText(user.getEmail());
+
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(UserId).child("userInfo");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    UserInfo info = dataSnapshot.getValue(UserInfo.class);
+                    if (info != null) {
+                        username.setText(info.getFirstName());
+                    }else {
+                        Toast.makeText(home.this, "null information", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle error
+                Toast.makeText(home.this, "Database Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
 
         //set profile image
         ImageView profileImage=headerView.findViewById(R.id.imageView);
-        StorageReference storageReference;
-        FirebaseAuth mAuth2 = FirebaseAuth.getInstance();
-        String Uid=mAuth2.getCurrentUser().getUid();
-        storageReference= FirebaseStorage.getInstance().getReference("UserProfileImages/"+Uid);
+        StorageReference storageReference=FirebaseStorage.getInstance().getReference("UserProfileImages/"+UserId);
         try {
             File localfile= File.createTempFile("tempfile",".jpg");
             storageReference.getFile(localfile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
@@ -140,8 +164,7 @@ public class home extends AppCompatActivity {
                 } else if (itemId == R.id.country) {
                     Log.i("MENU_DRAWER_TAG", "Country is clicked");
                 } else if (itemId == R.id.logout) {
-                    mAuth=FirebaseAuth.getInstance();
-                    mAuth.signOut();
+                    FirebaseAuth.getInstance().signOut();
                     startActivity(new Intent(home.this,MainActivity.class));
                     Toast.makeText(home.this, "user logged out", Toast.LENGTH_SHORT).show();
                 }
