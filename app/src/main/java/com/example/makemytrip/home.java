@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.DialogInterface;
@@ -50,7 +51,7 @@ public class home extends AppCompatActivity {
     Toolbar toolbar;
     ActionBarDrawerToggle actionBarDrawerTogg1e;
     LinearLayout hotel_tab;
-    TextView username;
+    TextView username,welcometext,header_phone;
     private DatabaseReference databaseReference;
     String UserId;
     @Override
@@ -77,6 +78,7 @@ public class home extends AppCompatActivity {
                 .setNegativeButton(android.R.string.no, null)
                 .show();
     }
+    @SuppressLint("SuspiciousIndentation")
     @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -92,31 +94,30 @@ public class home extends AppCompatActivity {
         actionBarDrawerTogg1e = new ActionBarDrawerToggle(this , drawerLayout , R.string.menu_open, R.string.menu_close);
         drawerLayout.addDrawerListener(actionBarDrawerTogg1e);
         actionBarDrawerTogg1e.syncState();
-       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Home");
         View headerView = navigationView.getHeaderView(0);
-       username=headerView.findViewById(R.id.username);
+        username=headerView.findViewById(R.id.username);
+        header_phone=headerView.findViewById(R.id.header_phone);
+        welcometext=findViewById(R.id.welcometext);
 
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(UserId).child("userInfo");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    UserInfo info = dataSnapshot.getValue(UserInfo.class);
-                    if (info != null) {
-                        username.setText(info.getFirstName());
-                    }else {
-                        Toast.makeText(home.this, "null information", Toast.LENGTH_SHORT).show();
-                    }
+           databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    UserInfo userInfo=snapshot.getValue(UserInfo.class);
+                    username.setText(userInfo.getFirstName()+" "+userInfo.getLastName());
+                    welcometext.setText("Welcome, "+userInfo.getFirstName());
+                    header_phone.setText(userInfo.getPhoneNumber());
                 }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Handle error
-                Toast.makeText(home.this, "Database Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(home.this, "failed to load username", Toast.LENGTH_SHORT).show();
+                }
+            });
+
 
 
 

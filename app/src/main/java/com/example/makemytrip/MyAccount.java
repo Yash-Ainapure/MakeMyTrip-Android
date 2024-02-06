@@ -22,6 +22,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -31,16 +36,22 @@ import java.io.IOException;
 
 public class MyAccount extends AppCompatActivity {
 
-    TextView name,phone;
+    TextView acc_phone,acc_name,acc_email;
     ImageView profileImage;
-
+    String UserId;
+    private DatabaseReference databaseReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_account);
 
-        name=findViewById(R.id.textView3);
-        phone=findViewById(R.id.textView7);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+        UserId=FirebaseAuth.getInstance().getCurrentUser().getUid();
+        acc_email = findViewById(R.id.acc_email);
+        acc_phone = findViewById(R.id.acc_phone);
+        acc_name = findViewById(R.id.acc_name);
         profileImage=findViewById(R.id.profileImage);
 
         profileImage.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +75,21 @@ public class MyAccount extends AppCompatActivity {
                 alertDialog.show();
             }
         });
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(UserId).child("userInfo");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserInfo userInfo=snapshot.getValue(UserInfo.class);
+                acc_name.setText(userInfo.getFirstName()+" "+userInfo.getLastName());
+                acc_email.setText(userInfo.getEmail());
+                acc_phone.setText(userInfo.getPhoneNumber());
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(MyAccount.this, "failed to load user data", Toast.LENGTH_SHORT).show();
+            }
+        });
         StorageReference storageReference;
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();

@@ -1,16 +1,17 @@
 package com.example.makemytrip;
 
 public class UserInfo {
-    String userId,firstName,lastName, phoneNumber, email;
+    public String userId,firstName,lastName, phoneNumber, email;
 
     public UserInfo() {
+        //Default Constructor
     }
-    public UserInfo(String userId, String firstName, String lastName, String phoneNumber, String email) {
-        this.userId = userId;
+    public UserInfo(String userId, String firstName, String lastName, String phoneNumber,String email ) {
+        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
-        this.email = email;
+        this.userId = userId;
     }
 
     public String getUserId() {
