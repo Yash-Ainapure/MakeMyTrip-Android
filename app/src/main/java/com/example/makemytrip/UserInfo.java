@@ -1,12 +1,15 @@
 package com.example.makemytrip;
 
+import android.util.Log;
+
 public class UserInfo {
     public String userId,firstName,lastName, phoneNumber, email;
 
     public UserInfo() {
         //Default Constructor
     }
-    public UserInfo(String userId, String firstName, String lastName, String phoneNumber,String email ) {
+    public UserInfo(String email, String firstName, String lastName, String phoneNumber,String userId ) {
+        Log.d("UserInfo", "UserInfo: " + userId + " " + firstName + " " + lastName + " " + phoneNumber + " " + email);
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;

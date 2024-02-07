@@ -88,7 +88,7 @@ public class WishlistCardAdapter extends RecyclerView.Adapter<WishlistCardAdapte
                         String LoggedUserId = user.getUid();
                         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(LoggedUserId).child("hotelsWishlist");
                         String UserId=databaseReference.push().getKey();
-                        Hotel newHotel=new Hotel(hotel.getId(),hotel.getName(),hotel.getAddress(),hotel.getImageUrl(),hotel.isLiked(),hotel.getPrice(), hotel.getOtherImages());
+                        Hotel newHotel=new Hotel(hotel.getId(),hotel.getName(),hotel.getAddress(),hotel.getImageUrl(),hotel.isLiked(),hotel.getPrice(), hotel.getOtherImages(),hotel.getRating());
                         databaseReference.child(UserId).setValue(newHotel);
                     }
                     else{
@@ -189,6 +189,8 @@ public class WishlistCardAdapter extends RecyclerView.Adapter<WishlistCardAdapte
         private ToggleButton likeButton;
         private TextView hotelPrice;
 
+        private TextView hotelRating;
+
         public WishlistViewHolder(@NonNull View itemView) {
             super(itemView);
             hotelImage = itemView.findViewById(R.id.imageViewHotel);
@@ -196,6 +198,7 @@ public class WishlistCardAdapter extends RecyclerView.Adapter<WishlistCardAdapte
             hotelAddress = itemView.findViewById(R.id.textViewHotelAddress);
             likeButton = itemView.findViewById(R.id.likeButton);
             hotelPrice=itemView.findViewById(R.id.hotelPrice);
+            hotelRating=itemView.findViewById(R.id.hotelRating);
         }
 
         public void bindData(Hotel hotel) {
@@ -204,6 +207,7 @@ public class WishlistCardAdapter extends RecyclerView.Adapter<WishlistCardAdapte
             hotelAddress.setText(hotel.getAddress());
 
             hotelPrice.setText(String.valueOf(hotel.getPrice()));
+            hotelRating.setText(String.valueOf(hotel.getRating()));
 
             // Load image using a library like Picasso or Glide
             // Example using Picasso:

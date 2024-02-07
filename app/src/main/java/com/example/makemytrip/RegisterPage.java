@@ -149,7 +149,7 @@ public class RegisterPage extends AppCompatActivity {
     private void saveAdditionalUserInfo(String userId, String firstName, String lastName, String phoneNumber, String email) {
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("userInfo");
-        UserInfo userInfo = new UserInfo(userId,firstName,lastName,phoneNumber,email);
+        UserInfo userInfo = new UserInfo(email,firstName,lastName,phoneNumber,userId);
         databaseReference.setValue(userInfo);
 
 

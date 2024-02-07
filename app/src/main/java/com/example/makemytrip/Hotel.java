@@ -11,6 +11,7 @@ public class Hotel implements Parcelable {
     private String name;
     private String address;
     private String imageUrl;
+    private Float rating;
     private boolean isLiked;
     private int price;
     private List<String> otherImages;
@@ -37,7 +38,7 @@ public class Hotel implements Parcelable {
     }
 
     // Parameterized constructor
-    public Hotel(String id, String name, String address, String imageUrl, boolean isLiked,int price,List<String> otherImages) {
+    public Hotel(String id, String name, String address, String imageUrl, boolean isLiked,int price,List<String> otherImages,float rating) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -45,6 +46,7 @@ public class Hotel implements Parcelable {
         this.isLiked = isLiked;
         this.price=price;
         this.otherImages=otherImages;
+        this.rating=rating;
     }
 
     // Parcelable constructor
@@ -57,6 +59,7 @@ public class Hotel implements Parcelable {
         price=in.readInt();
         otherImages = new ArrayList<>();
         in.readList(otherImages, String.class.getClassLoader());
+        rating=in.readFloat();
     }
 
     // Parcelable creator
@@ -79,6 +82,14 @@ public class Hotel implements Parcelable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Float getRating() {
+        return rating;
+    }
+
+    public void setRating(Float rating) {
+        this.rating = rating;
     }
 
     // Getter and setter for name
@@ -135,6 +146,7 @@ public class Hotel implements Parcelable {
         dest.writeByte((byte) (isLiked ? 1 : 0));
         dest.writeInt(price);
         dest.writeList(otherImages);
+        dest.writeFloat(rating);
     }
 }
 

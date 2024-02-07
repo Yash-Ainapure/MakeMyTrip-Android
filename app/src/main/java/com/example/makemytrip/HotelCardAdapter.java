@@ -89,7 +89,7 @@ public class HotelCardAdapter extends RecyclerView.Adapter<HotelCardAdapter.Hote
                         String LoggedUserId = user.getUid();
                         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(LoggedUserId).child("hotelsWishlist");
                         String UserId=databaseReference.push().getKey();
-                        Hotel newHotel=new Hotel(hotel.getId(),hotel.getName(),hotel.getAddress(),hotel.getImageUrl(),hotel.isLiked(),hotel.getPrice(), hotel.getOtherImages());
+                        Hotel newHotel=new Hotel(hotel.getId(),hotel.getName(),hotel.getAddress(),hotel.getImageUrl(),hotel.isLiked(),hotel.getPrice(), hotel.getOtherImages(),hotel.getRating());
                         databaseReference.child(UserId).setValue(newHotel);
                     }
                     else{
@@ -138,6 +138,7 @@ public class HotelCardAdapter extends RecyclerView.Adapter<HotelCardAdapter.Hote
                 Intent intent = new Intent(v.getContext(), HotelDetailActivity.class);
                 intent.putExtra("hotel", hotel);
                 v.getContext().startActivity(intent);
+
             }
         });
     }
@@ -154,6 +155,9 @@ public class HotelCardAdapter extends RecyclerView.Adapter<HotelCardAdapter.Hote
         private ToggleButton likeButton;
         private TextView hotelPrice;
 
+        private TextView hotelRating;
+
+
         public HotelViewHolder(@NonNull View itemView) {
             super(itemView);
             hotelImage = itemView.findViewById(R.id.imageViewHotel);
@@ -161,6 +165,7 @@ public class HotelCardAdapter extends RecyclerView.Adapter<HotelCardAdapter.Hote
             hotelAddress = itemView.findViewById(R.id.textViewHotelAddress);
             likeButton = itemView.findViewById(R.id.likeButton);
             hotelPrice=itemView.findViewById(R.id.hotelPrice);
+            hotelRating=itemView.findViewById(R.id.hotelRating);
         }
 
         public void bindData(Hotel hotel) {
@@ -170,7 +175,7 @@ public class HotelCardAdapter extends RecyclerView.Adapter<HotelCardAdapter.Hote
 
             //here hotel.getPrice() returns int which then is converted to string format
             hotelPrice.setText(String.valueOf(hotel.getPrice()));
-
+            hotelRating.setText(String.valueOf(hotel.getRating()));
             // Example using Picasso:
              Picasso.get().load(hotel.getImageUrl()).into(hotelImage);
         }

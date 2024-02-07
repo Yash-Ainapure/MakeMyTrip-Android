@@ -16,9 +16,11 @@
 package com.example.makemytrip;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,7 +39,17 @@ import java.util.List;
 public class Wishlist extends AppCompatActivity {
     private RecyclerView recyclerView;
     private WishlistCardAdapter wishlistAdapter;
-
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            // Handle the back button
+            case android.R.id.home:
+                onBackPressed(); // This will call the default back button behavior
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +60,11 @@ public class Wishlist extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         wishlistAdapter = new WishlistCardAdapter(new ArrayList<>());
         recyclerView.setAdapter(wishlistAdapter);
-
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            // Set your desired icon for the navigation drawer toggle
+        }
         // Retrieve and display liked hotels
         displayLikedHotels();
     }

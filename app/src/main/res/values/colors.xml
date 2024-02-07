@@ -10,4 +10,5 @@
     <color name="gray">#E1C6C6C6</color>
     <color name="calbtn">#2196F3</color>
     <color name="transparent">#00000000</color>
+    <color name="subtext">#202020</color>
 </resources>

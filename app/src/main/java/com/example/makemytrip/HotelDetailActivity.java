@@ -1,5 +1,7 @@
 package com.example.makemytrip;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.ObjectAnimator;
@@ -7,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -34,12 +37,27 @@ public class HotelDetailActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     DatabaseReference databaseReference;
     TextView textViewHotelName, textViewHotelAddress;
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            // Handle the back button
+            case android.R.id.home:
+                onBackPressed(); // This will call the default back button behavior
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hotel_detail);
-
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            // Set your desired icon for the navigation drawer toggle
+        }
         mAuth = FirebaseAuth.getInstance();
         getSupportActionBar().setTitle("Hotel Details");
         // Retrieve hotel details from intent
@@ -61,6 +79,7 @@ public class HotelDetailActivity extends AppCompatActivity {
             }
 
 
+            textViewHotelName.setText(hotel.getName());
             textViewHotelName.setText(hotel.getName());
             textViewHotelAddress.setText(hotel.getAddress());
 
@@ -125,7 +144,7 @@ public class HotelDetailActivity extends AppCompatActivity {
                     return;
                 }
 
-                Toast.makeText(HotelDetailActivity.this, "payment gateway", Toast.LENGTH_SHORT).show();
+
                 Intent intent = getIntent();
                 String ImageUrl="demo2";
                 if (intent != null && intent.hasExtra("hotel")) {
@@ -137,6 +156,7 @@ public class HotelDetailActivity extends AppCompatActivity {
                     intent1.putExtra("hotel",hotel);
                     intent1.putExtra("hotelBookedInfo",hotelBookedInfo);
                     startActivity(intent1);
+
                 }
 
                 //save this hotel booked details under logged in user in firebase realtime database
