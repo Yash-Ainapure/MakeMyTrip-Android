@@ -190,6 +190,7 @@ public class WishlistCardAdapter extends RecyclerView.Adapter<WishlistCardAdapte
         private TextView hotelPrice;
 
         private TextView hotelRating;
+        private TextView ratinginwords;
 
         public WishlistViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -199,6 +200,7 @@ public class WishlistCardAdapter extends RecyclerView.Adapter<WishlistCardAdapte
             likeButton = itemView.findViewById(R.id.likeButton);
             hotelPrice=itemView.findViewById(R.id.hotelPrice);
             hotelRating=itemView.findViewById(R.id.hotelRating);
+            ratinginwords = itemView.findViewById(R.id.ratinginwords);
         }
 
         public void bindData(Hotel hotel) {
@@ -208,7 +210,7 @@ public class WishlistCardAdapter extends RecyclerView.Adapter<WishlistCardAdapte
 
             hotelPrice.setText(String.valueOf(hotel.getPrice()));
             hotelRating.setText(String.valueOf(hotel.getRating()));
-
+            ratinginwords.setText(hotel.setRatinginwords());
             // Load image using a library like Picasso or Glide
             // Example using Picasso:
              Picasso.get().load(hotel.getImageUrl()).into(hotelImage);

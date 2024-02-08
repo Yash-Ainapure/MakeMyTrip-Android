@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hotel implements Parcelable {
+    private float totalRating;
+    private int numRatings;
+    private float averageRating;
     private String id;
     private String name;
     private String address;
@@ -48,6 +51,11 @@ public class Hotel implements Parcelable {
         this.otherImages=otherImages;
         this.rating=rating;
     }
+    public Hotel( float averageRating , int numRatings,float totalRating ) {
+        this.averageRating = averageRating;
+        this.numRatings = numRatings;
+        this.totalRating =totalRating;
+    }
 
     // Parcelable constructor
     protected Hotel(Parcel in) {
@@ -84,12 +92,59 @@ public class Hotel implements Parcelable {
         this.id = id;
     }
 
+    public float getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(float averageRating) {
+        this.averageRating = averageRating;
+    }
+
+    public float getTotalRating() {
+        return totalRating;
+    }
+
+
+    public void setTotalRating(Float totalRating) {
+        this.totalRating = totalRating;
+    }
+
+    public int getNumRatings() {
+
+        return numRatings;
+    }
+    public void setNumRatings(int numRatings) {
+
+        this.numRatings=numRatings;
+    }
+
     public Float getRating() {
         return rating;
     }
 
     public void setRating(Float rating) {
         this.rating = rating;
+    }
+
+
+    public String setRatinginwords()
+    {
+
+        if (rating >= 4.5) {
+            return "Excellent";
+        } else if (rating >= 4.0) {
+            return "Very Good";
+        } else if (rating >= 3.5) {
+            return "Good";
+        } else if (rating >= 3.0) {
+            return "Average";
+        } else if (rating >= 2.5) {
+            return "Fair";
+        } else if (rating >= 2.0) {
+            return "Poor";
+        } else {
+            return "Very Poor";
+        }
     }
 
     // Getter and setter for name

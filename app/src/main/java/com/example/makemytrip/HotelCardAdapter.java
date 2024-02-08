@@ -157,6 +157,7 @@ public class HotelCardAdapter extends RecyclerView.Adapter<HotelCardAdapter.Hote
 
         private TextView hotelRating;
 
+        private TextView ratinginwords;
 
         public HotelViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -166,6 +167,8 @@ public class HotelCardAdapter extends RecyclerView.Adapter<HotelCardAdapter.Hote
             likeButton = itemView.findViewById(R.id.likeButton);
             hotelPrice=itemView.findViewById(R.id.hotelPrice);
             hotelRating=itemView.findViewById(R.id.hotelRating);
+            ratinginwords = itemView.findViewById(R.id.ratinginwords);
+
         }
 
         public void bindData(Hotel hotel) {
@@ -176,6 +179,7 @@ public class HotelCardAdapter extends RecyclerView.Adapter<HotelCardAdapter.Hote
             //here hotel.getPrice() returns int which then is converted to string format
             hotelPrice.setText(String.valueOf(hotel.getPrice()));
             hotelRating.setText(String.valueOf(hotel.getRating()));
+            ratinginwords.setText(hotel.setRatinginwords());
             // Example using Picasso:
              Picasso.get().load(hotel.getImageUrl()).into(hotelImage);
         }

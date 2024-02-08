@@ -37,6 +37,7 @@ public class HotelDetailActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     DatabaseReference databaseReference;
     TextView textViewHotelName, textViewHotelAddress;
+    private TextView ratinginwords , hotelRating;
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -70,7 +71,8 @@ public class HotelDetailActivity extends AppCompatActivity {
             TextView textViewHotelName = findViewById(R.id.textViewHotelName);
             TextView textViewHotelAddress = findViewById(R.id.textViewHotelAddress);
             ImageView imageViewHotel = findViewById(R.id.imageViewHotel);
-
+            hotelRating=findViewById(R.id.hotelRating);
+            ratinginwords = findViewById(R.id.ratinginwords);
             ImageView otherImage1=findViewById(R.id.otherImage1);
             ImageView otherImage2=findViewById(R.id.otherImage2);
             if (hotel.getOtherImages() != null && hotel.getOtherImages().size() > 0) {
@@ -82,8 +84,8 @@ public class HotelDetailActivity extends AppCompatActivity {
             textViewHotelName.setText(hotel.getName());
             textViewHotelName.setText(hotel.getName());
             textViewHotelAddress.setText(hotel.getAddress());
-
-
+            hotelRating.setText(String.valueOf(hotel.getRating()));
+            ratinginwords.setText(hotel.setRatinginwords());
             Picasso.get().load(hotel.getImageUrl()).into(imageViewHotel);
 
         } else {
