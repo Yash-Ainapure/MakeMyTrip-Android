@@ -129,21 +129,25 @@ public class Hotel implements Parcelable {
 
     public String setRatinginwords()
     {
+        if (rating != null) {
 
-        if (rating >= 4.5) {
-            return "Excellent";
-        } else if (rating >= 4.0) {
-            return "Very Good";
-        } else if (rating >= 3.5) {
-            return "Good";
-        } else if (rating >= 3.0) {
-            return "Average";
-        } else if (rating >= 2.5) {
-            return "Fair";
-        } else if (rating >= 2.0) {
-            return "Poor";
-        } else {
-            return "Very Poor";
+            if (rating >= 4.5) {
+                return "Excellent";
+            } else if (rating >= 4.0) {
+                return "Very Good";
+            } else if (rating >= 3.5) {
+                return "Good";
+            } else if (rating >= 3.0) {
+                return "Average";
+            } else if (rating >= 2.5) {
+                return "Fair";
+            } else if (rating >= 2.0) {
+                return "Poor";
+            } else {
+                return "Very Poor";
+            }
+        }else{
+            return "Not Rated";
         }
     }
 
