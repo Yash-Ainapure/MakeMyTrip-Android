@@ -116,40 +116,14 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/buttonDatePicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/borderbtn"
-            android:drawableLeft="@drawable/calendar_icon"
-            android:drawablePadding="10dp"
-            android:padding="10dp"
-            android:text="Choose starting date"
-            android:textColor="@color/calbtn"
-            android:textStyle="bold"
-
-            />
-
-        <Button
-            android:id="@+id/buttonDatePicker2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/borderbtn"
-            android:drawableLeft="@drawable/calendar_icon"
-            android:drawablePadding="10dp"
-            android:padding="10dp"
-            android:text="Choose ending date"
-            android:textColor="@color/calbtn"
-            android:textStyle="bold"
-
-            />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/hotel_card_bg"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="10dp"
         android:orientation="vertical">
         <!-- Date Range Selector -->
 
@@ -175,13 +149,52 @@
         <!--            android:layout_marginTop="8dp" />-->
 
         <!-- Number of Rooms Selector -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonDatePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/borderbtn"
+                android:drawableLeft="@drawable/calendar_icon"
+                android:drawablePadding="10dp"
+                android:padding="10dp"
+                android:text="Starting Date"
+
+                android:textColor="@color/calbtn"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/buttonDatePicker2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/borderbtn"
+                android:drawableLeft="@drawable/calendar_icon"
+                android:drawablePadding="10dp"
+                android:padding="10dp"
+                android:text="Ending Date"
+
+                android:textColor="@color/calbtn"
+                android:textStyle="bold" />
+        </LinearLayout>
+
         <TextView
             android:id="@+id/textViewSelectRooms"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Select Number of Rooms"
-            android:textSize="16sp" />
+            android:textColor="@color/black"
+            android:textSize="16dp" />
 
         <!--        <NumberPicker-->
         <!--            android:id="@+id/numberPickerRooms"-->
@@ -190,10 +203,11 @@
         <!--            android:layout_marginTop="8dp" />-->
         <NumberPicker
             android:id="@+id/numberPickerRooms"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/transparent"
             android:layout_marginTop="8dp"
-            android:background="@drawable/np_number_picker_default" />
+            />
 
         <Button
             android:id="@+id/buttonBookHotel"

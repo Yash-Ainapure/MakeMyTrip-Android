@@ -136,7 +136,7 @@ public class home extends AppCompatActivity {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(home.this, "failed to load profile image", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(home.this, "failed to load profile image", Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (IOException e) {
