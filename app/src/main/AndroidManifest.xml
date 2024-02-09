@@ -13,6 +13,12 @@
         android:theme="@style/Theme.MakeMyTrip"
         tools:targetApi="31">
         <activity
+            android:name=".FlightDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FlightPage"
+            android:exported="false" />
+        <activity
             android:name=".ChangeImage"
             android:exported="false" />
         <activity

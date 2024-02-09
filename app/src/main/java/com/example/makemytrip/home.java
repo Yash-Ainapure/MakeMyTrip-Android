@@ -50,7 +50,7 @@ public class home extends AppCompatActivity {
     NavigationView navigationView;
     Toolbar toolbar;
     ActionBarDrawerToggle actionBarDrawerTogg1e;
-    LinearLayout hotel_tab;
+    LinearLayout hotel_tab,flight_tab;
     TextView username,welcometext,header_phone;
     private DatabaseReference databaseReference;
     String UserId;
@@ -88,6 +88,7 @@ public class home extends AppCompatActivity {
 
 
         hotel_tab = findViewById(R.id.hotel_tab);
+        flight_tab = findViewById(R.id.flight_tab);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigationView);
@@ -180,6 +181,13 @@ public class home extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i=new Intent(home.this, HotelPage.class);
+                startActivity(i);
+            }
+        });
+        flight_tab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(home.this, FlightPage.class);
                 startActivity(i);
             }
         });

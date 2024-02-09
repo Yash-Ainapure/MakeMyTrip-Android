@@ -1,0 +1,101 @@
+<!-- res/layout/flight_card_layout.xml -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Flight Name and Company Logo -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Flight Name -->
+        <TextView
+            android:id="@+id/textViewFlightName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="Flight Name" />
+
+        <!-- Company Logo (Replace with an ImageView) -->
+        <ImageView
+            android:id="@+id/imageViewCompanyLogo"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/calendar" />
+    </RelativeLayout>
+
+    <!-- Departure Information -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textViewDepartureCity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Departure City"
+            android:textStyle="italic"/>
+
+        <TextView
+            android:id="@+id/textViewDepartureTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Departure Time"
+            android:textStyle="italic"/>
+    </LinearLayout>
+
+    <!-- Destination Information -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textViewDestinationCity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Destination City"
+            android:textStyle="italic"/>
+
+        <TextView
+            android:id="@+id/textViewDestinationTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Destination Time"
+            android:textStyle="italic"/>
+    </LinearLayout>
+
+    <!-- Price per Person -->
+    <TextView
+        android:id="@+id/textViewPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="Price per Person: $100.00" />
+
+    <!-- Like Button (Toggle) -->
+    <ToggleButton
+        android:id="@+id/likeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOn=""
+        android:textOff=""
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:button="@drawable/ic_heart_unselected" />
+
+</LinearLayout>
