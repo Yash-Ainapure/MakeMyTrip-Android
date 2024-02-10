@@ -176,17 +176,19 @@
             android:id="@+id/one"
             style="@style/UPIButtonStyle"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:text="1"
 
+            app:layout_column="0"
             app:layout_columnWeight="1"
+            app:layout_row="0"
             app:layout_rowWeight="1" />
 
         <Button
             android:id="@+id/two"
             style="@style/UPIButtonStyle"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:text="2"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1" />
@@ -195,7 +197,7 @@
             android:id="@+id/three"
             style="@style/UPIButtonStyle"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:text="3"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1" />
@@ -204,7 +206,7 @@
             android:id="@+id/four"
             style="@style/UPIButtonStyle"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:text="4"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1" />
@@ -213,7 +215,7 @@
             android:id="@+id/five"
             style="@style/UPIButtonStyle"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:text="5"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1" />
@@ -222,7 +224,7 @@
             android:id="@+id/six"
             style="@style/UPIButtonStyle"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:text="6"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1" />
@@ -231,7 +233,7 @@
             android:id="@+id/seven"
             style="@style/UPIButtonStyle"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:text="7"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1" />
@@ -240,7 +242,7 @@
             android:id="@+id/eight"
             style="@style/UPIButtonStyle"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:text="8"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1" />
@@ -249,7 +251,7 @@
             android:id="@+id/nine"
             style="@style/UPIButtonStyle"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:text="9"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1" />
@@ -258,7 +260,7 @@
             android:id="@+id/clrbtn"
 
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/custom_dialbtn_bg"
             android:elevation="10dp"
             app:layout_columnWeight="1"
@@ -269,7 +271,7 @@
             android:id="@+id/zero"
             style="@style/UPIButtonStyle"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:text="0"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1" />
@@ -281,7 +283,7 @@
             android:id="@+id/pay"
             style="@style/UPIButtonStyle"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:text="Pay"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1" />

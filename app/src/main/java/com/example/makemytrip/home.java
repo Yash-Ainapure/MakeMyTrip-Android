@@ -48,6 +48,7 @@ import java.util.List;
 public class home extends AppCompatActivity {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
+    ImageView profileImage;
     Toolbar toolbar;
     ActionBarDrawerToggle actionBarDrawerTogg1e;
     LinearLayout hotel_tab,flight_tab;
@@ -101,14 +102,14 @@ public class home extends AppCompatActivity {
         username=headerView.findViewById(R.id.username);
         header_phone=headerView.findViewById(R.id.header_phone);
         welcometext=findViewById(R.id.welcometext);
-
+        profileImage=headerView.findViewById(R.id.imageView);
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(UserId).child("userInfo");
            databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     UserInfo userInfo=snapshot.getValue(UserInfo.class);
-                    username.setText(userInfo.getFirstName()+" "+userInfo.getLastName());
+                    username.setText("Hi, " + userInfo.getFirstName()+" "+userInfo.getLastName());
                     welcometext.setText("Welcome, "+userInfo.getFirstName());
                     header_phone.setText(userInfo.getPhoneNumber());
                 }
@@ -123,7 +124,6 @@ public class home extends AppCompatActivity {
 
 
         //set profile image
-        ImageView profileImage=headerView.findViewById(R.id.imageView);
         StorageReference storageReference=FirebaseStorage.getInstance().getReference("UserProfileImages/"+UserId);
         try {
             File localfile= File.createTempFile("tempfile",".jpg");
@@ -194,6 +194,34 @@ public class home extends AppCompatActivity {
 
     }
 
+    private void loadProfileImage() {
+
+        StorageReference storageReference=FirebaseStorage.getInstance().getReference("UserProfileImages/"+UserId);
+        try {
+            File localfile= File.createTempFile("tempfile",".jpg");
+            storageReference.getFile(localfile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    DisplayMetrics dm=new DisplayMetrics();
+                    Bitmap bitmap= BitmapFactory.decodeFile(localfile.getAbsolutePath());
+                    profileImage.setImageBitmap(bitmap);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    //Toast.makeText(home.this, "failed to load profile image", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Call the method to load profile image when the activity resumes
+        loadProfileImage();
+    }
 
 
 }

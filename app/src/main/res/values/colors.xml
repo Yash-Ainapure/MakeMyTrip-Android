@@ -8,7 +8,8 @@
     <color name="hotel_search_bg">#C8E1E1E1</color>
     <color name="hotel_search_border">#BDBDBD</color>
     <color name="gray">#E1C6C6C6</color>
-    <color name="calbtn">#2196F3</color>
+    <color name="calbtn">#0f93fe</color>
     <color name="transparent">#00000000</color>
     <color name="subtext">#202020</color>
+    <color name="account_title">#007359</color>
 </resources>

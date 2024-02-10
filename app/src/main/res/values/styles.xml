@@ -11,10 +11,17 @@
 
     <style name="UPIButtonStyle">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@android:color/black</item>
         <item name="android:background">@drawable/custom_dialbtn_bg</item>
+    </style>
+
+    <style name="account_title">
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/account_title</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginVertical">4dp</item>
     </style>
 
 </resources>

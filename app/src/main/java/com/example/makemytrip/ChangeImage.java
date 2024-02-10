@@ -1,8 +1,12 @@
 package com.example.makemytrip;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -10,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -17,9 +22,13 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import java.io.File;
+import java.io.IOException;
 
 public class ChangeImage extends AppCompatActivity {
 
@@ -31,9 +40,26 @@ public class ChangeImage extends AppCompatActivity {
     FirebaseAuth mAuth;
     DatabaseReference databaseReference;
     @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            // Handle the back button
+            case android.R.id.home:
+                onBackPressed(); // This will call the default back button behavior
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_image);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            // Set your desired icon for the navigation drawer toggle
+        }
+        getSupportActionBar().setTitle("Change Profile Image");
         b1=(Button) findViewById(R.id.select);
         b2=(Button) findViewById(R.id.upload);
         iv=(ImageView) findViewById(R.id.imageView3);
@@ -71,6 +97,28 @@ public class ChangeImage extends AppCompatActivity {
                         if(pd.isShowing()){
                             pd.dismiss();
                         }
+                        //set profile image
+                        ImageView profileImage=findViewById(R.id.imageView3);
+                        StorageReference storageReference=FirebaseStorage.getInstance().getReference("UserProfileImages/"+UserId);
+                        try {
+                            File localfile= File.createTempFile("tempfile",".jpg");
+                            storageReference.getFile(localfile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                    DisplayMetrics dm=new DisplayMetrics();
+                                    Bitmap bitmap= BitmapFactory.decodeFile(localfile.getAbsolutePath());
+                                    profileImage.setImageBitmap(bitmap);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    //Toast.makeText(home.this, "failed to load profile image", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
