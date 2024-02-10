@@ -119,6 +119,11 @@ public class Hotel implements Parcelable {
     }
 
     public Float getRating() {
+
+        if (rating == null) {
+            rating = 0.0f;
+        }
+
         return rating;
     }
 
@@ -129,6 +134,8 @@ public class Hotel implements Parcelable {
 
     public String setRatinginwords()
     {
+
+
         if (rating != null) {
 
             if (rating >= 4.5) {
@@ -143,11 +150,14 @@ public class Hotel implements Parcelable {
                 return "Fair";
             } else if (rating >= 2.0) {
                 return "Poor";
-            } else {
+            } else if (rating >= 1.0) {
                 return "Very Poor";
+            } else {
+                return "Not Rated";
             }
         }else{
-            return "Not Rated";
+
+            return "Null rating ";
         }
     }
 
