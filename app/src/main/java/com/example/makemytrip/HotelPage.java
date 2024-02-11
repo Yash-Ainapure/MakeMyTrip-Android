@@ -13,6 +13,7 @@ import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -31,6 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class HotelPage extends AppCompatActivity {
 
@@ -72,7 +74,10 @@ public class HotelPage extends AppCompatActivity {
         }
 
         // Initialize Firebase
-        databaseReference = FirebaseDatabase.getInstance().getReference("hotels");
+        //changing as per country , state and city
+        //databaseReference = FirebaseDatabase.getInstance().getReference("hotels");
+        databaseReference = FirebaseDatabase.getInstance().getReference("countries").child("India");
+
 
         // Set up the initial data
         loadData();
@@ -126,38 +131,111 @@ public class HotelPage extends AppCompatActivity {
         scaleDownX.start();
         scaleDownY.start();
     }
-    private void loadData() {
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<Hotel> hotelList = new ArrayList<>();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Hotel hotel = dataSnapshot.getValue(Hotel.class);
-                    if (hotel != null) {
-                        // Set the isLiked field based on the database value
-                        hotel.setLiked(dataSnapshot.child("isLiked").getValue(Boolean.class));
-                        hotelList.add(hotel);
+//    private void loadData() {
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                List<Hotel> hotelList = new ArrayList<>();
+//
+
+//
+////old logic
+//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                    Hotel hotel = dataSnapshot.getValue(Hotel.class);
+//                    if (hotel != null) {
+//                        // Set the isLiked field based on the database value
+//                        hotel.setLiked(dataSnapshot.child("isLiked").getValue(Boolean.class));
+//                        hotelList.add(hotel);
+//                    }
+//                }
+//
+//                        adapter = new HotelCardAdapter(hotelList);
+//                        recyclerView.setAdapter(adapter);
+//
+//                        // Set the database reference for the adapter
+//                        adapter.setDatabaseReference(databaseReference);
+//
+//                        // Update the isLiked field for each hotel in the adapter
+//                        for (Hotel hotel : hotelList) {
+//                            adapter.updateIsLikedInFirebase(hotel.getId(), hotel.isLiked());
+//                            Log.d("hotels", "onDataChange: "+hotel.getName()+" "+hotel.isLiked());
+//                        }
+//
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                // Handle error
+//                Toast.makeText(HotelPage.this, "Database Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
+//new logic
+            private void loadData() {
+                databaseReference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        List<Hotel> hotelList = new ArrayList<>();
+
+                        // Iterate through states
+                        for (DataSnapshot stateSnapshot : snapshot.child("states").getChildren()) {
+                            // Iterate through cities
+                            for (DataSnapshot citySnapshot : stateSnapshot.child("cities").getChildren()) {
+                                // Iterate through hotels
+                               for (DataSnapshot hotelSnapshot: citySnapshot.child("hotels").getChildren()) {// Retrieve hotel data as a Map
+                                    Map<String, Object> hotelData = (Map<String, Object>) hotelSnapshot.getValue();
+
+                                    if (hotelData != null) {
+//                                        Toast.makeText(HotelPage.this, "Database Error: " +  hotelData.get("name").toString(), Toast.LENGTH_SHORT).show();
+                                        if (hotelData.get("rating")==null){
+                                            hotelData.put("rating",0.0);
+                                        }
+                                        Log.d("hotel name", "onDataChange: "+ hotelData.get("name")+" "+hotelData.get("otherImages").toString());
+                                        // Create a Hotel object from the Map
+                                        Hotel hotel = new Hotel();
+                                        hotel.setId(hotelSnapshot.getKey());
+                                        hotel.setName((String) hotelData.get("name"));
+                                        hotel.setAddress((String) hotelData.get("address"));
+                                        hotel.setImageUrl((String) hotelData.get("imageUrl"));
+                                        hotel.setIsLiked((Boolean) hotelData.get("isLiked"));
+                                        hotel.setPrice(((Long) hotelData.get("price")).intValue());
+                                       hotel.setRating(((Double) hotelData.get("rating")).floatValue());
+
+//                                         Handle otherImages
+                                        List<String> otherImages = (List<String>) hotelData.get("otherImages");
+                                        if (otherImages != null) {
+                                            hotel.setOtherImages(otherImages);
+                                        }
+
+                                        hotelList.add(hotel);
+                                        Log.d("hotel", "onDataChange: " + hotel.getName() + " " + hotel.isLiked());
+                                    }
+                                    else {
+                                        Toast.makeText(HotelPage.this, "Null data " + hotelSnapshot.getValue().toString(), Toast.LENGTH_SHORT).show();}
+
+                                }
+                               }
+                        }
+
+                        adapter = new HotelCardAdapter(hotelList);
+                        recyclerView.setAdapter(adapter);
+
+                        // Set the database reference for the adapter
+                        adapter.setDatabaseReference(databaseReference.child("states"));
+
+                        // Update the isLiked field for each hotel in the adapter
+                        for (Hotel hotel : hotelList) {
+                            adapter.updateIsLikedInFirebase(hotel.getId(), hotel.isLiked());
+                            Log.d("hotels", "onDataChange: " + hotel.getName() + " " + hotel.isLiked());
+                        }
                     }
-                }
-                adapter = new HotelCardAdapter(hotelList);
-                recyclerView.setAdapter(adapter);
 
-                // Set the database reference for the adapter
-                adapter.setDatabaseReference(databaseReference);
-
-                // Update the isLiked field for each hotel in the adapter
-                for (Hotel hotel : hotelList) {
-                    adapter.updateIsLikedInFirebase(hotel.getId(), hotel.isLiked());
-                }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        // Handle error
+                        Toast.makeText(HotelPage.this, "Database Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Handle error
-                Toast.makeText(HotelPage.this, "Database Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     // Search feature logic
     private void performSearch() {
