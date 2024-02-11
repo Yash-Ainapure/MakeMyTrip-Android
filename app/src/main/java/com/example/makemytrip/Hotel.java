@@ -18,8 +18,22 @@ public class Hotel implements Parcelable {
     private boolean isLiked;
     private int price;
     private List<String> otherImages;
+    private String state;
+    private String city;
 
 
+    public String getState() {
+        return state;
+    }
+    public void setState(String state) {
+        this.state = state;
+    }
+    public String getCity() {
+        return city;
+    }
+    public void setCity(String city) {
+        this.city = city;
+    }
     public List<String> getOtherImages() {
         return otherImages;
     }
@@ -41,7 +55,7 @@ public class Hotel implements Parcelable {
     }
 
     // Parameterized constructor
-    public Hotel(String id, String name, String address, String imageUrl, boolean isLiked,int price,List<String> otherImages,float rating) {
+    public Hotel(String id, String name, String address, String imageUrl, boolean isLiked,int price,List<String> otherImages,float rating,String state,String city) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -50,6 +64,9 @@ public class Hotel implements Parcelable {
         this.price=price;
         this.otherImages=otherImages;
         this.rating=rating;
+        this.state=state;
+        this.city=city;
+
     }
     public Hotel( float averageRating , int numRatings,float totalRating ) {
         this.averageRating = averageRating;
@@ -68,6 +85,8 @@ public class Hotel implements Parcelable {
         otherImages = new ArrayList<>();
         in.readList(otherImages, String.class.getClassLoader());
         rating=in.readFloat();
+        state=in.readString();
+        city=in.readString();
     }
 
     // Parcelable creator
@@ -216,6 +235,8 @@ public class Hotel implements Parcelable {
         dest.writeInt(price);
         dest.writeList(otherImages);
         dest.writeFloat(rating);
+        dest.writeString(state);
+        dest.writeString(city);
     }
 }
 

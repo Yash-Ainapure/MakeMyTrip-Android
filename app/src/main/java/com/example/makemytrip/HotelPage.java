@@ -1,11 +1,8 @@
 package com.example.makemytrip;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,6 +38,7 @@ public class HotelPage extends AppCompatActivity {
     private RecyclerView recyclerView;
     private HotelCardAdapter adapter;
     private DatabaseReference databaseReference;
+    List<Hotel> hotelList = new ArrayList<>();
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -174,7 +172,7 @@ public class HotelPage extends AppCompatActivity {
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        List<Hotel> hotelList = new ArrayList<>();
+                        hotelList.clear();
 
                         // Iterate through states
                         for (DataSnapshot stateSnapshot : snapshot.child("states").getChildren()) {
@@ -199,7 +197,9 @@ public class HotelPage extends AppCompatActivity {
                                         hotel.setIsLiked((Boolean) hotelData.get("isLiked"));
                                         hotel.setPrice(((Long) hotelData.get("price")).intValue());
                                        hotel.setRating(((Double) hotelData.get("rating")).floatValue());
-
+                                       hotel.setCity((String) citySnapshot.getKey());
+                                        hotel.setState((String) stateSnapshot.getKey());
+                                        Log.d("city and state",""+hotel.getName()+" : "+hotel.getCity());
 //                                         Handle otherImages
                                         List<String> otherImages = (List<String>) hotelData.get("otherImages");
                                         if (otherImages != null) {
@@ -207,13 +207,12 @@ public class HotelPage extends AppCompatActivity {
                                         }
 
                                         hotelList.add(hotel);
-                                        Log.d("hotel", "onDataChange: " + hotel.getName() + " " + hotel.isLiked());
                                     }
                                     else {
                                         Toast.makeText(HotelPage.this, "Null data " + hotelSnapshot.getValue().toString(), Toast.LENGTH_SHORT).show();}
 
-                                }
                                }
+                            }
                         }
 
                         adapter = new HotelCardAdapter(hotelList);
@@ -224,7 +223,7 @@ public class HotelPage extends AppCompatActivity {
 
                         // Update the isLiked field for each hotel in the adapter
                         for (Hotel hotel : hotelList) {
-                            adapter.updateIsLikedInFirebase(hotel.getId(), hotel.isLiked());
+                            adapter.updateIsLikedInFirebase(hotel.getId(), hotel.isLiked(),hotel);
                             Log.d("hotels", "onDataChange: " + hotel.getName() + " " + hotel.isLiked());
                         }
                     }
@@ -237,7 +236,7 @@ public class HotelPage extends AppCompatActivity {
                 });
             }
 
-    // Search feature logic
+
     private void performSearch() {
         String queryText = searchEdt.getText().toString().trim();
 
@@ -245,57 +244,93 @@ public class HotelPage extends AppCompatActivity {
             // Empty search query, load all hotels
             loadData();
         } else {
-            // Perform a search based on both name and address
-            Query searchQuery = databaseReference.orderByChild("name").startAt(queryText).endAt(queryText + "\uf8ff");
+            List<Hotel> filteredHotelList = new ArrayList<>();
 
-            searchQuery.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot nameSnapshot) {
-                    List<Hotel> searchResult = new ArrayList<>();
-                    for (DataSnapshot nameDataSnapshot : nameSnapshot.getChildren()) {
-                        Hotel hotel = nameDataSnapshot.getValue(Hotel.class);
-                        if (hotel != null && hotel.getName().contains(queryText)) {
-                            hotel.setLiked(nameDataSnapshot.child("isLiked").getValue(Boolean.class));
-                            searchResult.add(hotel);
-                        }
-                    }
-
-                    // Now, let's check the "address" field
-                    databaseReference.orderByChild("address").startAt(queryText).endAt(queryText + "\uf8ff")
-                            .addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot addressSnapshot) {
-                                    for (DataSnapshot addressDataSnapshot : addressSnapshot.getChildren()) {
-                                        Hotel hotel = addressDataSnapshot.getValue(Hotel.class);
-                                        if (hotel != null && hotel.getAddress().contains(queryText) && !searchResult.contains(hotel)) {
-                                            // Avoid duplicate entries
-                                            hotel.setLiked(addressDataSnapshot.child("isLiked").getValue(Boolean.class));
-                                            searchResult.add(hotel);
-                                        }
-                                    }
-
-                                    // Update the existing adapter with the combined search results
-                                    if (adapter != null) {
-                                        adapter.setHotelList(searchResult);
-                                        adapter.notifyDataSetChanged();
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-                                    // Handle error
-                                    Toast.makeText(HotelPage.this, "Search Error: problem during address searching" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
+            // Iterate through the original hotelList and filter based on the search query
+            for (Hotel hotel : hotelList) {
+                if (hotel.getName().toLowerCase().contains(queryText.toLowerCase()) ||
+                        hotel.getAddress().toLowerCase().contains(queryText.toLowerCase())) {
+                    filteredHotelList.add(hotel);
                 }
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    // Handle error
-                    Toast.makeText(HotelPage.this, "Search Error: problem during name searching" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+            // Update the adapter with the filtered list
+            adapter = new HotelCardAdapter(filteredHotelList);
+            recyclerView.setAdapter(adapter);
+
+            // Set the database reference for the adapter
+            adapter.setDatabaseReference(databaseReference.child("states"));
+
+            // Update the isLiked field for each hotel in the adapter
+            for (Hotel hotel : filteredHotelList) {
+                adapter.updateIsLikedInFirebase(hotel.getId(), hotel.isLiked(), hotel);
+                Log.d("hotels", "onDataChange: " + hotel.getName() + " " + hotel.isLiked());
+            }
         }
     }
+
+
+
+    // Search feature logic
+    //private void performSearch() {
+//        String queryText = searchEdt.getText().toString().trim();
+//
+//        if (TextUtils.isEmpty(queryText)) {
+//            // Empty search query, load all hotels
+//            loadData();
+//        } else {
+
+            // Perform a search based on both name and address
+//            Query searchQuery = databaseReference.orderByChild("name").startAt(queryText).endAt(queryText + "\uf8ff");
+//
+//            searchQuery.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot nameSnapshot) {
+//                    List<Hotel> searchResult = new ArrayList<>();
+//                    for (DataSnapshot nameDataSnapshot : nameSnapshot.getChildren()) {
+//                        Hotel hotel = nameDataSnapshot.getValue(Hotel.class);
+//                        if (hotel != null && hotel.getName().contains(queryText)) {
+//                            hotel.setLiked(nameDataSnapshot.child("isLiked").getValue(Boolean.class));
+//                            searchResult.add(hotel);
+//                        }
+//                    }
+//
+//                    // Now, let's check the "address" field
+//                    databaseReference.orderByChild("address").startAt(queryText).endAt(queryText + "\uf8ff")
+//                            .addValueEventListener(new ValueEventListener() {
+//                                @Override
+//                                public void onDataChange(@NonNull DataSnapshot addressSnapshot) {
+//                                    for (DataSnapshot addressDataSnapshot : addressSnapshot.getChildren()) {
+//                                        Hotel hotel = addressDataSnapshot.getValue(Hotel.class);
+//                                        if (hotel != null && hotel.getAddress().contains(queryText) && !searchResult.contains(hotel)) {
+//                                            // Avoid duplicate entries
+//                                            hotel.setLiked(addressDataSnapshot.child("isLiked").getValue(Boolean.class));
+//                                            searchResult.add(hotel);
+//                                        }
+//                                    }
+//
+//                                    // Update the existing adapter with the combined search results
+//                                    if (adapter != null) {
+//                                        adapter.setHotelList(searchResult);
+//                                        adapter.notifyDataSetChanged();
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onCancelled(@NonNull DatabaseError error) {
+//                                    // Handle error
+//                                    Toast.makeText(HotelPage.this, "Search Error: problem during address searching" + error.getMessage(), Toast.LENGTH_SHORT).show();
+//                                }
+//                            });
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
+//                    // Handle error
+//                    Toast.makeText(HotelPage.this, "Search Error: problem during name searching" + error.getMessage(), Toast.LENGTH_SHORT).show();
+//                }
+//            });
+        //}
+    //}
 
 }

@@ -95,7 +95,7 @@ public class Wishlist extends AppCompatActivity {
 
                     // Update the isLiked field for each hotel in the adapter
                     for (Hotel hotel : likedHotelList) {
-                        wishlistAdapter.updateIsLikedInFirebase(hotel.getId(), hotel.isLiked());
+                        wishlistAdapter.updateIsLikedInFirebase(hotel.getId(), hotel.isLiked(),hotel);
                     }
                 }
 

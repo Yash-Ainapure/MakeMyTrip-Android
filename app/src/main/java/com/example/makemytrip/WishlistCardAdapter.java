@@ -78,7 +78,7 @@ public class WishlistCardAdapter extends RecyclerView.Adapter<WishlistCardAdapte
 
                 Log.i("MENU_DRAWER_TAG", "liked btn state : "+newState);
                 // Update the isLiked field in Firebase
-                updateIsLikedInFirebase(hotel.getId(), newState);
+                updateIsLikedInFirebase(hotel.getId(), newState,hotel);
 
                 //add liked hotel to wishlist
                 if(newState){
@@ -88,7 +88,7 @@ public class WishlistCardAdapter extends RecyclerView.Adapter<WishlistCardAdapte
                         String LoggedUserId = user.getUid();
                         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(LoggedUserId).child("hotelsWishlist");
                         String UserId=databaseReference.push().getKey();
-                        Hotel newHotel=new Hotel(hotel.getId(),hotel.getName(),hotel.getAddress(),hotel.getImageUrl(),hotel.isLiked(),hotel.getPrice(), hotel.getOtherImages(),hotel.getRating());
+                        Hotel newHotel=new Hotel(hotel.getId(),hotel.getName(),hotel.getAddress(),hotel.getImageUrl(),hotel.isLiked(),hotel.getPrice(), hotel.getOtherImages(),hotel.getRating(),hotel.getState(),hotel.getCity());
                         databaseReference.child(UserId).setValue(newHotel);
                     }
                     else{
@@ -217,10 +217,10 @@ public class WishlistCardAdapter extends RecyclerView.Adapter<WishlistCardAdapte
         }
     }
 
-    void updateIsLikedInFirebase(String hotelId, boolean isLiked) {
+    void updateIsLikedInFirebase(String hotelId, boolean isLiked,Hotel hotel) {
         // Update the 'isLiked' field in the 'hotels' node in Firebase
         if (hotelsRef != null) {
-            DatabaseReference hotelRef = hotelsRef.child(hotelId);
+            DatabaseReference hotelRef = hotelsRef.child(hotel.getState()).child("cities").child(hotel.getCity()).child("hotels").child(hotelId);
             hotelRef.child("isLiked").setValue(isLiked);
         }
     }

@@ -69,7 +69,7 @@ public class HotelCardAdapter extends RecyclerView.Adapter<HotelCardAdapter.Hote
                 boolean newState = ((ToggleButton) v).isChecked();
 
                 // Update the isLiked field in Firebase
-                updateIsLikedInFirebase(hotel.getId(), newState);
+                updateIsLikedInFirebase(hotel.getId(), newState,hotel);
 
                 // Update the local hotelList
                 hotel.setLiked(newState);
@@ -89,7 +89,7 @@ public class HotelCardAdapter extends RecyclerView.Adapter<HotelCardAdapter.Hote
                         String LoggedUserId = user.getUid();
                         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(LoggedUserId).child("hotelsWishlist");
                         String UserId=databaseReference.push().getKey();
-                        Hotel newHotel=new Hotel(hotel.getId(),hotel.getName(),hotel.getAddress(),hotel.getImageUrl(),hotel.isLiked(),hotel.getPrice(), hotel.getOtherImages(),hotel.getRating());
+                        Hotel newHotel=new Hotel(hotel.getId(),hotel.getName(),hotel.getAddress(),hotel.getImageUrl(),hotel.isLiked(),hotel.getPrice(), hotel.getOtherImages(),hotel.getRating(),hotel.getState(),hotel.getCity());
                         databaseReference.child(UserId).setValue(newHotel);
                     }
                     else{
@@ -185,11 +185,11 @@ public class HotelCardAdapter extends RecyclerView.Adapter<HotelCardAdapter.Hote
         }
     }
 
-    void updateIsLikedInFirebase(String hotelId, boolean isLiked) {
+    void updateIsLikedInFirebase(String hotelId, boolean isLiked,Hotel hotel) {
         // Update the 'isLiked' field in the 'hotels' node in Firebase
         //hotelsRef.child(hotelId).child("isLiked").setValue(isLiked);
         if (hotelsRef != null) {
-            DatabaseReference hotelRef = hotelsRef.child(hotelId);
+            DatabaseReference hotelRef = hotelsRef.child(hotel.getState()).child("cities").child(hotel.getCity()).child("hotels").child(hotelId);
             hotelRef.child("isLiked").setValue(isLiked);
         }
     }
