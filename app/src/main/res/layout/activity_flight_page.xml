@@ -18,17 +18,30 @@
         >
 
         <EditText
-            android:id="@+id/searchEdt"
+            android:id="@+id/departure"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/hotel_search_bg"
-            android:hint="Start Typing Here..."
+            android:hint="Enter Departure city"
             android:padding="10dp"
             android:textColor="@color/black"
-
             android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/destinatiom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/hotel_search_bg"
+            android:hint="Enter Destination city"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+
 
         <Button
             android:id="@+id/searchBtn"

@@ -93,7 +93,6 @@ public class FlightCardAdapter extends RecyclerView.Adapter<FlightCardAdapter.Fl
             destinationTime = itemView.findViewById(R.id.textViewDestinationTime);
             flightImage = itemView.findViewById(R.id.imageViewCompanyLogo);
 
-
         }
 
         public void bindData(Flight flight) {

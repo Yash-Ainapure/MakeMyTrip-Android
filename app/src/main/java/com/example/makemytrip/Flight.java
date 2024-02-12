@@ -6,7 +6,7 @@ import android.os.Parcel;
 
 public class Flight implements Parcelable {
     private String flightId;
-    private String flightName;
+    private String airline;
     private String departureCity;
     private String destinationCity;
     private double flightPrice;
@@ -15,6 +15,14 @@ public class Flight implements Parcelable {
     private String destinationTime;
     private String flightImage;
 
+    public String getAirline() {
+        return airline;
+    }
+
+    public void setAirline(String airline) {
+        this.airline = airline;
+    }
+
     // Default constructor
     public Flight() {
         // Default constructor required for Firebase
@@ -22,9 +30,9 @@ public class Flight implements Parcelable {
 
     // Constructor with parameters
     // Constructor with parameters
-    public Flight(String flightId, String flightName, String departureCity, String destinationCity, double flightPrice, boolean isLiked, String departureTime, String destinationTime,String flightImage) {
+    public Flight(String flightId, String airline, String departureCity, String destinationCity, double flightPrice, boolean isLiked, String departureTime, String destinationTime,String flightImage) {
     this.flightId = flightId;
-    this.flightName = flightName;
+    this.airline = airline;
     this.departureCity = departureCity;
     this.destinationCity = destinationCity;
     this.flightPrice = flightPrice;
@@ -37,7 +45,7 @@ public class Flight implements Parcelable {
 // Parcelable constructor
     protected Flight(Parcel in) {
     flightId = in.readString();
-    flightName = in.readString();
+    airline = in.readString();
     departureCity = in.readString();
     destinationCity = in.readString();
     flightPrice = in.readDouble();
@@ -81,11 +89,11 @@ public void setDestinationTime(String destinationTime) {
     }
 
     public String getFlightName() {
-        return flightName;
+        return airline;
     }
 
-    public void setFlightName(String flightName) {
-        this.flightName = flightName;
+    public void setFlightName(String airline) {
+        this.airline = airline;
     }
 
     public String getDepartureCity() {
@@ -141,7 +149,7 @@ public void setDestinationTime(String destinationTime) {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
     dest.writeString(flightId);
-    dest.writeString(flightName);
+    dest.writeString(airline);
     dest.writeString(departureCity);
     dest.writeString(destinationCity);
     dest.writeDouble(flightPrice);
