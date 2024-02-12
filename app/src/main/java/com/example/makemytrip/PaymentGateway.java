@@ -66,6 +66,7 @@ public class PaymentGateway extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(PaymentGateway.this, DummyUPIPayment.class);
+                intent.putExtra("bookingType", "hotel");
                 intent.putExtra("totalAmount",totalAmount);
                 intent.putExtra("hotelBookedInfo",receivedBookedInfo);
                 intent.putExtra("hotel",hotel);

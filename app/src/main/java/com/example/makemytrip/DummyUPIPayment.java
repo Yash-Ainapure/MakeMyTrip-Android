@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.wifi.hotspot2.pps.HomeSp;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -76,39 +78,52 @@ public class DummyUPIPayment extends AppCompatActivity {
         totalAmountTextView.setText("₹ "+totalAmount);
 
         payButton.setOnClickListener(view -> {
+            String enteredPassword = upiPasswordEditText.getText().toString();
 
-
-            FirebaseUser user = mAuth.getCurrentUser();
+            if ("123456".equals(enteredPassword)) {
+                Intent intent1 = new Intent(DummyUPIPayment.this, home.class);
+                FirebaseUser user = mAuth.getCurrentUser();
                 if(user!=null){
                     String LoggedUserEmail = user.getUid();
-                    databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(LoggedUserEmail).child("bookedHotels");
-                    String UserId=databaseReference.push().getKey();
-                    //Date selectedDate = new Date(selectedDates);
-//                    HotelBookedInfo hotelBookedInfo = new HotelBookedInfo(textViewHotelName.getText().toString(),textViewHotelAddress.getText().toString(),numberPickerRooms.getValue()
-//                            ,buttonDatePicker.getText().toString(),buttonDatePicker2.getText().toString(),ImageUrl);
-                    HotelBookedInfo hotelBookedInfo = new HotelBookedInfo(hotel.getName(),hotel.getAddress(),receivedBookedInfo.getNumberOfRooms()
-                            ,receivedBookedInfo.getStartingDate(),receivedBookedInfo.getEndingDate(),hotel.getImageUrl());
-                    databaseReference.child(UserId).setValue(hotelBookedInfo);
-                    // Inside your DummyUPIPayment activity
-                    String enteredPassword = upiPasswordEditText.getText().toString();
+                    String bookingType = intent.getStringExtra("bookingType");
+                    if (bookingType != null) {
 
-                    // Check if the entered password is correct
-                    if ("123456".equals(enteredPassword)) {
-                        // Password is correct, proceed with the intent
-                        Intent intent1 = new Intent(DummyUPIPayment.this, ViewManageTrips.class);
-                        startActivity(intent1);
-                        finish(); // Finish the current activity
-                    } else {
-                        // Incorrect password, show a toast
-                        Toast.makeText(DummyUPIPayment.this, "Incorrect PIN. Please try again.", Toast.LENGTH_SHORT).show();
-                        // Optionally, you can clear the entered password
-                        passwordBuilder.setLength(0);
-                        updatePasswordEditText();
+                        if (bookingType.equals("hotel")) {
+
+                            databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(LoggedUserEmail).child("bookedHotels");
+                            String UserId = databaseReference.push().getKey();
+                            HotelBookedInfo hotelBookedInfo = new HotelBookedInfo(hotel.getName(), hotel.getAddress(), receivedBookedInfo.getNumberOfRooms()
+                                    , receivedBookedInfo.getStartingDate(), receivedBookedInfo.getEndingDate(), hotel.getImageUrl());
+                            databaseReference.child(UserId).setValue(hotelBookedInfo);
+                            // Inside your DummyUPIPayment activity
+                            Toast.makeText(this, "hotel booked successfully", Toast.LENGTH_SHORT).show();
+                            startActivity(intent1);
+                            finish();
+
+                        } else if (bookingType.equals("flight")) {
+
+                            databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(LoggedUserEmail).child("bookedFlights");
+                            String UserId = databaseReference.push().getKey();
+                            Flight flight = intent.getParcelableExtra("flightBooking");
+                            databaseReference.child(UserId).setValue(flight);
+                            Toast.makeText(this, "flight booked successfully", Toast.LENGTH_SHORT).show();
+                            startActivity(intent1);
+                            finish();
+                        }
                     }
 
                 }else{
                     Toast.makeText(DummyUPIPayment.this, "Error: No user logged in", Toast.LENGTH_SHORT).show();
                 }
+
+            } else {
+
+                    Toast.makeText(DummyUPIPayment.this, "Incorrect PIN. Please try again.", Toast.LENGTH_SHORT).show();
+                    // Optionally, you can clear the entered password
+                    passwordBuilder.setLength(0);
+                    updatePasswordEditText();
+            }
+
         });
     }
 

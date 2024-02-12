@@ -6,4 +6,102 @@
     android:layout_height="match_parent"
     tools:context=".FlightDetailActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="30dp"
+        android:textAlignment="center"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/fltName"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:text="Flight Name: "
+            android:layout_height="25dp"/>
+        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/fltdept"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:text="Departure City: "
+            android:layout_height="25dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/fltdest"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:text="Destination City: "
+            android:layout_height="25dp"/>
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/deptTime"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:text="Departure Time: "
+                android:layout_height="25dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/destTime"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:text="Destination Time: "
+                android:layout_height="25dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/airport"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:text="Aitport Name: "
+                android:layout_height="25dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/bookFlight"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Book Flight"/>
+        </LinearLayout>
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
