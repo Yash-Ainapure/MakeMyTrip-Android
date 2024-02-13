@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,6 +31,7 @@ public class FlightPage extends AppCompatActivity {
     private RecyclerView recyclerView;
     private FlightCardAdapter adapter;
     private DatabaseReference databaseReference;
+    String selectedCountry;
     List<Flight> flights = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,44 +44,66 @@ public class FlightPage extends AppCompatActivity {
                 adapter = new FlightCardAdapter(new ArrayList<>());
                 recyclerView.setAdapter(adapter);
 
-                databaseReference = FirebaseDatabase.getInstance().getReference("countries").child("India");
-                loadData();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
 
-                searchBtn=findViewById(R.id.searchBtn);
-                departure=findViewById(R.id.departure);
-                destination=findViewById(R.id.destinatiom);
-                searchBtn.setOnClickListener(v ->{
-                    String departureCity = departure.getText().toString().trim();
-                    String destinationCity = destination.getText().toString().trim();
+        if (user != null) {
+            String userId = user.getUid();
 
-                    if (!TextUtils.isEmpty(departureCity) && !TextUtils.isEmpty(destinationCity)) {
-                        List<Flight> filteredFlights = new ArrayList<>();
+            // Get reference to the user's information node in the database
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("userInfo");
+            userRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    UserInfo userInfo = snapshot.getValue(UserInfo.class);
 
-                        for (Flight flight : flights) {
-                            if (flight.getDepartureCity().equalsIgnoreCase(departureCity) &&
-                                    flight.getDestinationCity().equalsIgnoreCase(destinationCity)) {
-                                filteredFlights.add(flight);
-                            }else {
-                                if (containsKeyword(flight.getDepartureCity(), departureCity) ||
-                                        containsKeyword(flight.getDestinationCity(), destinationCity) ||
-                                        containsKeyword(flight.getAirline(), departureCity) || // Assuming airline is a relevant keyword
-                                        containsKeyword(flight.getAirline(), destinationCity)) {
+                    selectedCountry = userInfo.getSelectedCountry();
+                    databaseReference = FirebaseDatabase.getInstance().getReference("countries").child(selectedCountry);
+                    loadData();
+
+                    searchBtn = findViewById(R.id.searchBtn);
+                    departure = findViewById(R.id.departure);
+                    destination = findViewById(R.id.destinatiom);
+                    searchBtn.setOnClickListener(v -> {
+                        String departureCity = departure.getText().toString().trim();
+                        String destinationCity = destination.getText().toString().trim();
+
+                        if (!TextUtils.isEmpty(departureCity) && !TextUtils.isEmpty(destinationCity)) {
+                            List<Flight> filteredFlights = new ArrayList<>();
+
+                            for (Flight flight : flights) {
+                                if (flight.getDepartureCity().equalsIgnoreCase(departureCity) &&
+                                        flight.getDestinationCity().equalsIgnoreCase(destinationCity)) {
                                     filteredFlights.add(flight);
+                                } else {
+                                    if (containsKeyword(flight.getDepartureCity(), departureCity) ||
+                                            containsKeyword(flight.getDestinationCity(), destinationCity) ||
+                                            containsKeyword(flight.getAirline(), departureCity) || // Assuming airline is a relevant keyword
+                                            containsKeyword(flight.getAirline(), destinationCity)) {
+                                        filteredFlights.add(flight);
+                                    }
                                 }
                             }
-                        }
 
-                        FlightCardAdapter adapter = new FlightCardAdapter(filteredFlights);
-                        recyclerView.setAdapter(adapter);
-                    } else {
-                        Toast.makeText(FlightPage.this, "Please enter both departure and destination cities", Toast.LENGTH_SHORT).show();
-                        loadData();
-                    }
-                });
+                            FlightCardAdapter adapter = new FlightCardAdapter(filteredFlights);
+                            recyclerView.setAdapter(adapter);
+                        } else {
+                            Toast.makeText(FlightPage.this, "Please enter both departure and destination cities", Toast.LENGTH_SHORT).show();
+                            loadData();
+                        }
+                    });
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
     }
 
     private void loadData() {
-        Toast.makeText(this, "loading data", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Loading data of" +  selectedCountry + "!!", Toast.LENGTH_SHORT).show();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

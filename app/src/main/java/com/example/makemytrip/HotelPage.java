@@ -19,6 +19,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,6 +36,8 @@ import java.util.Map;
 public class HotelPage extends AppCompatActivity {
 
     Button searchBtn;
+
+    String selectedCountry;
     EditText searchEdt;
     private RecyclerView recyclerView;
     private HotelCardAdapter adapter;
@@ -70,31 +74,58 @@ public class HotelPage extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             // Set your desired icon for the navigation drawer toggle
         }
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        if (user != null) {
+            String userId = user.getUid();
+
+            // Get reference to the user's information node in the database
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("userInfo");
+            userRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    UserInfo userInfo = snapshot.getValue(UserInfo.class);
+                    selectedCountry= userInfo.getSelectedCountry();
+                    databaseReference = FirebaseDatabase.getInstance().getReference("countries").child(selectedCountry);
+                    loadData();
+
+                    // Add a ValueEventListener to update the adapter when data changes
+                    databaseReference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (adapter != null) {
+                                loadData();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            // Handle error
+                            Toast.makeText(HotelPage.this, "Database Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+            // Store the selected country under a new node (e.g., "selectedCountry")
+
+        }
+
+
 
         // Initialize Firebase
         //changing as per country , state and city
         //databaseReference = FirebaseDatabase.getInstance().getReference("hotels");
-        databaseReference = FirebaseDatabase.getInstance().getReference("countries").child("India");
+
 
 
         // Set up the initial data
-        loadData();
-
-        // Add a ValueEventListener to update the adapter when data changes
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (adapter != null) {
-                    loadData();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Handle error
-                Toast.makeText(HotelPage.this, "Database Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
 
         // perform search when button clicked
         searchBtn.setOnClickListener(new View.OnClickListener() {

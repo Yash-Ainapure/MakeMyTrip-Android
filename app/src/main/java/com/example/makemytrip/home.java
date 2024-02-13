@@ -45,10 +45,11 @@ public class home extends AppCompatActivity {
     ImageView profileImage;
     Toolbar toolbar;
     ActionBarDrawerToggle actionBarDrawerTogg1e;
-    LinearLayout hotel_tab,flight_tab;
-    TextView username,welcometext,header_phone;
+    LinearLayout hotel_tab, flight_tab;
+    TextView username, welcometext, header_phone;
     private DatabaseReference databaseReference;
     String UserId;
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (actionBarDrawerTogg1e.onOptionsItemSelected(item)) {
@@ -73,13 +74,14 @@ public class home extends AppCompatActivity {
                 .setNegativeButton(android.R.string.no, null)
                 .show();
     }
+
     @SuppressLint("SuspiciousIndentation")
     @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        UserId=FirebaseAuth.getInstance().getCurrentUser().getUid();
+        UserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
         hotel_tab = findViewById(R.id.hotel_tab);
@@ -87,45 +89,43 @@ public class home extends AppCompatActivity {
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigationView);
-        actionBarDrawerTogg1e = new ActionBarDrawerToggle(this , drawerLayout , R.string.menu_open, R.string.menu_close);
+        actionBarDrawerTogg1e = new ActionBarDrawerToggle(this, drawerLayout, R.string.menu_open, R.string.menu_close);
         drawerLayout.addDrawerListener(actionBarDrawerTogg1e);
         actionBarDrawerTogg1e.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Home");
         View headerView = navigationView.getHeaderView(0);
-        username=headerView.findViewById(R.id.username);
-        header_phone=headerView.findViewById(R.id.header_phone);
-        welcometext=findViewById(R.id.welcometext);
-        profileImage=headerView.findViewById(R.id.imageView);
+        username = headerView.findViewById(R.id.username);
+        header_phone = headerView.findViewById(R.id.header_phone);
+        welcometext = findViewById(R.id.welcometext);
+        profileImage = headerView.findViewById(R.id.imageView);
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(UserId).child("userInfo");
-           databaseReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    UserInfo userInfo=snapshot.getValue(UserInfo.class);
-                    username.setText("Hi, " + userInfo.getFirstName());
-                    welcometext.setText("Welcome, "+userInfo.getFirstName());
-                    header_phone.setText(userInfo.getPhoneNumber());
-                }
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserInfo userInfo = snapshot.getValue(UserInfo.class);
+                username.setText("Hi, " + userInfo.getFirstName());
+                welcometext.setText("Welcome, " + userInfo.getFirstName());
+                header_phone.setText(userInfo.getPhoneNumber());
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Toast.makeText(home.this, "failed to load username", Toast.LENGTH_SHORT).show();
-                }
-            });
-
-
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(home.this, "failed to load username", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         //set profile image
-        StorageReference storageReference=FirebaseStorage.getInstance().getReference("UserProfileImages/"+UserId);
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference("UserProfileImages/" + UserId);
         try {
-            File localfile= File.createTempFile("tempfile",".jpg");
+            File localfile = File.createTempFile("tempfile", ".jpg");
             storageReference.getFile(localfile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                    DisplayMetrics dm=new DisplayMetrics();
-                    Bitmap bitmap= BitmapFactory.decodeFile(localfile.getAbsolutePath());
+                    DisplayMetrics dm = new DisplayMetrics();
+                    Bitmap bitmap = BitmapFactory.decodeFile(localfile.getAbsolutePath());
                     profileImage.setImageBitmap(bitmap);
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -141,12 +141,13 @@ public class home extends AppCompatActivity {
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             Intent intent;
+
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int itemId = item.getItemId();
 
                 if (itemId == R.id.nav_account) {
-                    startActivity(new Intent(home.this,MyAccount.class));
+                    startActivity(new Intent(home.this, MyAccount.class));
                 } else if (itemId == R.id.view_manage) {
                     Log.i("MENU_DRAWER_TAG", "View/Manage is clicked");
                     intent = new Intent(home.this, ViewManageTrips.class);
@@ -158,10 +159,12 @@ public class home extends AppCompatActivity {
                 } else if (itemId == R.id.language) {
                     Log.i("MENU_DRAWER_TAG", "Language is clicked");
                 } else if (itemId == R.id.country) {
+                    intent = new Intent(home.this, Country.class);
+                    startActivity(intent);
                     Log.i("MENU_DRAWER_TAG", "Country is clicked");
                 } else if (itemId == R.id.logout) {
                     FirebaseAuth.getInstance().signOut();
-                    startActivity(new Intent(home.this,MainActivity.class));
+                    startActivity(new Intent(home.this, MainActivity.class));
                     Toast.makeText(home.this, "user logged out", Toast.LENGTH_SHORT).show();
                 }
 
@@ -174,14 +177,14 @@ public class home extends AppCompatActivity {
         hotel_tab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(home.this, HotelPage.class);
+                Intent i = new Intent(home.this, HotelPage.class);
                 startActivity(i);
             }
         });
         flight_tab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(home.this, FlightPage.class);
+                Intent i = new Intent(home.this, FlightPage.class);
                 startActivity(i);
             }
         });
@@ -190,14 +193,14 @@ public class home extends AppCompatActivity {
 
     private void loadProfileImage() {
 
-        StorageReference storageReference=FirebaseStorage.getInstance().getReference("UserProfileImages/"+UserId);
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference("UserProfileImages/" + UserId);
         try {
-            File localfile= File.createTempFile("tempfile",".jpg");
+            File localfile = File.createTempFile("tempfile", ".jpg");
             storageReference.getFile(localfile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                    DisplayMetrics dm=new DisplayMetrics();
-                    Bitmap bitmap= BitmapFactory.decodeFile(localfile.getAbsolutePath());
+                    DisplayMetrics dm = new DisplayMetrics();
+                    Bitmap bitmap = BitmapFactory.decodeFile(localfile.getAbsolutePath());
                     profileImage.setImageBitmap(bitmap);
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -210,12 +213,26 @@ public class home extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();
         // Call the method to load profile image when the activity resumes
         loadProfileImage();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(UserId).child("userInfo");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserInfo userInfo = snapshot.getValue(UserInfo.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
     }
-
-
 }

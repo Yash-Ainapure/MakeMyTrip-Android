@@ -4,7 +4,7 @@ import android.util.Log;
 
 public class UserInfo {
     public String userId,firstName,lastName, phoneNumber, email;
-    public String gender="",city="",state="",nationality="",passportNo="",issuingCountry="",panCard="";
+    public String gender="",city="",state="",nationality="",passportNo="",issuingCountry="",panCard="",selectedCountry="";
     String panExpiry="",dob="";
 
     public UserInfo() {
@@ -21,7 +21,7 @@ public class UserInfo {
 
     public UserInfo(String userId,String firstName, String phoneNumber, String email,
                     String gender, String city, String state, String nationality,
-                    String passportNo, String issuingCountry, String panCard,String panExpiry,String dob) {
+                    String passportNo, String issuingCountry, String panCard,String panExpiry,String dob,String selectedCountry) {
         this.userId=userId;
         this.firstName = firstName;
         this.phoneNumber = phoneNumber;
@@ -35,6 +35,15 @@ public class UserInfo {
         this.panCard = panCard;
         this.panExpiry=panExpiry;
         this.dob=dob;
+        this.selectedCountry=selectedCountry;
+    }
+
+    public String getSelectedCountry(){
+        return selectedCountry;
+    }
+
+    public void setSelectedCountry(String selectedCountry) {
+        this.selectedCountry = selectedCountry;
     }
 
     public String getPanExpiry() {

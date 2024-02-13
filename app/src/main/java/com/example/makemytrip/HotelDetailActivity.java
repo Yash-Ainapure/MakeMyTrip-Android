@@ -50,6 +50,7 @@ public class HotelDetailActivity extends AppCompatActivity {
     float totalRating;
     int numRatings;
     float averageRating;
+    String selectedCountry;
 
     Ratings ratings;
 
@@ -98,6 +99,58 @@ public class HotelDetailActivity extends AppCompatActivity {
                    Picasso.get().load(hotel.getOtherImages().get(1)).into(otherImage2);
                }
 
+               FirebaseAuth mAuth = FirebaseAuth.getInstance();
+               FirebaseUser user = mAuth.getCurrentUser();
+
+               if (user != null) {
+                   String userId = user.getUid();
+
+                   // Get reference to the user's information node in the database
+                   DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("userInfo");
+                   userRef.addValueEventListener(new ValueEventListener() {
+                       @Override
+                       public void onDataChange(@NonNull DataSnapshot snapshot) {
+                           UserInfo userInfo = snapshot.getValue(UserInfo.class);
+                            selectedCountry = userInfo.getSelectedCountry();
+                           databaseReference=FirebaseDatabase.getInstance()
+                                   .getReference("countries").child(selectedCountry)
+                                   .child("states").child(hotel.getState())
+                                   .child("cities")
+                                   .child(hotel.getCity())
+                                   .child("hotels")
+                                   .child(hotel.getId())
+                                   .child("ratings");
+                           databaseReference.addValueEventListener(new ValueEventListener() {
+                               @Override
+                               public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                   ratings =snapshot.getValue(Ratings.class);
+                                   if (ratings !=null) {
+//                       Toast.makeText(HotelDetailActivity.this, "Ratings" + ratings.getAverageRating(), Toast.LENGTH_SHORT).show();
+                                       averageRating = ratings.getAverageRating();
+                                       numRatings = ratings.getNumRatings();
+                                       totalRating = ratings.getTotalRating();
+                                       hotelRating.setText(String.valueOf(averageRating));
+                                       ratinginwords.setText(ratings.setRatinginwords());
+                                       String count =  String.valueOf(numRatings);
+                                       ratingcount.setText("(" + count + ")");
+                                   }
+                               }
+
+                               @Override
+                               public void onCancelled(@NonNull DatabaseError error) {
+
+                               }
+                           });
+                       }
+
+                       @Override
+                       public void onCancelled(@NonNull DatabaseError error) {
+
+                       }
+                   });
+                   // Store the selected country under a new node (e.g., "selectedCountry")
+
+               }
 
 
 
@@ -108,35 +161,7 @@ public class HotelDetailActivity extends AppCompatActivity {
 
 
 
-               databaseReference=FirebaseDatabase.getInstance()
-                       .getReference("countries").child("India")
-                       .child("states").child(hotel.getState())
-                       .child("cities")
-                       .child(hotel.getCity())
-                       .child("hotels")
-                       .child(hotel.getId())
-                       .child("ratings");
-               databaseReference.addValueEventListener(new ValueEventListener() {
-                   @Override
-                   public void onDataChange(@NonNull DataSnapshot snapshot) {
-                       ratings =snapshot.getValue(Ratings.class);
-                    if (ratings !=null) {
-//                       Toast.makeText(HotelDetailActivity.this, "Ratings" + ratings.getAverageRating(), Toast.LENGTH_SHORT).show();
-                        averageRating = ratings.getAverageRating();
-                        numRatings = ratings.getNumRatings();
-                        totalRating = ratings.getTotalRating();
-                        hotelRating.setText(String.valueOf(averageRating));
-                        ratinginwords.setText(ratings.setRatinginwords());
-                        String count =  String.valueOf(numRatings);
-                        ratingcount.setText("(" + count + ")");
-                    }
-                   }
 
-                   @Override
-                   public void onCancelled(@NonNull DatabaseError error) {
-
-                   }
-                });
                ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
                    @Override
                    public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {

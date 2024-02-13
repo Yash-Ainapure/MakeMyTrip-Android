@@ -99,8 +99,9 @@ public class FlightCardAdapter extends RecyclerView.Adapter<FlightCardAdapter.Fl
             departureCity.setText(flight.getDepartureCity());
             destinationCity.setText(flight.getDestinationCity());
             flightPrice.setText(String.valueOf(flight.getFlightPrice()));
-            departureTime.setText("departure time: "+flight.getDepartureTime());
-            destinationTime.setText("destination time: "+flight.getDestinationTime());
+            departureTime.setText(flight.getDepartureTime());
+            destinationTime.setText(flight.getDestinationTime());
+
 
             Picasso.get().load(flight.getFlightImage()).into(flightImage);
 

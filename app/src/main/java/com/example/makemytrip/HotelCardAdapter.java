@@ -29,7 +29,8 @@ public class HotelCardAdapter extends RecyclerView.Adapter<HotelCardAdapter.Hote
     private List<Hotel> hotelList;
     private DatabaseReference hotelsRef;
     FirebaseAuth mAuth;
-
+    String selectedCountry;
+    DatabaseReference databaseReference;
     public HotelCardAdapter(List<Hotel> hotelList) {
         this.hotelList = hotelList;
     }
@@ -183,33 +184,57 @@ public class HotelCardAdapter extends RecyclerView.Adapter<HotelCardAdapter.Hote
 
             // Example using Picasso:
             Picasso.get().load(hotel.getImageUrl()).into(hotelImage);
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            FirebaseUser user = mAuth.getCurrentUser();
 
+            if (user != null) {
+                String userId = user.getUid();
 
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance()
-                    .getReference("countries").child("India")
-                    .child("states").child(hotel.getState())
-                    .child("cities")
-                    .child(hotel.getCity())
-                    .child("hotels")
-                    .child(hotel.getId())
-                    .child("ratings");
-            databaseReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Ratings ratings = snapshot.getValue(Ratings.class);
-                    if (ratings != null) {
+                // Get reference to the user's information node in the database
+                DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("userInfo");
+                userRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        UserInfo userInfo = snapshot.getValue(UserInfo.class);
+                        selectedCountry= userInfo.getSelectedCountry();
+                        databaseReference = FirebaseDatabase.getInstance()
+                                .getReference("countries").child(selectedCountry)
+                                .child("states").child(hotel.getState())
+                                .child("cities")
+                                .child(hotel.getCity())
+                                .child("hotels")
+                                .child(hotel.getId())
+                                .child("ratings");
+                        databaseReference.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                Ratings ratings = snapshot.getValue(Ratings.class);
+                                if (ratings != null) {
 //                       Toast.makeText(HotelDetailActivity.this, "Ratings" + ratings.getAverageRating(), Toast.LENGTH_SHORT).show();
 
-                        hotelRating.setText(String.valueOf(ratings.getAverageRating()));
-                        ratinginwords.setText(ratings.setRatinginwords());
+                                    hotelRating.setText(String.valueOf(ratings.getAverageRating()));
+                                    ratinginwords.setText(ratings.setRatinginwords());
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
                     }
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
-                }
-            });
+                    }
+                });
+                // Store the selected country under a new node (e.g., "selectedCountry")
+
+            }
+
+
+
         }
     }
         void updateIsLikedInFirebase(String hotelId, boolean isLiked, Hotel hotel) {

@@ -47,7 +47,7 @@ public class MyAccount extends AppCompatActivity {
     ImageView profileImage;
     private String selectedDates="1/02/2024";
 
-    String UserId;
+    String UserId,selectedCountry;
     EditText acc_email_edt,acc_phone_edt,acc_name_edt,acc_gender_edt;
     EditText acc_city_edt,acc_state_edt,acc_nationality_edt,acc_PassNo_edt,acc_issuecountry_edt,acc_PanNo_edt;
     private DatabaseReference databaseReference;
@@ -190,7 +190,7 @@ public class MyAccount extends AppCompatActivity {
                     ,acc_email_edt.getText().toString(),acc_gender_edt.getText().toString(),acc_city_edt.getText().toString()
                     ,acc_state_edt.getText().toString(),acc_nationality_edt.getText().toString()
             ,acc_PassNo_edt.getText().toString(),acc_issuecountry_edt.getText().toString()
-                    ,acc_PanNo_edt.getText().toString(),expiryPicker.getText().toString(),dobPicker.getText().toString());
+                    ,acc_PanNo_edt.getText().toString(),expiryPicker.getText().toString(),dobPicker.getText().toString(),selectedCountry);
 
             databaseReference.setValue(info);
             Toast.makeText(this, "data saved successfully", Toast.LENGTH_SHORT).show();
