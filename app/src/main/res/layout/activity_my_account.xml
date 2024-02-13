@@ -202,7 +202,6 @@
                     android:ems="10"
                     android:hint="Mobile Number"
                     android:inputType="text"
-
                     android:paddingStart="20dp"
                     android:paddingTop="15dp"
                     android:paddingEnd="20dp"
@@ -312,7 +311,12 @@
 
             </LinearLayout>
 
-
+            <Button
+                android:id="@+id/saveData"
+                android:text="save Data"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
 
     </ScrollView>

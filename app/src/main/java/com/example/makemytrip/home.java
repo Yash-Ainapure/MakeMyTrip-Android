@@ -103,7 +103,7 @@ public class home extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     UserInfo userInfo=snapshot.getValue(UserInfo.class);
-                    username.setText("Hi, " + userInfo.getFirstName()+" "+userInfo.getLastName());
+                    username.setText("Hi, " + userInfo.getFirstName());
                     welcometext.setText("Welcome, "+userInfo.getFirstName());
                     header_phone.setText(userInfo.getPhoneNumber());
                 }

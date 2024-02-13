@@ -4,6 +4,8 @@ import android.util.Log;
 
 public class UserInfo {
     public String userId,firstName,lastName, phoneNumber, email;
+    public String gender="",city="",state="",nationality="",passportNo="",issuingCountry="",panCard="";
+    String panExpiry="",dob="";
 
     public UserInfo() {
         //Default Constructor
@@ -15,6 +17,96 @@ public class UserInfo {
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.userId = userId;
+    }
+
+    public UserInfo(String userId,String firstName, String phoneNumber, String email,
+                    String gender, String city, String state, String nationality,
+                    String passportNo, String issuingCountry, String panCard,String panExpiry,String dob) {
+        this.userId=userId;
+        this.firstName = firstName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.gender = gender;
+        this.city = city;
+        this.state = state;
+        this.nationality = nationality;
+        this.passportNo = passportNo;
+        this.issuingCountry = issuingCountry;
+        this.panCard = panCard;
+        this.panExpiry=panExpiry;
+        this.dob=dob;
+    }
+
+    public String getPanExpiry() {
+        return panExpiry;
+    }
+
+    public void setPanExpiry(String panExpiry) {
+        this.panExpiry = panExpiry;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
+
+    public String getPassportNo() {
+        return passportNo;
+    }
+
+    public void setPassportNo(String passportNo) {
+        this.passportNo = passportNo;
+    }
+
+    public String getIssuingCountry() {
+        return issuingCountry;
+    }
+
+    public void setIssuingCountry(String issuingCountry) {
+        this.issuingCountry = issuingCountry;
+    }
+
+    public String getPanCard() {
+        return panCard;
+    }
+
+    public void setPanCard(String panCard) {
+        this.panCard = panCard;
     }
 
     public String getUserId() {
