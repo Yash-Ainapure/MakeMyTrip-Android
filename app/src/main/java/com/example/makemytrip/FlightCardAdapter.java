@@ -76,7 +76,6 @@ public class FlightCardAdapter extends RecyclerView.Adapter<FlightCardAdapter.Fl
         private TextView flightName;
         private TextView departureCity;
         private TextView destinationCity;
-        private ToggleButton likeButton;
         private TextView flightPrice;
         private TextView departureTime;
         private TextView destinationTime;
@@ -87,7 +86,6 @@ public class FlightCardAdapter extends RecyclerView.Adapter<FlightCardAdapter.Fl
             flightName = itemView.findViewById(R.id.textViewFlightName);
             departureCity = itemView.findViewById(R.id.textViewDepartureCity);
             destinationCity = itemView.findViewById(R.id.textViewDestinationCity);
-            likeButton = itemView.findViewById(R.id.likeButton);
             flightPrice = itemView.findViewById(R.id.textViewPrice);
             departureTime = itemView.findViewById(R.id.textViewDepartureTime);
             destinationTime = itemView.findViewById(R.id.textViewDestinationTime);
@@ -106,36 +104,6 @@ public class FlightCardAdapter extends RecyclerView.Adapter<FlightCardAdapter.Fl
 
             Picasso.get().load(flight.getFlightImage()).into(flightImage);
 
-            // Set the like button state based on isLiked field
-            likeButton.setChecked(flight.isLiked());
-
-            // Set the appropriate drawable for the like button
-            int drawableRes = flight.isLiked() ? R.drawable.ic_heart_selected : R.drawable.ic_heart_unselected;
-            likeButton.setButtonDrawable(drawableRes);
-
-            // Set a click listener for the like button
-            likeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Handle like button click action
-                    boolean newState = ((ToggleButton) v).isChecked();
-
-                    // Update the isLiked field in Firebase
-                    updateIsLikedInFirebase(flight.getFlightId(), newState);
-
-                    // Update the local flightList
-                    flight.setLiked(newState);
-
-                    // Set the appropriate drawable for the like button
-                    int drawableRes = newState ? R.drawable.ic_heart_selected : R.drawable.ic_heart_unselected;
-                    likeButton.setButtonDrawable(drawableRes);
-
-                    notifyItemChanged(getAdapterPosition());
-
-                    // Add or remove flight from wishlist based on the like state
-                    handleWishlistAction(flight, newState);
-                }
-            });
         }
     }
 
