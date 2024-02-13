@@ -87,15 +87,5 @@
         android:text="Price per Person: $100.00" />
 
     <!-- Like Button (Toggle) -->
-    <ToggleButton
-        android:id="@+id/likeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textOn=""
-        android:textOff=""
-        android:background="?android:attr/selectableItemBackground"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:button="@drawable/ic_heart_unselected" />
 
 </LinearLayout>

@@ -13,6 +13,12 @@
         android:theme="@style/Theme.MakeMyTrip"
         tools:targetApi="31">
         <activity
+            android:name=".ViewBookedFlights"
+            android:exported="false" />
+        <activity
+            android:name=".ViewManageTrips"
+            android:exported="false" />
+        <activity
             android:name=".FlightDetailActivity"
             android:exported="false" />
         <activity
@@ -48,7 +54,7 @@
             android:name=".Wishlist"
             android:exported="false" />
         <activity
-            android:name=".ViewManageTrips"
+            android:name=".ViewBookedHotels"
             android:exported="false" />
         <activity
             android:name=".HotelDetailActivity"
