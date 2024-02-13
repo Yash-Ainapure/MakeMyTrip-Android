@@ -2,16 +2,15 @@ package com.example.makemytrip;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Hotel implements Parcelable {
-    private float totalRating;
-    private int numRatings;
-    private float averageRating;
     private String id;
     private String name;
+
     private String address;
     private String imageUrl;
     private Float rating;
@@ -25,15 +24,19 @@ public class Hotel implements Parcelable {
     public String getState() {
         return state;
     }
+
     public void setState(String state) {
         this.state = state;
     }
+
     public String getCity() {
         return city;
     }
+
     public void setCity(String city) {
         this.city = city;
     }
+
     public List<String> getOtherImages() {
         return otherImages;
     }
@@ -55,24 +58,20 @@ public class Hotel implements Parcelable {
     }
 
     // Parameterized constructor
-    public Hotel(String id, String name, String address, String imageUrl, boolean isLiked,int price,List<String> otherImages,float rating,String state,String city) {
+    public Hotel(String id, String name, String address, String imageUrl, boolean isLiked, int price, List<String> otherImages, float rating, String state, String city) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.imageUrl = imageUrl;
         this.isLiked = isLiked;
-        this.price=price;
-        this.otherImages=otherImages;
-        this.rating=rating;
-        this.state=state;
-        this.city=city;
+        this.price = price;
+        this.otherImages = otherImages;
+        this.rating = rating;
+        this.state = state;
+        this.city = city;
 
     }
-    public Hotel( float averageRating , int numRatings,float totalRating ) {
-        this.averageRating = averageRating;
-        this.numRatings = numRatings;
-        this.totalRating =totalRating;
-    }
+
 
     // Parcelable constructor
     protected Hotel(Parcel in) {
@@ -81,12 +80,12 @@ public class Hotel implements Parcelable {
         address = in.readString();
         imageUrl = in.readString();
         isLiked = in.readByte() != 0;
-        price=in.readInt();
+        price = in.readInt();
         otherImages = new ArrayList<>();
         in.readList(otherImages, String.class.getClassLoader());
-        rating=in.readFloat();
-        state=in.readString();
-        city=in.readString();
+        rating = in.readFloat();
+        state = in.readString();
+        city = in.readString();
     }
 
     // Parcelable creator
@@ -111,31 +110,6 @@ public class Hotel implements Parcelable {
         this.id = id;
     }
 
-    public float getAverageRating() {
-        return averageRating;
-    }
-
-    public void setAverageRating(float averageRating) {
-        this.averageRating = averageRating;
-    }
-
-    public float getTotalRating() {
-        return totalRating;
-    }
-
-
-    public void setTotalRating(Float totalRating) {
-        this.totalRating = totalRating;
-    }
-
-    public int getNumRatings() {
-
-        return numRatings;
-    }
-    public void setNumRatings(int numRatings) {
-
-        this.numRatings=numRatings;
-    }
 
     public Float getRating() {
 
@@ -151,34 +125,7 @@ public class Hotel implements Parcelable {
     }
 
 
-    public String setRatinginwords()
-    {
 
-
-        if (rating != null) {
-
-            if (rating >= 4.5) {
-                return "Excellent";
-            } else if (rating >= 4.0) {
-                return "Very Good";
-            } else if (rating >= 3.5) {
-                return "Good";
-            } else if (rating >= 3.0) {
-                return "Average";
-            } else if (rating >= 2.5) {
-                return "Fair";
-            } else if (rating >= 2.0) {
-                return "Poor";
-            } else if (rating >= 1.0) {
-                return "Very Poor";
-            } else {
-                return "Not Rated";
-            }
-        }else{
-
-            return "Null rating ";
-        }
-    }
 
     // Getter and setter for name
     public String getName() {
@@ -211,6 +158,7 @@ public class Hotel implements Parcelable {
     public boolean isLiked() {
         return isLiked;
     }
+
     public void setIsLiked(boolean isLiked) {
         this.isLiked = isLiked;
     }
@@ -218,6 +166,9 @@ public class Hotel implements Parcelable {
     public void setLiked(boolean isLiked) {
         this.isLiked = isLiked;
     }
+
+
+
 
     // Parcelable methods
     @Override
@@ -238,5 +189,7 @@ public class Hotel implements Parcelable {
         dest.writeString(state);
         dest.writeString(city);
     }
+
+
 }
 

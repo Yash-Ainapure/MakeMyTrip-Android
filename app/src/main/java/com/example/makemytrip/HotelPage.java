@@ -187,7 +187,7 @@ public class HotelPage extends AppCompatActivity {
                                         if (hotelData.get("rating")==null){
                                             hotelData.put("rating",0.0);
                                         }
-                                        Log.d("hotel name", "onDataChange: "+ hotelData.get("name")+" "+hotelData.get("otherImages").toString());
+                                        Log.d("hotel name", "onDataChange: "+ hotelData.get("name")+" "+hotelData.containsKey("ratings"));
                                         // Create a Hotel object from the Map
                                         Hotel hotel = new Hotel();
                                         hotel.setId(hotelSnapshot.getKey());
@@ -199,6 +199,22 @@ public class HotelPage extends AppCompatActivity {
                                        hotel.setRating(((Double) hotelData.get("rating")).floatValue());
                                        hotel.setCity((String) citySnapshot.getKey());
                                         hotel.setState((String) stateSnapshot.getKey());
+                                        if (hotelData.containsKey("ratings")) {
+                                            Map<String, Object> ratingsData = (Map<String, Object>) hotelData.get("ratings");
+
+                                            if (ratingsData != null) {
+//                                                float averageRating = ((Double) ratingsData.get("averageRating")).floatValue();
+//                                                int numRatings = ((Long) ratingsData.get("numRatings")).intValue();
+//                                                float totalRating = ((Double) ratingsData.get("totalRating")).floatValue();
+//                                                Log.d("hotelrate", "onDataChange: "+averageRating);
+//                                                // Create Ratings object
+//                                                Hotel.Ratings ratings = new Hotel.Ratings(averageRating, numRatings, totalRating);
+//                                                Log.d("Exam2", "onDataChange: "+ratings.getAverageRating());
+
+                                                // Set Ratings to Hotel
+
+                                            }
+                                        }
                                         Log.d("city and state",""+hotel.getName()+" : "+hotel.getCity());
 //                                         Handle otherImages
                                         List<String> otherImages = (List<String>) hotelData.get("otherImages");

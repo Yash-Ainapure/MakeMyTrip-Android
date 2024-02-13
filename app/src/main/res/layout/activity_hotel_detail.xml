@@ -8,403 +8,428 @@
 
     <ScrollView
 
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/app_bg">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/imageViewHotel"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginBottom="10dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/calendar"
-        app:shapeAppearanceOverlay="@style/circular" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/hotel_card_bg"
-        android:orientation="vertical"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="10dp">
-
-        <TextView
-            android:id="@+id/textViewHotelName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Harsh Hotel"
-            android:textColor="@color/black"
-            android:textSize="25dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textViewHotelAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Pune, Maharashtra"
-            android:textColor="@color/black"
-            android:textSize="16dp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginVertical="8dp"
-            android:background="@color/gray" />
-
-        <TextView
-            android:id="@+id/textViewSelectDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Travel Dates"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-        <!--        <TextView-->
-        <!--            android:id="@+id/textViewSelectedDates"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginVertical="4dp"-->
-        <!--            android:textColor="@color/black"-->
-        <!--            android:text="No Date Selected"/>-->
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginVertical="4dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:text="Check-in: "
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="12 PM"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textView14"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:text="Check-out: "
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textView15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="11 AM"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/hotel_card_bg"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="10dp"
-        android:orientation="vertical">
-        <!-- Date Range Selector -->
-
-        <!--            <TextView-->
-        <!--                android:id="@+id/selectedDate"-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:text="No Date Selected"-->
-        <!--                android:textSize="16sp"-->
-        <!--                android:layout_marginTop="16dp"/>-->
-        <!--        <TextView-->
-        <!--            android:id="@+id/textViewSelectNumberOfDates"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginTop="16dp"-->
-        <!--            android:text="Select Number of Days you need"-->
-        <!--            android:textSize="16sp" />-->
-
-        <!--        <NumberPicker-->
-        <!--            android:id="@+id/numberPickerDays"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginTop="8dp" />-->
-
-        <!-- Number of Rooms Selector -->
+        android:background="@color/app_bg">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/buttonDatePicker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:layout_marginTop="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/borderbtn"
-                android:drawableLeft="@drawable/calendar_icon"
-                android:drawablePadding="10dp"
-                android:padding="10dp"
-                android:text="Starting Date"
-
-                android:textColor="@color/calbtn"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/buttonDatePicker2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:layout_marginTop="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/borderbtn"
-                android:drawableLeft="@drawable/calendar_icon"
-                android:drawablePadding="10dp"
-                android:padding="10dp"
-                android:text="Ending Date"
-
-                android:textColor="@color/calbtn"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/textViewSelectRooms"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Select Number of Rooms"
-            android:textColor="@color/black"
-            android:textSize="16dp" />
-
-        <!--        <NumberPicker-->
-        <!--            android:id="@+id/numberPickerRooms"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginTop="8dp" />-->
-        <NumberPicker
-            android:id="@+id/numberPickerRooms"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/transparent"
-            android:layout_marginTop="8dp"
-            />
-
-        <Button
-            android:id="@+id/buttonBookHotel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/custom_button_bg"
-            android:text="Book Hotel"
-            android:textColor="@color/white"
-            android:textSize="20dp" />
-
-        <!-- Book Hotel Button -->
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginVertical="10dp"
-        android:background="@drawable/hotel_card_bg"
-        android:orientation="vertical"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="10dp">
-
-        <TextView
-            android:id="@+id/textViewAboutHotel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="About This Property"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/AboutProperty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Manthan Executive hotel is a contemporary lifestyle destination situated in Kolhapur city. The hotel is located at the distance of 1.5 km from Kolhapur Railway Station and 1.5 km from Kolhapur Central Bus Stand.  Good Food and a variety of drinks are served at the restaurant within the premises." />
-
-        <TextView
-            android:id="@+id/readmore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Read More"
-            android:textColor="@color/calbtn"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
+            android:orientation="vertical"
+            android:padding="16dp">
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/otherImage1"
-                android:layout_width="368dp"
-                android:layout_height="180dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="10dp"
+                android:id="@+id/imageViewHotel"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginBottom="10dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/photo1"
+                android:src="@drawable/calendar"
                 app:shapeAppearanceOverlay="@style/circular" />
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/otherImage2"
-                android:layout_width="368dp"
-                android:layout_height="180dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="10dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/photo2"
-                app:shapeAppearanceOverlay="@style/circular" />
-
-        </LinearLayout>
-    </HorizontalScrollView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginVertical="10dp"
-        android:background="@drawable/hotel_card_bg"
-        android:orientation="vertical"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="10dp">
-
-        <TextView
-            android:id="@+id/Ratings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Reviews and Ratings"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginVertical="4dp"
-            android:gravity="center_horizontal|center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="5dp">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rating_no_bg"
-                android:paddingHorizontal="5dp">
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/hotel_card_bg"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="10dp">
 
                 <TextView
-                    android:id="@+id/hotelRating"
+                    android:id="@+id/textViewHotelName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Harsh Hotel"
+                    android:textColor="@color/black"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textViewHotelAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Pune, Maharashtra"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="8dp"
+                    android:background="@color/gray" />
+
+                <TextView
+                    android:id="@+id/textViewSelectDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Travel Dates"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <!--        <TextView-->
+                <!--            android:id="@+id/textViewSelectedDates"-->
+                <!--            android:layout_width="wrap_content"-->
+                <!--            android:layout_height="wrap_content"-->
+                <!--            android:layout_marginVertical="4dp"-->
+                <!--            android:textColor="@color/black"-->
+                <!--            android:text="No Date Selected"/>-->
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="4dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:text="Check-in: "
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="12 PM"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:text="Check-out: "
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="11 AM"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/hotel_card_bg"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="10dp"
+                android:orientation="vertical">
+                <!-- Date Range Selector -->
+
+                <!--            <TextView-->
+                <!--                android:id="@+id/selectedDate"-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:text="No Date Selected"-->
+                <!--                android:textSize="16sp"-->
+                <!--                android:layout_marginTop="16dp"/>-->
+                <!--        <TextView-->
+                <!--            android:id="@+id/textViewSelectNumberOfDates"-->
+                <!--            android:layout_width="match_parent"-->
+                <!--            android:layout_height="wrap_content"-->
+                <!--            android:layout_marginTop="16dp"-->
+                <!--            android:text="Select Number of Days you need"-->
+                <!--            android:textSize="16sp" />-->
+
+                <!--        <NumberPicker-->
+                <!--            android:id="@+id/numberPickerDays"-->
+                <!--            android:layout_width="wrap_content"-->
+                <!--            android:layout_height="wrap_content"-->
+                <!--            android:layout_marginTop="8dp" />-->
+
+                <!-- Number of Rooms Selector -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/buttonDatePicker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/borderbtn"
+                        android:drawableLeft="@drawable/calendar_icon"
+                        android:drawablePadding="10dp"
+                        android:padding="10dp"
+                        android:text="Starting Date"
+
+                        android:textColor="@color/calbtn"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/buttonDatePicker2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/borderbtn"
+                        android:drawableLeft="@drawable/calendar_icon"
+                        android:drawablePadding="10dp"
+                        android:padding="10dp"
+                        android:text="Ending Date"
+
+                        android:textColor="@color/calbtn"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textViewSelectRooms"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Select Number of Rooms"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+                <!--        <NumberPicker-->
+                <!--            android:id="@+id/numberPickerRooms"-->
+                <!--            android:layout_width="wrap_content"-->
+                <!--            android:layout_height="wrap_content"-->
+                <!--            android:layout_marginTop="8dp" />-->
+                <NumberPicker
+                    android:id="@+id/numberPickerRooms"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:layout_marginTop="8dp"
+                    />
+
+                <Button
+                    android:id="@+id/buttonBookHotel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/custom_button_bg"
+                    android:text="Book Hotel"
+                    android:textColor="@color/white"
+                    android:textSize="20dp" />
+
+                <!-- Book Hotel Button -->
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/hotel_card_bg"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="10dp">
+
+                <TextView
+                    android:id="@+id/textViewAboutHotel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="About This Property"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/AboutProperty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="1dp"
-                    android:text="4.1"
-                    android:textColor="@color/white"
-                    android:textSize="25dp"
+                    android:text="Manthan Executive hotel is a contemporary lifestyle destination situated in Kolhapur city. The hotel is located at the distance of 1.5 km from Kolhapur Railway Station and 1.5 km from Kolhapur Central Bus Stand.  Good Food and a variety of drinks are served at the restaurant within the premises." />
+
+                <TextView
+                    android:id="@+id/readmore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Read More"
+                    android:textColor="@color/calbtn"
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/ratinginwords"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="0"
-                android:text="Very Good"
-                android:textColor="@color/rating_bg"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/otherImage1"
+                        android:layout_width="368dp"
+                        android:layout_height="180dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="10dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/photo1"
+                        app:shapeAppearanceOverlay="@style/circular" />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/otherImage2"
+                        android:layout_width="368dp"
+                        android:layout_height="180dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="10dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/photo2"
+                        app:shapeAppearanceOverlay="@style/circular" />
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/hotel_card_bg"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="10dp">
+
+                <TextView
+                    android:id="@+id/Ratings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Reviews and Ratings"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginVertical="4dp"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="5dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rating_no_bg"
+                        android:paddingHorizontal="5dp">
+
+                        <TextView
+                            android:id="@+id/hotelRating"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="1dp"
+                            android:text="4.1"
+                            android:textColor="@color/white"
+                            android:textSize="25dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/ratinginwords"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="0"
+                        android:text="Very Good"
+                        android:textColor="@color/rating_bg"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/ratingcount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="0"
+                        android:text="(10)"
+                        android:textColor="@color/rating_bg"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                       />
+                </LinearLayout>
+
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:progressTint="#4C5FC6"
+                    android:progressBackgroundTint="#803F51B5"
+                    />
+
+
+                <Button
+                    android:id="@+id/submit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_button_bg"
+                    android:textColor="@color/white"
+                    android:textSize="15dp"
+                    android:text="Submit" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="8dp"
+                    android:background="@color/gray" />
+
+                <TextView
+                    android:id="@+id/Reviews"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Guest Ratings"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Good Stay"
+                    android:textColor="@color/black"
+                    android:layout_marginVertical="4dp"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Prasad N Mar 05,2023"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Very Suitable for family stay , industrial visitors and business people. Very good service and food. Very good location. Very good staff. Very good cleanliness. Very good parking facility. Very good room service. Very good room. Very good amenities. Very good value for money."
+                    android:layout_marginVertical="4dp"
+                    android:textSize="14dp"
+                    android:textColor="@color/black"
+                    />
+                <TextView
+                    android:id="@+id/readall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textColor="@color/calbtn"
+                    android:text="Read All"
+                    />
+
+            </LinearLayout>
+
+            <!--    <com.google.android.material.imageview.ShapeableImageView-->
+            <!--        android:id="@+id/otherImages"-->
+            <!--        android:layout_width="match_parent"-->
+            <!--        android:layout_height="200dp"-->
+            <!--        android:layout_marginBottom="10dp"-->
+            <!--        android:scaleType="centerCrop"-->
+            <!--        android:src="@drawable/calendar"-->
+            <!--        app:shapeAppearanceOverlay="@style/circular" />-->
+
         </LinearLayout>
 
-        <RatingBar
-            android:id="@+id/ratingBar"
-            android:layout_width="wrap_content"
-            android:layout_height="47dp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginVertical="8dp"
-            android:background="@color/gray" />
-
-        <TextView
-            android:id="@+id/Reviews"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Guest Ratings"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Good Stay"
-            android:textColor="@color/black"
-            android:layout_marginVertical="4dp"
-            android:textSize="14dp"
-            android:textStyle="bold" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Prasad N Mar 05,2023"
-            android:textSize="14dp"
-            android:textStyle="bold" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Very Suitable for family stay , industrial visitors and business people. Very good service and food. Very good location. Very good staff. Very good cleanliness. Very good parking facility. Very good room service. Very good room. Very good amenities. Very good value for money."
-            android:layout_marginVertical="4dp"
-            android:textSize="14dp"
-            android:textColor="@color/black"
-             />
-        <TextView
-            android:id="@+id/readall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/calbtn"
-            android:text="Read All"
-            />
-</LinearLayout>
-
-<!--    <com.google.android.material.imageview.ShapeableImageView-->
-<!--        android:id="@+id/otherImages"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="200dp"-->
-<!--        android:layout_marginBottom="10dp"-->
-<!--        android:scaleType="centerCrop"-->
-<!--        android:src="@drawable/calendar"-->
-<!--        app:shapeAppearanceOverlay="@style/circular" />-->
-
-</LinearLayout>
-
-        </ScrollView>
+    </ScrollView>
 
 </LinearLayout>

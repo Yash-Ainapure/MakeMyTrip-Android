@@ -88,6 +88,7 @@ public class WishlistCardAdapter extends RecyclerView.Adapter<WishlistCardAdapte
                         String LoggedUserId = user.getUid();
                         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(LoggedUserId).child("hotelsWishlist");
                         String UserId=databaseReference.push().getKey();
+
                         Hotel newHotel=new Hotel(hotel.getId(),hotel.getName(),hotel.getAddress(),hotel.getImageUrl(),hotel.isLiked(),hotel.getPrice(), hotel.getOtherImages(),hotel.getRating(),hotel.getState(),hotel.getCity());
                         databaseReference.child(UserId).setValue(newHotel);
                     }
@@ -198,8 +199,8 @@ public class WishlistCardAdapter extends RecyclerView.Adapter<WishlistCardAdapte
             hotelName = itemView.findViewById(R.id.textViewHotelName);
             hotelAddress = itemView.findViewById(R.id.textViewHotelAddress);
             likeButton = itemView.findViewById(R.id.likeButton);
-            hotelPrice=itemView.findViewById(R.id.hotelPrice);
-            hotelRating=itemView.findViewById(R.id.hotelRating);
+            hotelPrice = itemView.findViewById(R.id.hotelPrice);
+            hotelRating = itemView.findViewById(R.id.hotelRating);
             ratinginwords = itemView.findViewById(R.id.ratinginwords);
         }
 
@@ -209,19 +210,45 @@ public class WishlistCardAdapter extends RecyclerView.Adapter<WishlistCardAdapte
             hotelAddress.setText(hotel.getAddress());
 
             hotelPrice.setText(String.valueOf(hotel.getPrice()));
-            hotelRating.setText(String.valueOf(hotel.getRating()));
-            ratinginwords.setText(hotel.setRatinginwords());
+//            hotelRating.setText(String.valueOf(hotel.getRating()));
+//            ratinginwords.setText(hotel.setRatinginwords());
             // Load image using a library like Picasso or Glide
             // Example using Picasso:
-             Picasso.get().load(hotel.getImageUrl()).into(hotelImage);
+            Picasso.get().load(hotel.getImageUrl()).into(hotelImage);
+
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance()
+                    .getReference("countries").child("India")
+                    .child("states").child(hotel.getState())
+                    .child("cities")
+                    .child(hotel.getCity())
+                    .child("hotels")
+                    .child(hotel.getId())
+                    .child("ratings");
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Ratings ratings = snapshot.getValue(Ratings.class);
+                    if (ratings != null) {
+//                       Toast.makeText(HotelDetailActivity.this, "Ratings" + ratings.getAverageRating(), Toast.LENGTH_SHORT).show();
+
+                        hotelRating.setText(String.valueOf(ratings.getAverageRating()));
+                        ratinginwords.setText(ratings.setRatinginwords());
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+    }
+        void updateIsLikedInFirebase(String hotelId, boolean isLiked, Hotel hotel) {
+            // Update the 'isLiked' field in the 'hotels' node in Firebase
+            if (hotelsRef != null) {
+                DatabaseReference hotelRef = hotelsRef.child(hotel.getState()).child("cities").child(hotel.getCity()).child("hotels").child(hotelId);
+                hotelRef.child("isLiked").setValue(isLiked);
+            }
         }
     }
 
-    void updateIsLikedInFirebase(String hotelId, boolean isLiked,Hotel hotel) {
-        // Update the 'isLiked' field in the 'hotels' node in Firebase
-        if (hotelsRef != null) {
-            DatabaseReference hotelRef = hotelsRef.child(hotel.getState()).child("cities").child(hotel.getCity()).child("hotels").child(hotelId);
-            hotelRef.child("isLiked").setValue(isLiked);
-        }
-    }
-}

@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,13 +17,17 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
@@ -33,11 +38,21 @@ public class HotelDetailActivity extends AppCompatActivity {
     NumberPicker numberPickerRooms;
     private String selectedDates="1/02/2024";
     private int Price=0;
-    Button buttonDatePicker, buttonBookHotel,buttonDatePicker2;
+    Button buttonDatePicker, buttonBookHotel,buttonDatePicker2 ,submit;
     FirebaseAuth mAuth;
+
+    String formattedAverageRating ;
+    String formattedTotalRating ,  formattednewRating;
     DatabaseReference databaseReference;
-    TextView textViewHotelName, textViewHotelAddress;
+    TextView textViewHotelName, textViewHotelAddress ,ratingcount;
     private TextView ratinginwords , hotelRating;
+    private RatingBar ratingBar;
+    float totalRating;
+    int numRatings;
+    float averageRating;
+
+    Ratings ratings;
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -66,28 +81,88 @@ public class HotelDetailActivity extends AppCompatActivity {
         if (intent != null && intent.hasExtra("hotel")) {
             Hotel hotel = intent.getParcelableExtra("hotel");
 
-            Price=hotel.getPrice();
-            // Now you have the 'hotel' object, you can display its details in the activity
-            TextView textViewHotelName = findViewById(R.id.textViewHotelName);
-            TextView textViewHotelAddress = findViewById(R.id.textViewHotelAddress);
-            ImageView imageViewHotel = findViewById(R.id.imageViewHotel);
-            hotelRating=findViewById(R.id.hotelRating);
-            ratinginwords = findViewById(R.id.ratinginwords);
-            ImageView otherImage1=findViewById(R.id.otherImage1);
-            ImageView otherImage2=findViewById(R.id.otherImage2);
-            if (hotel.getOtherImages() != null && hotel.getOtherImages().size() > 0) {
-                Picasso.get().load(hotel.getOtherImages().get(0)).into(otherImage1);
-                Picasso.get().load(hotel.getOtherImages().get(1)).into(otherImage2);
-            }
+
+           if (hotel!=null) {
+               Price = hotel.getPrice();
+               // Now you have the 'hotel' object, you can display its details in the activity
+               TextView textViewHotelName = findViewById(R.id.textViewHotelName);
+               TextView textViewHotelAddress = findViewById(R.id.textViewHotelAddress);
+               ImageView imageViewHotel = findViewById(R.id.imageViewHotel);
+               hotelRating = findViewById(R.id.hotelRating);
+               ratinginwords = findViewById(R.id.ratinginwords);
+               ratingcount = findViewById(R.id.ratingcount);
+               ImageView otherImage1 = findViewById(R.id.otherImage1);
+               ImageView otherImage2 = findViewById(R.id.otherImage2);
+               if (hotel.getOtherImages() != null && hotel.getOtherImages().size() > 0) {
+                   Picasso.get().load(hotel.getOtherImages().get(0)).into(otherImage1);
+                   Picasso.get().load(hotel.getOtherImages().get(1)).into(otherImage2);
+               }
 
 
-            textViewHotelName.setText(hotel.getName());
-            textViewHotelName.setText(hotel.getName());
-            textViewHotelAddress.setText(hotel.getAddress());
-            hotelRating.setText(String.valueOf(hotel.getRating()));
-            ratinginwords.setText(hotel.setRatinginwords());
-            Picasso.get().load(hotel.getImageUrl()).into(imageViewHotel);
 
+
+               ratingBar = findViewById(R.id.ratingBar);
+               submit = findViewById(R.id.submit);
+
+               submit.setVisibility(View.GONE);
+
+
+
+               databaseReference=FirebaseDatabase.getInstance()
+                       .getReference("countries").child("India")
+                       .child("states").child(hotel.getState())
+                       .child("cities")
+                       .child(hotel.getCity())
+                       .child("hotels")
+                       .child(hotel.getId())
+                       .child("ratings");
+               databaseReference.addValueEventListener(new ValueEventListener() {
+                   @Override
+                   public void onDataChange(@NonNull DataSnapshot snapshot) {
+                       ratings =snapshot.getValue(Ratings.class);
+                    if (ratings !=null) {
+//                       Toast.makeText(HotelDetailActivity.this, "Ratings" + ratings.getAverageRating(), Toast.LENGTH_SHORT).show();
+                        averageRating = ratings.getAverageRating();
+                        numRatings = ratings.getNumRatings();
+                        totalRating = ratings.getTotalRating();
+                        hotelRating.setText(String.valueOf(averageRating));
+                        ratinginwords.setText(ratings.setRatinginwords());
+                        String count =  String.valueOf(numRatings);
+                        ratingcount.setText("(" + count + ")");
+                    }
+                   }
+
+                   @Override
+                   public void onCancelled(@NonNull DatabaseError error) {
+
+                   }
+                });
+               ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                   @Override
+                   public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                       // Change visibility of the button based on the rating change
+                       if (rating > 0) {
+                           submit.setVisibility(View.VISIBLE);
+                           submit.setOnClickListener(new View.OnClickListener() {
+                               @Override
+                               public void onClick(View v) {
+                                   // Assuming you have the 'newRating' value, and 'hotel' object already defined
+//                                   Toast.makeText(HotelDetailActivity.this, "New rating" + rating, Toast.LENGTH_SHORT).show();
+                                  updateRatingInFirebase(rating, databaseReference);
+//                                   hotelRating.setText(String.valueOf(rating));
+                               }
+                           });
+                       } else {
+                           submit.setVisibility(View.GONE);
+                       }
+                   }
+               });
+
+               textViewHotelName.setText(hotel.getName());
+               textViewHotelAddress.setText(hotel.getAddress());
+
+               Picasso.get().load(hotel.getImageUrl()).into(imageViewHotel);
+           }
         } else {
             // Handle the case where no hotel details are provided
             Toast.makeText(this, "Error: No hotel details found", Toast.LENGTH_SHORT).show();
@@ -199,6 +274,66 @@ public class HotelDetailActivity extends AppCompatActivity {
         });
 
     }
+
+    private void updateRatingInFirebase(float newRating, DatabaseReference databaseReference) {
+
+        // Retrieve the current total rating and the number of ratings
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    float totalRating = dataSnapshot.child("totalRating").getValue(Float.class);
+                    int numRatings = dataSnapshot.child("numRatings").getValue(Integer.class);
+                    formattednewRating = String.format("%.1f", newRating);
+                    if (formattednewRating.matches("\\d+\\.0")) {
+                        formattednewRating = String.format("%.1f", newRating + 0.1);
+                    }
+// Update the total rating and number of ratings
+                    totalRating += newRating;
+                    numRatings++;
+
+// Calculate the average rating
+                    float averageRating = totalRating / numRatings;
+
+
+
+// Format values with one decimal place
+                 formattedTotalRating = String.format("%.1f", totalRating);
+                     formattedAverageRating = String.format("%.1f", averageRating);
+
+// Add 0.1 if the first decimal place is 0
+                    if (formattedTotalRating.matches("\\d+\\.0")) {
+                        formattedTotalRating = String.format("%.1f", totalRating + 0.1);
+                    }
+                    if (formattedAverageRating.matches("\\d+\\.0")) {
+                        formattedAverageRating = String.format("%.1f", averageRating + 0.1);
+                    }
+
+// Update the Firebase node with the new values
+                    databaseReference.child("totalRating").setValue(Float.parseFloat(formattedTotalRating));
+                    databaseReference.child("numRatings").setValue(numRatings);
+                    databaseReference.child("averageRating").setValue(Float.parseFloat(formattedAverageRating));
+
+
+
+
+                }
+                Toast.makeText(HotelDetailActivity.this, "Rating will be updated shortly.", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle the error
+            }
+        });
+    }
+
+
+
+
+
+
+
 
     private void showDatePickerDialog(Button buttonDatePickerx) {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
