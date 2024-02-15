@@ -29,6 +29,7 @@ public class Flight implements Parcelable {
     }
 
     // Constructor with parameters
+
     // Constructor with parameters
     public Flight(String flightId, String airline, String departureCity, String destinationCity, int flightPrice, boolean isLiked, String departureTime, String destinationTime,String flightImage) {
     this.flightId = flightId;
@@ -152,7 +153,7 @@ public void setDestinationTime(String destinationTime) {
     dest.writeString(airline);
     dest.writeString(departureCity);
     dest.writeString(destinationCity);
-    dest.writeDouble(flightPrice);
+    dest.writeInt(flightPrice);
     dest.writeByte((byte) (isLiked ? 1 : 0));
     dest.writeString(departureTime);
     dest.writeString(destinationTime);

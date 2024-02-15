@@ -94,6 +94,33 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/price"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:text="Select no. of people to book: "
+                android:layout_height="25dp"/>
+            <NumberPicker
+                android:id="@+id/numberPickerRooms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:layout_marginTop="8dp"
+                />
+            <Spinner
+                android:id="@+id/flightSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:prompt="@string/select_flight_prompt" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
             android:gravity="center"
             android:layout_height="wrap_content">
             <Button
