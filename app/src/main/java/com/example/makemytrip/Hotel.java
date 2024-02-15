@@ -83,7 +83,7 @@ public class Hotel implements Parcelable {
         price = in.readInt();
         otherImages = new ArrayList<>();
         in.readList(otherImages, String.class.getClassLoader());
-        rating = in.readFloat();
+//        rating = in.readFloat();
         state = in.readString();
         city = in.readString();
     }
@@ -185,7 +185,7 @@ public class Hotel implements Parcelable {
         dest.writeByte((byte) (isLiked ? 1 : 0));
         dest.writeInt(price);
         dest.writeList(otherImages);
-        dest.writeFloat(rating);
+//        dest.writeFloat(rating);
         dest.writeString(state);
         dest.writeString(city);
     }

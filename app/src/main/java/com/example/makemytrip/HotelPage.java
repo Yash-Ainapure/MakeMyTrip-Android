@@ -37,7 +37,7 @@ public class HotelPage extends AppCompatActivity {
 
     Button searchBtn;
 
-    String selectedCountry;
+    String selectedCountry = "India";
     EditText searchEdt;
     private RecyclerView recyclerView;
     private HotelCardAdapter adapter;
@@ -87,6 +87,11 @@ public class HotelPage extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     UserInfo userInfo = snapshot.getValue(UserInfo.class);
                     selectedCountry= userInfo.getSelectedCountry();
+                    if(selectedCountry == null){
+                        selectedCountry = "India";
+                        userInfo.setSelectedCountry(selectedCountry);
+                        databaseReference.child("selectedCountry").setValue(selectedCountry);
+                    }
                     databaseReference = FirebaseDatabase.getInstance().getReference("countries").child(selectedCountry);
                     loadData();
 
@@ -227,7 +232,7 @@ public class HotelPage extends AppCompatActivity {
                                         hotel.setImageUrl((String) hotelData.get("imageUrl"));
                                         hotel.setIsLiked((Boolean) hotelData.get("isLiked"));
                                         hotel.setPrice(((Long) hotelData.get("price")).intValue());
-                                       hotel.setRating(((Double) hotelData.get("rating")).floatValue());
+//                                       hotel.setRating(((Double) hotelData.get("rating")).floatValue());
                                        hotel.setCity((String) citySnapshot.getKey());
                                         hotel.setState((String) stateSnapshot.getKey());
                                         if (hotelData.containsKey("ratings")) {

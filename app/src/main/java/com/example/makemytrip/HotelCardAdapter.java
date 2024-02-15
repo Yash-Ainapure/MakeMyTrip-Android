@@ -1,6 +1,7 @@
 package com.example.makemytrip;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -210,7 +211,7 @@ public class HotelCardAdapter extends RecyclerView.Adapter<HotelCardAdapter.Hote
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 Ratings ratings = snapshot.getValue(Ratings.class);
                                 if (ratings != null) {
-//                       Toast.makeText(HotelDetailActivity.this, "Ratings" + ratings.getAverageRating(), Toast.LENGTH_SHORT).show();
+                                    Log.d("rate1", "Ratings" + ratings.getAverageRating());
 
                                     hotelRating.setText(String.valueOf(ratings.getAverageRating()));
                                     ratinginwords.setText(ratings.setRatinginwords());

@@ -1,6 +1,7 @@
 package com.example.makemytrip;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -23,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class FlightPage extends AppCompatActivity {
 
@@ -33,6 +36,18 @@ public class FlightPage extends AppCompatActivity {
     private DatabaseReference databaseReference;
     String selectedCountry;
     List<Flight> flights = new ArrayList<>();
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            // Handle the back button
+            case android.R.id.home:
+                onBackPressed(); // This will call the default back button behavior
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,21 +58,31 @@ public class FlightPage extends AppCompatActivity {
                 recyclerView.setLayoutManager(new LinearLayoutManager(this));
                 adapter = new FlightCardAdapter(new ArrayList<>());
                 recyclerView.setAdapter(adapter);
-
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
-
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            // Set your desired icon for the navigation drawer toggle
+        }
+        getSupportActionBar().setTitle("Flights");
         if (user != null) {
             String userId = user.getUid();
 
             // Get reference to the user's information node in the database
             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("userInfo");
+
             userRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     UserInfo userInfo = snapshot.getValue(UserInfo.class);
 
                     selectedCountry = userInfo.getSelectedCountry();
+                    if(selectedCountry == null){
+                        selectedCountry = "India";
+                        userInfo.setSelectedCountry(selectedCountry);
+                        databaseReference.child("selectedCountry").setValue(selectedCountry);
+                    }
                     databaseReference = FirebaseDatabase.getInstance().getReference("countries").child(selectedCountry);
                     loadData();
 
@@ -103,7 +128,8 @@ public class FlightPage extends AppCompatActivity {
     }
 
     private void loadData() {
-        Toast.makeText(this, "Loading data of" +  selectedCountry + "!!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Loading data of " + selectedCountry + "!!", Toast.LENGTH_SHORT).show();
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -117,12 +143,11 @@ public class FlightPage extends AppCompatActivity {
 
                         //comes till here only
                         // Iterate through hotels
-                        for (DataSnapshot flightSnapshot: citySnapshot.child("airports").getChildren()) {
+                        for (DataSnapshot flightSnapshot : citySnapshot.child("airports").getChildren()) {
 
-                            for (DataSnapshot flightsSnapshot: flightSnapshot.child("flights").getChildren()) {
+                            for (DataSnapshot flightsSnapshot : flightSnapshot.child("flights").getChildren()) {
 
                                 Map<String, Object> flightData = (Map<String, Object>) flightsSnapshot.getValue();
-
 
                                 if (flightData != null) {
                                     Flight flt = flightsSnapshot.getValue(Flight.class);
@@ -130,6 +155,14 @@ public class FlightPage extends AppCompatActivity {
                                         Log.d("FlightName", "Flight Name: " + flt.getAirline());
                                         Log.d("FlightName", "Flight ID: " + flt.getFlightId());
                                         Log.d("FlightName", "Flight City: " + flt.getDepartureCity());
+
+                                        Random random = new Random();
+
+                                        // Generate a random price between 2000 and 6000
+                                        int randomPrice = random.nextInt(4001) + 2000;
+                                        // Set the random price to your flight object
+                                        flt.setFlightPrice(randomPrice);
+
                                         flights.add(flt);
                                     } else {
                                         Log.d("NullData", "Null data found for flight: " + flightsSnapshot.getValue());
@@ -151,10 +184,10 @@ public class FlightPage extends AppCompatActivity {
                 adapter.setDatabaseReference(databaseReference.child("states"));
 
                 // Update the isLiked field for each hotel in the adapter
-//                for (Flight flt : flights) {
-//                    adapter.updateIsLikedInFirebase(flt.getId(), flt.isLiked(),flt);
-//                    Log.d("hotels", "onDataChange: " + flt.getName() + " " + flt.isLiked());
-//                }
+//            for (Flight flt : flights) {
+//                adapter.updateIsLikedInFirebase(flt.getId(), flt.isLiked(),flt);
+//                Log.d("hotels", "onDataChange: " + flt.getName() + " " + flt.isLiked());
+//            }
             }
 
             @Override
@@ -164,6 +197,7 @@ public class FlightPage extends AppCompatActivity {
             }
         });
     }
+
     private boolean containsKeyword(String source, String keyword) {
         return source.toLowerCase().contains(keyword.toLowerCase());
     }

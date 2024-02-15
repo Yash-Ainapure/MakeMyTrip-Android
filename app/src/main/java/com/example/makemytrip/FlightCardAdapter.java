@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.Random;
 
 public class FlightCardAdapter extends RecyclerView.Adapter<FlightCardAdapter.FlightViewHolder> {
     private List<Flight> flightList;
@@ -95,10 +96,12 @@ public class FlightCardAdapter extends RecyclerView.Adapter<FlightCardAdapter.Fl
 
         public void bindData(Flight flight) {
             // Bind data to UI elements
+
             flightName.setText(flight.getFlightName());
             departureCity.setText(flight.getDepartureCity());
             destinationCity.setText(flight.getDestinationCity());
-            flightPrice.setText(String.valueOf(flight.getFlightPrice()));
+            String price= String.valueOf(flight.getFlightPrice());
+            flightPrice.setText("₹ "+ price);
             departureTime.setText(flight.getDepartureTime());
             destinationTime.setText(flight.getDestinationTime());
 

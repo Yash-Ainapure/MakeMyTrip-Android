@@ -9,7 +9,7 @@ public class Flight implements Parcelable {
     private String airline;
     private String departureCity;
     private String destinationCity;
-    private double flightPrice;
+    private int flightPrice;
     private boolean isLiked;
     private String departureTime;
     private String destinationTime;
@@ -30,7 +30,7 @@ public class Flight implements Parcelable {
 
     // Constructor with parameters
     // Constructor with parameters
-    public Flight(String flightId, String airline, String departureCity, String destinationCity, double flightPrice, boolean isLiked, String departureTime, String destinationTime,String flightImage) {
+    public Flight(String flightId, String airline, String departureCity, String destinationCity, int flightPrice, boolean isLiked, String departureTime, String destinationTime,String flightImage) {
     this.flightId = flightId;
     this.airline = airline;
     this.departureCity = departureCity;
@@ -48,7 +48,7 @@ public class Flight implements Parcelable {
     airline = in.readString();
     departureCity = in.readString();
     destinationCity = in.readString();
-    flightPrice = in.readDouble();
+    flightPrice = in.readInt();
     isLiked = in.readByte() != 0;
     departureTime = in.readString();
     destinationTime = in.readString();
@@ -112,11 +112,11 @@ public void setDestinationTime(String destinationTime) {
         this.destinationCity = destinationCity;
     }
 
-    public double getFlightPrice() {
+    public int getFlightPrice() {
         return flightPrice;
     }
 
-    public void setFlightPrice(double flightPrice) {
+    public void setFlightPrice(int flightPrice) {
         this.flightPrice = flightPrice;
     }
 
