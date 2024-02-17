@@ -314,7 +314,11 @@
             <Button
                 android:id="@+id/saveData"
                 android:text="save Data"
+                android:background="@drawable/custom_button_bg"
                 android:layout_marginBottom="10dp"
+                android:layout_marginHorizontal="15dp"
+                android:textColor="@color/white"
+                android:textSize="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>

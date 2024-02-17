@@ -24,12 +24,12 @@
         <item android:id="@+id/nav_settings" android:title="Settings" >
             <menu>
                 <group>
-                    <item android:id="@+id/language"
-                        android:title="Language"
-                        android:icon="@drawable/languages"/>
+<!--                    <item android:id="@+id/language"-->
+<!--                        android:title="Language"-->
+<!--                        android:icon="@drawable/languages"/>-->
                     <item android:id="@+id/country"
                         android:title="Country"
-                        android:icon="@drawable/flag"/>
+                        android:icon="@drawable/languages"/>
                 </group>
             </menu>
         </item>

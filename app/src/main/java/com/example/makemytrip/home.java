@@ -156,9 +156,11 @@ public class home extends AppCompatActivity {
                     Log.i("MENU_DRAWER_TAG", "Wishlist is clicked");
                     intent = new Intent(home.this, Wishlist.class);
                     startActivity(intent);
-                } else if (itemId == R.id.language) {
-                    Log.i("MENU_DRAWER_TAG", "Language is clicked");
-                } else if (itemId == R.id.country) {
+                        }
+//                else if (itemId == R.id.language) {
+//                    Log.i("MENU_DRAWER_TAG", "Language is clicked");
+//                }
+                else if (itemId == R.id.country) {
                     intent = new Intent(home.this, Country.class);
                     startActivity(intent);
                     Log.i("MENU_DRAWER_TAG", "Country is clicked");
