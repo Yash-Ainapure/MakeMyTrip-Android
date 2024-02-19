@@ -52,6 +52,7 @@ public class RegisterPage extends AppCompatActivity {
             String fname = firstName.getText().toString();
             String lname = lastName.getText().toString();
             String mobno = mobileNo.getText().toString();
+            String selectedCountry = "India";
             if(fname.isEmpty()){
                 firstName.setError("Please enter first name");
                 firstName.requestFocus();
@@ -88,7 +89,7 @@ public class RegisterPage extends AppCompatActivity {
                     }
                     else{
 
-                        saveAdditionalUserInfo(task.getResult().getUser().getUid(),fname, lname, mobno,emailid);
+                        saveAdditionalUserInfo(task.getResult().getUser().getUid(),fname, lname, mobno,emailid, selectedCountry);
 
                         startActivity(new Intent(RegisterPage.this, MainActivity.class));
                         Toast.makeText(this, "registered successfully,now you can login with the credentials", Toast.LENGTH_SHORT).show();
@@ -146,10 +147,10 @@ public class RegisterPage extends AppCompatActivity {
             return false;
         });
     }
-    private void saveAdditionalUserInfo(String userId, String firstName, String lastName, String phoneNumber, String email) {
+    private void saveAdditionalUserInfo(String userId, String firstName, String lastName, String phoneNumber, String email,String selectedCountry) {
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("userInfo");
-        UserInfo userInfo = new UserInfo(email,firstName,lastName,phoneNumber,userId);
+        UserInfo userInfo = new UserInfo(email,firstName,lastName,phoneNumber,userId ,selectedCountry);
         databaseReference.setValue(userInfo);
 
 

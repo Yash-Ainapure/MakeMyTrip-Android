@@ -74,6 +74,8 @@ public class HotelPage extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             // Set your desired icon for the navigation drawer toggle
         }
+
+
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
 

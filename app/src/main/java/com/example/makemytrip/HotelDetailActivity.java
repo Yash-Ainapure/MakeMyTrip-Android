@@ -75,6 +75,7 @@ public class HotelDetailActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             // Set your desired icon for the navigation drawer toggle
         }
+
         mAuth = FirebaseAuth.getInstance();
         getSupportActionBar().setTitle("Hotel Details");
         // Retrieve hotel details from intent

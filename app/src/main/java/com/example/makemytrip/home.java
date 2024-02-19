@@ -87,6 +87,7 @@ public class home extends AppCompatActivity {
         hotel_tab = findViewById(R.id.hotel_tab);
         flight_tab = findViewById(R.id.flight_tab);
 
+
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigationView);
         actionBarDrawerTogg1e = new ActionBarDrawerToggle(this, drawerLayout, R.string.menu_open, R.string.menu_close);

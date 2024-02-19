@@ -10,13 +10,14 @@ public class UserInfo {
     public UserInfo() {
         //Default Constructor
     }
-    public UserInfo(String email, String firstName, String lastName, String phoneNumber,String userId ) {
+    public UserInfo(String email, String firstName, String lastName, String phoneNumber,String userId ,String selectedCountry) {
         Log.d("UserInfo", "UserInfo: " + userId + " " + firstName + " " + lastName + " " + phoneNumber + " " + email);
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.userId = userId;
+        this.selectedCountry = selectedCountry;
     }
 
     public UserInfo(String userId,String firstName, String phoneNumber, String email,
