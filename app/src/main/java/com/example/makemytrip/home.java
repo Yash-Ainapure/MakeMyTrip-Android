@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -87,7 +88,7 @@ public class home extends AppCompatActivity {
         hotel_tab = findViewById(R.id.hotel_tab);
         flight_tab = findViewById(R.id.flight_tab);
         holiday_tab = findViewById(R.id.holiday_tab);
-
+        ImageView imageView = findViewById(R.id.imageView8);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigationView);
         actionBarDrawerTogg1e = new ActionBarDrawerToggle(this, drawerLayout, R.string.menu_open, R.string.menu_close);
@@ -100,7 +101,14 @@ public class home extends AppCompatActivity {
         header_phone = headerView.findViewById(R.id.header_phone);
         welcometext = findViewById(R.id.welcometext);
         profileImage = headerView.findViewById(R.id.imageView);
-
+//        imageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Open Google Maps link
+//                String googleMapsUrl = "https://maps.app.goo.gl/YJRCFtWcE7FH2xsJ7";
+//                openWebPage(googleMapsUrl);
+//            }
+//        });
         databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(UserId).child("userInfo");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -200,7 +208,15 @@ public class home extends AppCompatActivity {
         });
 
     }
-
+//    private void openWebPage(String url) {
+//        Uri webpage = Uri.parse(url);
+//        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+////        Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show();
+//        // Check if there's a web browser available to handle the intent
+//        if (intent.resolveActivity(getPackageManager()) != null) {
+//            startActivity(intent);
+//        }
+//    }
     private void loadProfileImage() {
 
         StorageReference storageReference = FirebaseStorage.getInstance().getReference("UserProfileImages/" + UserId);

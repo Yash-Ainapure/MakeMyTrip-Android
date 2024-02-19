@@ -8,6 +8,7 @@ import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -93,6 +95,7 @@ public class HotelDetailActivity extends AppCompatActivity {
                hotelRating = findViewById(R.id.hotelRating);
                ratinginwords = findViewById(R.id.ratinginwords);
                ratingcount = findViewById(R.id.ratingcount);
+                LinearLayout locationOnMap = findViewById(R.id.OnMapClick);
                ImageView otherImage1 = findViewById(R.id.otherImage1);
                ImageView otherImage2 = findViewById(R.id.otherImage2);
                if (hotel.getOtherImages() != null && hotel.getOtherImages().size() > 0) {
@@ -186,7 +189,14 @@ public class HotelDetailActivity extends AppCompatActivity {
 
                textViewHotelName.setText(hotel.getName());
                textViewHotelAddress.setText(hotel.getAddress());
-
+               locationOnMap.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) {
+                       // Open Google Maps link
+                       String googleMapsUrl = "https://maps.app.goo.gl/YJRCFtWcE7FH2xsJ7";
+                       openWebPage(googleMapsUrl);
+                   }
+               });
                Picasso.get().load(hotel.getImageUrl()).into(imageViewHotel);
            }
         } else {
@@ -300,7 +310,15 @@ public class HotelDetailActivity extends AppCompatActivity {
         });
 
     }
-
+    private void openWebPage(String url) {
+        Uri webpage = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+//        Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show();
+        // Check if there's a web browser available to handle the intent
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
     private void updateRatingInFirebase(float newRating, DatabaseReference databaseReference) {
 
         // Retrieve the current total rating and the number of ratings
