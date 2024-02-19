@@ -6,7 +6,7 @@ import android.os.Parcel;
 
 public class Flight implements Parcelable {
     private String flightId;
-    private String airline;
+    private String airline,departureAirport, destinationAirport;
     private String departureCity;
     private String destinationCity;
     private int flightPrice;
@@ -15,9 +15,11 @@ public class Flight implements Parcelable {
     private String destinationTime;
     private String flightImage;
 
+
     public String getAirline() {
         return airline;
     }
+
 
     public void setAirline(String airline) {
         this.airline = airline;
@@ -28,10 +30,25 @@ public class Flight implements Parcelable {
         // Default constructor required for Firebase
     }
 
-    // Constructor with parameters
+    public String getDepartureAirport() {
+        return departureAirport;
+    }
+
+    public void setDepartureAirport(String departureAirport) {
+        this.departureAirport = departureAirport;
+    }
+
+    public String getDestinationAirport() {
+        return destinationAirport;
+    }
+
+    public void setDestinationAirport(String destinationAirport) {
+        this.destinationAirport = destinationAirport;
+    }
+// Constructor with parameters
 
     // Constructor with parameters
-    public Flight(String flightId, String airline, String departureCity, String destinationCity, int flightPrice, boolean isLiked, String departureTime, String destinationTime,String flightImage) {
+    public Flight(String flightId, String airline, String departureCity, String destinationCity, int flightPrice, boolean isLiked, String departureTime, String destinationTime,String flightImage, String destinationAirport, String departureAirport) {
     this.flightId = flightId;
     this.airline = airline;
     this.departureCity = departureCity;
@@ -41,6 +58,9 @@ public class Flight implements Parcelable {
     this.departureTime = departureTime;
     this.destinationTime = destinationTime;
     this.flightImage = flightImage;
+    this.departureAirport = departureAirport;
+    this.destinationAirport = destinationAirport;
+
 }
 
 // Parcelable constructor
@@ -54,6 +74,8 @@ public class Flight implements Parcelable {
     departureTime = in.readString();
     destinationTime = in.readString();
     flightImage = in.readString();
+     departureAirport = in.readString();
+     destinationAirport = in.readString();
 }
 
 
@@ -158,5 +180,7 @@ public void setDestinationTime(String destinationTime) {
     dest.writeString(departureTime);
     dest.writeString(destinationTime);
     dest.writeString(flightImage);
+    dest.writeString(departureAirport);
+    dest.writeString(destinationAirport);
 }
 }

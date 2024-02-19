@@ -75,7 +75,7 @@ public class FlightCardAdapter extends RecyclerView.Adapter<FlightCardAdapter.Fl
 
     public class FlightViewHolder extends RecyclerView.ViewHolder {
         private TextView flightName;
-        private TextView departureCity;
+        private TextView departureCity, durationTextView;
         private TextView destinationCity;
         private TextView flightPrice;
         private TextView departureTime;
@@ -91,7 +91,7 @@ public class FlightCardAdapter extends RecyclerView.Adapter<FlightCardAdapter.Fl
             departureTime = itemView.findViewById(R.id.textViewDepartureTime);
             destinationTime = itemView.findViewById(R.id.textViewDestinationTime);
             flightImage = itemView.findViewById(R.id.imageViewCompanyLogo);
-
+            durationTextView = itemView.findViewById(R.id.textViewDuration);
         }
 
         public void bindData(Flight flight) {
@@ -105,12 +105,47 @@ public class FlightCardAdapter extends RecyclerView.Adapter<FlightCardAdapter.Fl
             departureTime.setText(flight.getDepartureTime());
             destinationTime.setText(flight.getDestinationTime());
 
+            String departureTime = flight.getDepartureTime();
+            String destinationTime = flight.getDestinationTime();
 
+            String duration = calculateDuration(departureTime, destinationTime);
+
+// Set the duration in your TextView
+            durationTextView.setText(duration);
             Picasso.get().load(flight.getFlightImage()).into(flightImage);
 
         }
     }
+    public String calculateDuration(String departureTime, String destinationTime) {
+        // Parse the departure and destination times
+        String[] depTimeParts = departureTime.split(":");
+        String[] destTimeParts = destinationTime.split(":");
 
+        int depHours = Integer.parseInt(depTimeParts[0]);
+        int depMinutes = Integer.parseInt(depTimeParts[1]);
+
+        int destHours = Integer.parseInt(destTimeParts[0]);
+        int destMinutes = Integer.parseInt(destTimeParts[1]);
+
+        // Calculate the duration
+        int durationHours = destHours - depHours;
+        int durationMinutes = destMinutes - depMinutes;
+
+        // Handle cases where the destination time is earlier than the departure time
+        if (durationHours < 0) {
+            durationHours += 24; // Add 24 hours to handle the next day
+        }
+
+        if (durationMinutes < 0) {
+            durationMinutes += 60; // Add 60 minutes to handle borrowing from the next hour
+            durationHours--; // Subtract 1 hour
+        }
+
+        // Format the duration as a string
+        String durationString = String.format("%d hrs %d min", durationHours, durationMinutes);
+
+        return durationString;
+    }
     void updateIsLikedInFirebase(String flightId, boolean isLiked) {
         // Update the 'isLiked' field in the 'flights' node in Firebase
         if (flightsRef != null) {
@@ -130,7 +165,7 @@ public class FlightCardAdapter extends RecyclerView.Adapter<FlightCardAdapter.Fl
             String flightId = databaseReference.push().getKey();
 
             // Create a new Flight object with relevant details
-            Flight newFlight = new Flight(flight.getFlightId(), flight.getFlightName(), flight.getDepartureCity(), flight.getDestinationCity(), flight.getFlightPrice(), flight.isLiked(),flight.getDepartureTime(),flight.getDestinationTime(),flight.getFlightImage());
+            Flight newFlight = new Flight(flight.getFlightId(), flight.getFlightName(), flight.getDepartureCity(), flight.getDestinationCity(), flight.getFlightPrice(), flight.isLiked(),flight.getDepartureTime(),flight.getDestinationTime(),flight.getFlightImage(),flight.getDepartureAirport(),flight.getDestinationAirport());
 
             // Add or remove flight from wishlist based on the like state
             if (isLiked) {

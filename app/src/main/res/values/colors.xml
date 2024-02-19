@@ -4,7 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="hotel_card_bg">#FFFFFF</color>
     <color name="rating_bg">#3F51B5</color>
-    <color name="app_bg">#EFEFEF</color>
+    <color name="app_bg">#daedfc</color>
     <color name="hotel_search_bg">#C8E1E1E1</color>
     <color name="hotel_search_border">#BDBDBD</color>
     <color name="gray">#E1C6C6C6</color>

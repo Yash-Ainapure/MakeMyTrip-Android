@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -13,10 +14,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +28,16 @@ import java.util.List;
 public class FlightDetailActivity extends AppCompatActivity {
 
     private TextView fltNameTextView;
-    private TextView fltDeptTextView;
-    private TextView fltDestTextView;
+    private TextView fltDeptTextView , fltDeptTextView1;
+    private TextView fltDestTextView , fltDestTextView1;
     private TextView deptTimeTextView;
+    private int numberOfTravelers = 1;
     private TextView destTimeTextView;
-    private TextView airportTextView;
+    private TextView airportTextView , destAirportTextView,durationTextView ,duration1;
     private Button bookButton;
+   private ImageView flightImage;
+
+    private TextView numberOfTravelersTextView;
     Flight flight;
     NumberPicker numberPickerPeople;
     private Spinner flightSpinner;
@@ -53,10 +61,17 @@ public class FlightDetailActivity extends AppCompatActivity {
         fltNameTextView = findViewById(R.id.fltName);
         fltDeptTextView = findViewById(R.id.fltdept);
         fltDestTextView = findViewById(R.id.fltdest);
+        fltDeptTextView1 = findViewById(R.id.fltdept1);
+        fltDestTextView1 = findViewById(R.id.fltdest1);
         deptTimeTextView = findViewById(R.id.deptTime);
         destTimeTextView = findViewById(R.id.destTime);
-        airportTextView = findViewById(R.id.airport);
+        airportTextView = findViewById(R.id.depairport);
+        destAirportTextView = findViewById(R.id.destairport);
+        durationTextView = findViewById(R.id.fltduration);
+        duration1 = findViewById(R.id.fltduration1);
         bookButton = findViewById(R.id.bookFlight);
+        flightImage = findViewById(R.id.imageViewCompanyLogo);
+        numberOfTravelersTextView = findViewById(R.id.noOfTravellers);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -67,45 +82,79 @@ public class FlightDetailActivity extends AppCompatActivity {
         if (intent != null) {
             flight = intent.getParcelableExtra("flight");
 
-            fltNameTextView.setText("Flight Name: " + flight.getFlightName());
-            fltDeptTextView.setText("Departure City: " + flight.getDepartureCity());
-            fltDestTextView.setText("Destination City: " + flight.getDestinationCity());
-            deptTimeTextView.setText("Departure : " + flight.getDepartureTime());
-            destTimeTextView.setText("Destination : " + flight.getDestinationTime());
-            airportTextView.setText("Airport Name: " + flight.getAirline());
+            fltNameTextView.setText(flight.getFlightName());
+            fltDeptTextView.setText(flight.getDepartureCity());
+            fltDestTextView.setText(flight.getDestinationCity());
+            fltDeptTextView1.setText(flight.getDepartureCity());
+            fltDestTextView1.setText(flight.getDestinationCity());
+            deptTimeTextView.setText(flight.getDepartureTime());
+            destTimeTextView.setText(flight.getDestinationTime());
+            airportTextView.setText(flight.getDepartureAirport());
+            destAirportTextView.setText(flight.getDestinationAirport());
+            Picasso.get().load(flight.getFlightImage()).into(flightImage);
+            String departureTime = flight.getDepartureTime();
+            String destinationTime = flight.getDestinationTime();
+
+            String duration = calculateDuration(departureTime, destinationTime);
+            duration1.setText("Non stop | " + duration);
+// Set the duration in your TextView
+            durationTextView.setText(duration);
         }
+
+        Button minusButton = findViewById(R.id.btnMinus);
+        Button plusButton = findViewById(R.id.btnPlus);
+
+
+        // Initial number of travelers
+
+        minusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (numberOfTravelers > 1) {
+                    numberOfTravelers--;
+                    numberOfTravelersTextView.setText(String.valueOf(numberOfTravelers));
+                    // You can also update your logic here based on the new number of travelers
+                }else {
+                    Toast.makeText(FlightDetailActivity.this, "You have to book for minimum of 1 person", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+
+        plusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (numberOfTravelers < 10) {
+                    numberOfTravelers++;
+                    numberOfTravelersTextView.setText(String.valueOf(numberOfTravelers));
+
+                    // You can also update your logic here based on the new number of travelers
+                }
+                else {
+                    Toast.makeText(FlightDetailActivity.this, "You can book a maximum of 10 people at a time", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         bookButton.setOnClickListener(v->{
             Intent intent1 = new Intent(FlightDetailActivity.this, FlightPayment.class);
             intent1.putExtra("bookingType", "flight");
-            intent1.putExtra("numberOfPeople", numberPickerPeople.getValue());
+            intent1.putExtra("numberOfPeople",numberOfTravelers);
             intent1.putExtra("flightBooking", flight);
             intent1.putExtra("class", flightSpinner.getSelectedItem().toString());
             startActivity(intent1);
-            Log.d("FlightDetailActivity", "price: " + flight.getFlightPrice()+" \n class: "+flightSpinner.getSelectedItem().toString()+" \n no of people: "+numberPickerPeople.getValue());
+            Log.d("FlightDetailActivity", "price: " + flight.getFlightPrice()+" \n class: "+flightSpinner.getSelectedItem().toString()+" \n no of people: "+numberOfTravelers);
         });
 
-        numberPickerPeople = findViewById(R.id.numberPickerRooms);
-        numberPickerPeople.setMinValue(1);
-        numberPickerPeople.setMaxValue(10);
-        numberPickerPeople.setValue(1);
 
-        numberPickerPeople.setOnTouchListener((v, event) -> {
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                v.setBackgroundResource(R.drawable.np_number_picker_pressed);
-            } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                v.setBackgroundResource(R.drawable.np_number_picker_default);
-            }
-            return false;
-        });
 
-        numberPickerPeople.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus) {
-                v.setBackgroundResource(R.drawable.np_number_picker_focused);
-            } else {
-                v.setBackgroundResource(R.drawable.np_number_picker_default);
-            }
-        });
+
+
+
+
+
+
+
 
         flightSpinner = findViewById(R.id.flightSpinner);
 
@@ -131,6 +180,36 @@ public class FlightDetailActivity extends AppCompatActivity {
             }
         });
 
+    }
+    public String calculateDuration(String departureTime, String destinationTime) {
+        // Parse the departure and destination times
+        String[] depTimeParts = departureTime.split(":");
+        String[] destTimeParts = destinationTime.split(":");
+
+        int depHours = Integer.parseInt(depTimeParts[0]);
+        int depMinutes = Integer.parseInt(depTimeParts[1]);
+
+        int destHours = Integer.parseInt(destTimeParts[0]);
+        int destMinutes = Integer.parseInt(destTimeParts[1]);
+
+        // Calculate the duration
+        int durationHours = destHours - depHours;
+        int durationMinutes = destMinutes - depMinutes;
+
+        // Handle cases where the destination time is earlier than the departure time
+        if (durationHours < 0) {
+            durationHours += 24; // Add 24 hours to handle the next day
+        }
+
+        if (durationMinutes < 0) {
+            durationMinutes += 60; // Add 60 minutes to handle borrowing from the next hour
+            durationHours--; // Subtract 1 hour
+        }
+
+        // Format the duration as a string
+        String durationString = String.format("%d hrs %d min", durationHours, durationMinutes);
+
+        return durationString;
     }
 
     private List<String> getClassTypes() {

@@ -1,9 +1,12 @@
 package com.example.makemytrip;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -13,7 +16,17 @@ public class FlightPayment extends AppCompatActivity {
     Button pay;
     int totalAmount;
     int noOfPeople;
-
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            // Handle the back button
+            case android.R.id.home:
+                onBackPressed(); // This will call the default back button behavior
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,10 +36,15 @@ public class FlightPayment extends AppCompatActivity {
         Flight flight = intent.getParcelableExtra("flightBooking");
         String BookingType= intent.getStringExtra("BookingType");
 
+
         noOfPeople = intent.getIntExtra("numberOfPeople", 1);
 
         String flightClass=intent.getStringExtra("class");
-
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            // Set your desired icon for the navigation drawer toggle
+        }
 
         price=findViewById(R.id.price);
         classTextview=findViewById(R.id.flightclass);
@@ -34,21 +52,33 @@ public class FlightPayment extends AppCompatActivity {
         rooms=findViewById(R.id.rooms);
         pay=findViewById(R.id.pay);
         gst=findViewById(R.id.gst);
-        getSupportActionBar().setTitle("Confirm Booking");
+        getSupportActionBar().setTitle("Confirm Flight Booking");
 
         price.setText("₹ "+flight.getFlightPrice());
         rooms.setText(noOfPeople+ " People");
 
         classTextview.setText(flightClass);
-        gst.setText("₹ "+(flight.getFlightPrice()*noOfPeople*0.18));
-        totalAmount = (int) (flight.getFlightPrice()*noOfPeople);
-        total.setText("₹ "+totalAmount);
+
+        // Adjust total amount based on flight class
+        double classMultiplier = 1.0; // Default multiplier for economy class
+
+        if ("First Class".equals(flightClass)) {
+            classMultiplier = 1.5; // Adjust multiplier for first class
+        } else if ("Business".equals(flightClass)) {
+            classMultiplier = 1.2; // Adjust multiplier for business class
+        }
+
+        double gstAmount = flight.getFlightPrice() * noOfPeople * 0.18;
+        double totalAmount = flight.getFlightPrice() * noOfPeople * classMultiplier;
+        double totalAmountWithGST = totalAmount + gstAmount;
+        gst.setText("₹ " + gstAmount);
+        total.setText("₹ " + totalAmountWithGST + "\n (including GST)");
 
         pay.setOnClickListener(v -> {
             Intent intent1 = new Intent(FlightPayment.this, DummyUPIPayment.class);
-            intent1.putExtra("totalAmount",totalAmount);
-            intent1.putExtra("bookingType","flight");
-            intent1.putExtra("flightBooking",flight);
+            intent1.putExtra("totalAmount", (int) totalAmountWithGST );
+            intent1.putExtra("bookingType", "flight");
+            intent1.putExtra("flightBooking", flight);
             startActivity(intent1);
         });
 
