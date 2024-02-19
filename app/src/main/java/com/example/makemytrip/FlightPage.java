@@ -10,10 +10,13 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -109,7 +112,21 @@ public class FlightPage extends AppCompatActivity {
                                     }
                                 }
                             }
-
+                            LottieAnimationView animationView = findViewById(R.id.animationView);
+                            RecyclerView recyclerView = findViewById(R.id.recyclerView);
+                            TextView emptyText = findViewById(R.id.nothing_found);
+                            TextView emptyHotelSubText = findViewById(R.id.description2);
+                            if (filteredFlights.isEmpty()) {
+                                animationView.setVisibility(View.VISIBLE);
+                                recyclerView.setVisibility(View.GONE);
+                                emptyText.setVisibility(View.VISIBLE);
+                                emptyHotelSubText.setVisibility(View.VISIBLE);
+                            } else {
+                                animationView.setVisibility(View.GONE);
+                                emptyText.setVisibility(View.GONE);
+                                recyclerView.setVisibility(View.VISIBLE);
+                                emptyHotelSubText.setVisibility(View.GONE);
+                            }
                             FlightCardAdapter adapter = new FlightCardAdapter(filteredFlights);
                             recyclerView.setAdapter(adapter);
                         } else {

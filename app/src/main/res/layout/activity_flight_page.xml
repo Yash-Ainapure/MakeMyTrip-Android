@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/app_bg"
     android:orientation="vertical"
     tools:context=".FlightPage">
@@ -60,7 +61,40 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp">
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="notfound.json"
+            app:lottie_loop="false"
+            android:visibility="gone"
 
+            />
+        <TextView
+            android:id="@+id/nothing_found"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No Flights Found"
+            android:textSize="25dp"
+            android:textColor="@color/rating_bg"
+            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:visibility="gone"
+            />
+        <TextView
+            android:id="@+id/description2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Try searching with different keywords."
+            android:textSize="16dp"
+            android:layout_marginHorizontal="15dp"
+
+            android:textColor="@color/subtext"
+            android:gravity="center_horizontal"
+            android:visibility="gone"
+
+            />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

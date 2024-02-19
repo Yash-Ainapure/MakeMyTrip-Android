@@ -17,6 +17,8 @@ package com.example.makemytrip;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -90,12 +93,31 @@ public class Wishlist extends AppCompatActivity {
                         }
                     }
 
+                    // Check if the likedHotelList is empty
+                    LottieAnimationView animationView = findViewById(R.id.animationView);
+                    RecyclerView recyclerView = findViewById(R.id.recyclerViewWishlist);
+                    TextView emptyWishlistText = findViewById(R.id.nothing_saved_yet);
+                    TextView emptyWishlistSubText = findViewById(R.id.description_wishlist);
+                    if (likedHotelList.isEmpty()) {
+                        animationView.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
+                        emptyWishlistText.setVisibility(View.VISIBLE);
+                        emptyWishlistSubText.setVisibility(View.VISIBLE);
+
+                    } else {
+                        animationView.setVisibility(View.GONE);
+                        emptyWishlistText.setVisibility(View.GONE);
+                        emptyWishlistSubText.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                    }
+
+
                     // Update adapter with liked hotels
                     wishlistAdapter.setWishlist(likedHotelList);
 
                     // Update the isLiked field for each hotel in the adapter
                     for (Hotel hotel : likedHotelList) {
-                        wishlistAdapter.updateIsLikedInFirebase(hotel.getId(), hotel.isLiked(),hotel);
+                        wishlistAdapter.updateIsLikedInFirebase(hotel.getId(), hotel.isLiked(), hotel);
                     }
                 }
 

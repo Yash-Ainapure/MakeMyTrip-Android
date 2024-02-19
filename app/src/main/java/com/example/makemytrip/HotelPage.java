@@ -16,8 +16,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -307,7 +309,21 @@ public class HotelPage extends AppCompatActivity {
                     filteredHotelList.add(hotel);
                 }
             }
-
+            LottieAnimationView animationView = findViewById(R.id.animationView);
+            RecyclerView recyclerView = findViewById(R.id.recyclerView);
+            TextView emptyText = findViewById(R.id.nothing_found);
+            TextView emptyHotelSubText = findViewById(R.id.description2);
+            if (filteredHotelList.isEmpty()) {
+                animationView.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+                emptyText.setVisibility(View.VISIBLE);
+                emptyHotelSubText.setVisibility(View.VISIBLE);
+            } else {
+                animationView.setVisibility(View.GONE);
+                emptyText.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+                emptyHotelSubText.setVisibility(View.GONE);
+            }
             // Update the adapter with the filtered list
             adapter = new HotelCardAdapter(filteredHotelList);
             recyclerView.setAdapter(adapter);

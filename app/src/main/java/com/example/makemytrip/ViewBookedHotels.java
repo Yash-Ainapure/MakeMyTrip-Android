@@ -8,9 +8,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -88,6 +91,22 @@ public class ViewBookedHotels extends AppCompatActivity {
                         }
                     }
 
+                    LottieAnimationView animationView = findViewById(R.id.animationView);
+                    RecyclerView recyclerView = findViewById(R.id.recyclerView);
+                    TextView emptyHotelText = findViewById(R.id.nothing_booked_yet);
+                    TextView emptyHotelSubText = findViewById(R.id.description_hotels);
+                    if (bookedHotels.isEmpty()) {
+                        animationView.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
+                      emptyHotelText.setVisibility(View.VISIBLE);
+                       emptyHotelSubText.setVisibility(View.VISIBLE);
+
+                    } else {
+                        animationView.setVisibility(View.GONE);
+                        emptyHotelText.setVisibility(View.GONE);
+                       emptyHotelSubText.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                    }
                     // Notify the adapter that the data has changed
                     adapter.notifyDataSetChanged();
                 }
