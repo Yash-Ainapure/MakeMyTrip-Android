@@ -3,10 +3,12 @@ package com.example.makemytrip;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.wifi.hotspot2.pps.HomeSp;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -26,6 +28,9 @@ public class DummyUPIPayment extends AppCompatActivity {
     EditText upiPasswordEditText;
     FirebaseAuth mAuth;
     DatabaseReference databaseReference;
+    //lhatog Vanabies
+   AlertDialog.Builder builderDialog;
+   AlertDialog dialog;
 
     private final StringBuilder passwordBuilder = new StringBuilder();
     @Override
@@ -68,7 +73,6 @@ public class DummyUPIPayment extends AppCompatActivity {
         });
         mAuth = FirebaseAuth.getInstance();
 
-
         Intent intent = getIntent();
         int totalAmount = intent.getIntExtra("totalAmount", 0);
         HotelBookedInfo receivedBookedInfo = (HotelBookedInfo) intent.getSerializableExtra("hotelBookedInfo");
@@ -81,50 +85,73 @@ public class DummyUPIPayment extends AppCompatActivity {
             String enteredPassword = upiPasswordEditText.getText().toString();
 
             if ("123456".equals(enteredPassword)) {
-                Intent intent1 = new Intent(DummyUPIPayment.this, home.class);
-                FirebaseUser user = mAuth.getCurrentUser();
-                if(user!=null){
-                    String LoggedUserEmail = user.getUid();
-                    String bookingType = intent.getStringExtra("bookingType");
-                    if (bookingType != null) {
-
-                        if (bookingType.equals("hotel")) {
-
-                            databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(LoggedUserEmail).child("bookedHotels");
-                            String UserId = databaseReference.push().getKey();
-                            HotelBookedInfo hotelBookedInfo = new HotelBookedInfo(hotel.getName(), hotel.getAddress(), receivedBookedInfo.getNumberOfRooms()
-                                    , receivedBookedInfo.getStartingDate(), receivedBookedInfo.getEndingDate(), hotel.getImageUrl());
-                            databaseReference.child(UserId).setValue(hotelBookedInfo);
-                            // Inside your DummyUPIPayment activity
-                            Toast.makeText(this, "hotel booked successfully", Toast.LENGTH_SHORT).show();
-                            startActivity(intent1);
-                            finish();
-
-                        } else if (bookingType.equals("flight")) {
-
-                            databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(LoggedUserEmail).child("bookedFlights");
-                            String UserId = databaseReference.push().getKey();
-                            Flight flight = intent.getParcelableExtra("flightBooking");
-                            databaseReference.child(UserId).setValue(flight);
-                            Toast.makeText(this, "flight booked successfully", Toast.LENGTH_SHORT).show();
-                            startActivity(intent1);
-                            finish();
-                        }
-                    }
-
-                }else{
-                    Toast.makeText(DummyUPIPayment.this, "Error: No user logged in", Toast.LENGTH_SHORT).show();
-                }
-
-            } else {
-
-                    Toast.makeText(DummyUPIPayment.this, "Incorrect PIN. Please try again.", Toast.LENGTH_SHORT).show();
-                    // Optionally, you can clear the entered password
+                // Payment successful, show success dialog
+                showAlertDialog(R.layout.payment_successful, intent ,receivedBookedInfo ,hotel);
+            }
+             else {
+                builderDialog = new AlertDialog.Builder(DummyUPIPayment.this);
+                View layoutView = getLayoutInflater().inflate(R.layout.payment_failed, null);
+                Button okButton = layoutView.findViewById(R.id.ok);
+                builderDialog.setView(layoutView);
+                dialog = builderDialog.create();
+                dialog.show();
+                okButton.setOnClickListener(view1 -> {
+                    dialog.dismiss();
                     passwordBuilder.setLength(0);
                     updatePasswordEditText();
+                });
+
             }
 
         });
+    }
+
+    private void showAlertDialog(int layout, Intent intent ,HotelBookedInfo receivedBookedInfo ,Hotel hotel) {
+        builderDialog = new AlertDialog.Builder(DummyUPIPayment.this);
+        View layoutView = getLayoutInflater().inflate(layout, null);
+        Button okButton = layoutView.findViewById(R.id.ok);
+        builderDialog.setView(layoutView);
+        dialog = builderDialog.create();
+        dialog.show();
+        okButton.setOnClickListener(view -> {
+            dialog.dismiss();
+            if (intent != null) {
+                // Process booking and navigate to home
+                processBooking(intent, receivedBookedInfo, hotel);
+            } else {
+                // Optionally handle other cases or just close the activity
+
+            }
+        });
+    }
+
+    private void processBooking(Intent intent, HotelBookedInfo receivedBookedInfo, Hotel hotel) {
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            String loggedUserEmail = user.getUid();
+            String bookingType = intent.getStringExtra("bookingType");
+            if (bookingType != null) {
+                if (bookingType.equals("hotel")) {
+                    databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(loggedUserEmail).child("bookedHotels");
+                    String userId = databaseReference.push().getKey();
+                    HotelBookedInfo hotelBookedInfo = new HotelBookedInfo(hotel.getName(), hotel.getAddress(), receivedBookedInfo.getNumberOfRooms()
+                            , receivedBookedInfo.getStartingDate(), receivedBookedInfo.getEndingDate(), hotel.getImageUrl());
+                    databaseReference.child(userId).setValue(hotelBookedInfo);
+                    Toast.makeText(this, "Hotel booked successfully", Toast.LENGTH_LONG).show();
+                } else if (bookingType.equals("flight")) {
+                    databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(loggedUserEmail).child("bookedFlights");
+                    String userId = databaseReference.push().getKey();
+                    Flight flight = intent.getParcelableExtra("flightBooking");
+                    databaseReference.child(userId).setValue(flight);
+                    Toast.makeText(this, "Flight booked successfully", Toast.LENGTH_LONG).show();
+                }
+            }
+            Intent homeIntent = new Intent(DummyUPIPayment.this, home.class);
+            startActivity(homeIntent);
+            finish();
+        } else {
+            Toast.makeText(DummyUPIPayment.this, "Error: No user logged in", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void appendValueToPassword(String value) {
