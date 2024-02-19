@@ -13,6 +13,9 @@
         android:theme="@style/Theme.MakeMyTrip"
         tools:targetApi="31">
         <activity
+            android:name=".HolidayPage"
+            android:exported="false" />
+        <activity
             android:name=".FlightPayment"
             android:exported="false" />
         <activity

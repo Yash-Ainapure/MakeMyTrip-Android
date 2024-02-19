@@ -170,6 +170,7 @@
 
                         <LinearLayout
                             android:layout_width="0dp"
+                            android:id="@+id/holiday_tab"
                             android:layout_height="match_parent"
                             android:layout_marginHorizontal="5dp"
                             android:layout_weight="1"
