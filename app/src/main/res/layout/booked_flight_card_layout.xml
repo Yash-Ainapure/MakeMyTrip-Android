@@ -8,75 +8,165 @@
     app:cardCornerRadius="8dp"
 
     >
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/hotel_card_bg"
-        android:padding="16dp"
-        >
+        android:background="@drawable/flight_block_bg"
 
-        <TextView
-            android:id="@+id/flightNameTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Airline Name"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:textStyle="bold" />
+        android:elevation="10dp"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageViewCompanyLogo"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+
+                android:src="@drawable/indigo" />
+
+            <TextView
+                android:id="@+id/flightNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="IndiGo"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="3dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/departureDateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="22:15"
+                android:textColor="@color/black"
+                android:textSize="22dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fltduration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="2 hrs 10 min"
+                android:textColor="#E1AAAAAA"
+                android:textSize="12dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/destinationDateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="00:25"
+                android:textColor="@color/black"
+                android:textSize="21dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="3dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/fromCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="New Delhi"
+                android:textColor="@color/subtext"
+                android:textSize="14dp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imageView10"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_weight="1"
+
+                android:src="@drawable/clock1" />
+
+            <TextView
+                android:id="@+id/ToCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="Mumbai"
+                android:textColor="@color/black"
+                android:textSize="14dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="3dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/depairport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Chhatrapati Shivaji International Airport"
+                android:textColor="@color/subtext"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/destairport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="Indira Gandhi International Airport"
+                android:textColor="@color/subtext"
+                android:textSize="14dp" />
+
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginVertical="8dp"
             android:background="@color/gray" />
-        <TextView
-            android:id="@+id/fromCity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textColor="@color/black"
-            android:text="From : "
-            android:textSize="14dp"/>
-        <TextView
-            android:id="@+id/ToCity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textColor="@color/black"
-            android:text="To : "
-            android:textSize="14dp"/>
 
-        <TextView
-            android:id="@+id/departureDateTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textColor="@color/black"
-            android:text="Starting Date: 31/1/2024"
-            android:textSize="14dp"/>
-        <TextView
-            android:id="@+id/destinationDateTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textColor="@color/black"
-            android:text="Ending Date: 1/2/2024"
-            android:textSize="14dp"/>
         <Button
             android:id="@+id/cancelBookingButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:layout_gravity="end"
-            android:paddingVertical="8dp"
-            android:paddingHorizontal="16dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/custom_button_bg"
+            android:onClick="onCancelBookingClick"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp"
             android:text="Cancel Flight"
             android:textColor="@color/white"
             android:textSize="14dp"
-            android:textStyle="bold"
-            android:onClick="onCancelBookingClick"/>
+            android:textStyle="bold" />
+
     </LinearLayout>
+
 </androidx.cardview.widget.CardView>

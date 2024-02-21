@@ -89,7 +89,7 @@
                     android:layout_gravity="end"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:text="Yash Ainapure"
+                    android:text="Prajval Chavan"
                     android:textColor="@color/black"
                     android:textSize="14dp" />
             </LinearLayout>

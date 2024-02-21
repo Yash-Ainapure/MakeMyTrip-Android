@@ -1,5 +1,6 @@
 package com.example.makemytrip;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -37,6 +38,9 @@ public class DummyUPIPayment extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dummy_upipayment);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
 
         totalAmountTextView = findViewById(R.id.totalAmount);
         upiPasswordEditText = findViewById(R.id.pinpass);

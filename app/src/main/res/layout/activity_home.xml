@@ -32,42 +32,69 @@
                     android:layout_width="match_parent"
                     android:layout_height="700dp">
 
-                    <EditText
-                        android:id="@+id/editTextText4"
+                    <LinearLayout
+                        android:id="@+id/linearLayout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="40dp"
                         android:layout_marginEnd="20dp"
                         android:background="@drawable/search_bg"
-                        android:drawableLeft="@drawable/baseline_search_24"
-                        android:drawablePadding="8dp"
-                        android:elevation="10dp"
-                        android:ems="10"
-                        android:gravity="center_vertical"
-                        android:hint="Try Searching 'Mumbai Flights'"
-                        android:inputType="text"
+                        android:elevation="2dp"
                         android:paddingStart="20dp"
-                        android:paddingTop="15dp"
                         android:paddingEnd="20dp"
-                        android:paddingBottom="15dp"
+                        android:gravity="center"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/imageView16"
+                            android:layout_width="72dp"
+                            android:layout_height="72dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/discount" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="10dp">
+
+                            <TextView
+                                android:id="@+id/textView25"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="FLAT 20% OFF* On Some Hotels Booking"
+                                android:textColor="#1C1C1C"
+                                android:textSize="18dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView27"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Stay Better Pay Lesser"
+                                android:textColor="#5A5A5A"
+                                android:textStyle="italic" />
+                        </LinearLayout>
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/linearLayout2"
                         android:layout_width="0dp"
                         android:layout_height="217dp"
-                        android:layout_marginTop="1dp"
+                        android:layout_marginTop="13dp"
                         android:orientation="horizontal"
                         android:padding="20dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/editTextText4"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
                         app:layout_constraintVertical_bias="0.0">
 
                         <LinearLayout
@@ -169,8 +196,8 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="0dp"
                             android:id="@+id/holiday_tab"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginHorizontal="5dp"
                             android:layout_weight="1"

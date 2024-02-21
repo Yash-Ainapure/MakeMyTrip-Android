@@ -246,13 +246,7 @@
                     android:layout_height="wrap_content"
                     android:text="Manthan Executive hotel is a contemporary lifestyle destination situated in Kolhapur city. The hotel is located at the distance of 1.5 km from Kolhapur Railway Station and 1.5 km from Kolhapur Central Bus Stand.  Good Food and a variety of drinks are served at the restaurant within the premises." />
 
-                <TextView
-                    android:id="@+id/readmore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Read More"
-                    android:textColor="@color/calbtn"
-                    android:textStyle="bold" />
+
             </LinearLayout>
 
             <LinearLayout

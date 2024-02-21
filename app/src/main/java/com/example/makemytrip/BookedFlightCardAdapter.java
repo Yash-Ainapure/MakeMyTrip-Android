@@ -49,7 +49,8 @@ public class BookedFlightCardAdapter extends  RecyclerView.Adapter<BookedFlightC
         TextView DepartureDateTextView;
         TextView DestinationDateTextView;
         Button cancelBookingButton;
-
+         ImageView flightImage;
+         TextView destairport,depairport,fltduration;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             FlightNameTextView = itemView.findViewById(R.id.flightNameTextView);
@@ -58,6 +59,10 @@ public class BookedFlightCardAdapter extends  RecyclerView.Adapter<BookedFlightC
             DepartureDateTextView = itemView.findViewById(R.id.departureDateTextView);
             DestinationDateTextView = itemView.findViewById(R.id.destinationDateTextView);
             cancelBookingButton = itemView.findViewById(R.id.cancelBookingButton);
+            flightImage = itemView.findViewById(R.id.imageViewCompanyLogo);
+            destairport = itemView.findViewById(R.id.destairport);
+            depairport = itemView.findViewById(R.id.depairport);
+            fltduration = itemView.findViewById(R.id.fltduration);
         }
     }
 
@@ -80,6 +85,14 @@ public class BookedFlightCardAdapter extends  RecyclerView.Adapter<BookedFlightC
         holder.ToCityTextView.setText("To: " + flight.getDestinationCity());
         holder.DepartureDateTextView.setText(" " + flight.getDepartureTime());
         holder.DestinationDateTextView.setText(" " + flight.getDestinationTime());
+        Picasso.get().load(flight.getFlightImage()).into(holder.flightImage);
+        holder.destairport.setText(flight.getDestinationAirport());
+        holder.depairport.setText(flight.getDepartureAirport());
+        String departureTime = flight.getDepartureTime();
+        String destinationTime = flight.getDestinationTime();
+
+        String duration = calculateDuration(departureTime, destinationTime);
+        holder.fltduration.setText(duration);
 
         // Set a click listener for the cancel booking button
         holder.cancelBookingButton.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +103,36 @@ public class BookedFlightCardAdapter extends  RecyclerView.Adapter<BookedFlightC
             }
         });
     }
+    public String calculateDuration(String departureTime, String destinationTime) {
+        // Parse the departure and destination times
+        String[] depTimeParts = departureTime.split(":");
+        String[] destTimeParts = destinationTime.split(":");
 
+        int depHours = Integer.parseInt(depTimeParts[0]);
+        int depMinutes = Integer.parseInt(depTimeParts[1]);
+
+        int destHours = Integer.parseInt(destTimeParts[0]);
+        int destMinutes = Integer.parseInt(destTimeParts[1]);
+
+        // Calculate the duration
+        int durationHours = destHours - depHours;
+        int durationMinutes = destMinutes - depMinutes;
+
+        // Handle cases where the destination time is earlier than the departure time
+        if (durationHours < 0) {
+            durationHours += 24; // Add 24 hours to handle the next day
+        }
+
+        if (durationMinutes < 0) {
+            durationMinutes += 60; // Add 60 minutes to handle borrowing from the next hour
+            durationHours--; // Subtract 1 hour
+        }
+
+        // Format the duration as a string
+        String durationString = String.format("%d hrs %d min", durationHours, durationMinutes);
+
+        return durationString;
+    }
     @Override
     public int getItemCount() {
         // Return the size of the bookedHotels list

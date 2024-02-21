@@ -5,11 +5,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -58,13 +56,13 @@ public class FlightDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flight_detail);
 
-        fltNameTextView = findViewById(R.id.fltName);
-        fltDeptTextView = findViewById(R.id.fltdept);
-        fltDestTextView = findViewById(R.id.fltdest);
+        fltNameTextView = findViewById(R.id.flightNameTextView);
+        fltDeptTextView = findViewById(R.id.fromCity);
+        fltDestTextView = findViewById(R.id.ToCity);
         fltDeptTextView1 = findViewById(R.id.fltdept1);
         fltDestTextView1 = findViewById(R.id.fltdest1);
-        deptTimeTextView = findViewById(R.id.deptTime);
-        destTimeTextView = findViewById(R.id.destTime);
+        deptTimeTextView = findViewById(R.id.departureDateTextView);
+        destTimeTextView = findViewById(R.id.destinationDateTextView);
         airportTextView = findViewById(R.id.depairport);
         destAirportTextView = findViewById(R.id.destairport);
         durationTextView = findViewById(R.id.fltduration);
