@@ -189,12 +189,21 @@ public class HotelDetailActivity extends AppCompatActivity {
 
                textViewHotelName.setText(hotel.getName());
                textViewHotelAddress.setText(hotel.getAddress());
+Log.d("HotelDetailActivity", "onCreate: "+hotel.getlocationUrl());
                locationOnMap.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View v) {
                        // Open Google Maps link
-                       String googleMapsUrl = "https://maps.app.goo.gl/YJRCFtWcE7FH2xsJ7";
-                       openWebPage(googleMapsUrl);
+                       if (hotel.getlocationUrl() != null) {
+                           String googleMapsUrl = hotel.getlocationUrl();
+
+                           openWebPage(googleMapsUrl);
+                       }
+                       else{
+                           String googleMapsUrl = "https://maps.app.goo.gl/YJRCFtWcE7FH2xsJ7";
+                           openWebPage(googleMapsUrl);
+                           Toast.makeText(HotelDetailActivity.this, "Location not available", Toast.LENGTH_SHORT).show();
+                       }
                    }
                });
                Picasso.get().load(hotel.getImageUrl()).into(imageViewHotel);

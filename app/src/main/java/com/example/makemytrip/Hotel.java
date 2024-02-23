@@ -2,6 +2,7 @@ package com.example.makemytrip;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -10,6 +11,8 @@ import java.util.List;
 public class Hotel implements Parcelable {
     private String id;
     private String name;
+
+    private String locationUrl;
 
     private String address;
     private String imageUrl;
@@ -20,6 +23,13 @@ public class Hotel implements Parcelable {
     private String state;
     private String city;
 
+    public String getlocationUrl() {
+        return locationUrl;
+    }
+
+    public void setlocationUrl(String locationUrl) {
+        this.locationUrl = locationUrl;
+    }
 
     public String getState() {
         return state;
@@ -58,7 +68,7 @@ public class Hotel implements Parcelable {
     }
 
     // Parameterized constructor
-    public Hotel(String id, String name, String address, String imageUrl, boolean isLiked, int price, List<String> otherImages, float rating, String state, String city) {
+    public Hotel(String id, String name, String address, String imageUrl, boolean isLiked, int price, List<String> otherImages, float rating, String state, String city, String locationUrl) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -69,7 +79,8 @@ public class Hotel implements Parcelable {
         this.rating = rating;
         this.state = state;
         this.city = city;
-
+        this.locationUrl = locationUrl;
+        Log.d("Hotel1", "Hotel: " + id + " " + name + " " + address + " " + imageUrl + " " + isLiked + " " + price + " " + otherImages + " " + rating + " " + state + " " + city + " " + locationUrl);
     }
 
 
@@ -86,6 +97,8 @@ public class Hotel implements Parcelable {
 //        rating = in.readFloat();
         state = in.readString();
         city = in.readString();
+        locationUrl = in.readString();
+
     }
 
     // Parcelable creator
@@ -188,6 +201,7 @@ public class Hotel implements Parcelable {
 //        dest.writeFloat(rating);
         dest.writeString(state);
         dest.writeString(city);
+        dest.writeString(locationUrl);
     }
 
 
