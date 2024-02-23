@@ -30,7 +30,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="700dp">
+                    android:layout_height="match_parent">
 
                     <LinearLayout
                         android:id="@+id/linearLayout"
@@ -41,9 +41,9 @@
                         android:layout_marginEnd="20dp"
                         android:background="@drawable/search_bg"
                         android:elevation="2dp"
+                        android:gravity="center"
                         android:paddingStart="20dp"
                         android:paddingEnd="20dp"
-                        android:gravity="center"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
@@ -136,6 +136,7 @@
                                     android:layout_marginBottom="10dp"
                                     android:text="Flights"
                                     android:textAlignment="center"
+                                    android:textColor="@color/black"
                                     android:textSize="20sp"
                                     android:textStyle="bold"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -184,6 +185,7 @@
                                     android:layout_marginBottom="10dp"
                                     android:text="Hotels"
                                     android:textAlignment="center"
+                                    android:textColor="@color/black"
                                     android:textSize="20sp"
                                     android:textStyle="bold"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -231,6 +233,7 @@
                                     android:layout_marginBottom="10dp"
                                     android:text="Holiday Packages"
                                     android:textAlignment="center"
+                                    android:textColor="@color/black"
                                     android:textSize="20dp"
                                     android:textStyle="bold"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -247,7 +250,7 @@
                         android:id="@+id/linearLayout10"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="11dp"
+                      
                         android:orientation="vertical"
                         android:padding="20dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -262,6 +265,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text=""
+                            android:textColor="@color/subtext"
                             android:textSize="20sp"
                             android:textStyle="bold" />
 
@@ -315,7 +319,32 @@
                                     app:shapeAppearanceOverlay="@style/circular" />
                             </LinearLayout>
                         </HorizontalScrollView>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:layout_marginVertical="20dp"
+                        android:background="@drawable/tabs_bg">
+                        <TextView
+                            android:id="@+id/textView26"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:layout_marginVertical="8dp"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
+                            android:text="Voyago Description" />
 
+                        <TextView
+                            android:id="@+id/textView272"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textSize="14dp"
+                            android:lineHeight="20dp"
+                            android:text="@string/description" />
+                    </LinearLayout>
                     </LinearLayout>
 
 
