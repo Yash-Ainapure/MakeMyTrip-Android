@@ -89,7 +89,7 @@ public class WishlistCardAdapter extends RecyclerView.Adapter<WishlistCardAdapte
                         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(LoggedUserId).child("hotelsWishlist");
                         String UserId=databaseReference.push().getKey();
 
-                        Hotel newHotel=new Hotel(hotel.getId(),hotel.getName(),hotel.getAddress(),hotel.getImageUrl(),hotel.isLiked(),hotel.getPrice(), hotel.getOtherImages(),hotel.getRating(),hotel.getState(),hotel.getCity(),hotel.getlocationUrl());
+                        Hotel newHotel=new Hotel(hotel.getId(),hotel.getName(),hotel.getAddress(),hotel.getImageUrl(),hotel.isLiked(),hotel.getPrice(), hotel.getOtherImages(),hotel.getRating(),hotel.getState(),hotel.getCity(),hotel.getLocationUrl());
                         databaseReference.child(UserId).setValue(newHotel);
                     }
                     else{

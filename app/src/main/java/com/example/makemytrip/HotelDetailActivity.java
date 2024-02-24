@@ -156,14 +156,10 @@ public class HotelDetailActivity extends AppCompatActivity {
 
                }
 
-
-
                ratingBar = findViewById(R.id.ratingBar);
                submit = findViewById(R.id.submit);
 
                submit.setVisibility(View.GONE);
-
-
 
 
                ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -189,14 +185,13 @@ public class HotelDetailActivity extends AppCompatActivity {
 
                textViewHotelName.setText(hotel.getName());
                textViewHotelAddress.setText(hotel.getAddress());
-Log.d("HotelDetailActivity", "onCreate: "+hotel.getlocationUrl());
                locationOnMap.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View v) {
                        // Open Google Maps link
-                       if (hotel.getlocationUrl() != null) {
-                           String googleMapsUrl = hotel.getlocationUrl();
-
+                       if (hotel.getLocationUrl() != null) {
+                           String googleMapsUrl = hotel.getLocationUrl();
+                           Toast.makeText(HotelDetailActivity.this, "Opening maps....", Toast.LENGTH_SHORT).show();
                            openWebPage(googleMapsUrl);
                        }
                        else{
@@ -257,7 +252,6 @@ Log.d("HotelDetailActivity", "onCreate: "+hotel.getlocationUrl());
         buttonBookHotel = findViewById(R.id.buttonBookHotel);
         textViewHotelName = findViewById(R.id.textViewHotelName);
         textViewHotelAddress = findViewById(R.id.textViewHotelAddress);
-//        TextView textViewSelectedDates = findViewById(R.id.textViewSelectedDates);
         buttonBookHotel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -280,25 +274,6 @@ Log.d("HotelDetailActivity", "onCreate: "+hotel.getlocationUrl());
                     startActivity(intent1);
 
                 }
-
-                //save this hotel booked details under logged in user in firebase realtime database
-                //get email of person logged in
-                //get hotel name, address, image url, dates, rooms, days staying
-                //save this data under user email in firebase realtime database
-//                FirebaseUser user = mAuth.getCurrentUser();
-//                if(user!=null){
-//                    String LoggedUserEmail = user.getUid();
-//                    databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(LoggedUserEmail).child("bookedHotels");
-//                    String UserId=databaseReference.push().getKey();
-//                    Date selectedDate = new Date(selectedDates);
-//                    HotelBookedInfo hotelBookedInfo = new HotelBookedInfo(textViewHotelName.getText().toString(),textViewHotelAddress.getText().toString(),numberPickerRooms.getValue()
-//                            ,buttonDatePicker.getText().toString(),buttonDatePicker2.getText().toString(),ImageUrl);
-//                    databaseReference.child(UserId).setValue(hotelBookedInfo);
-//
-//                }else{
-//                    Toast.makeText(HotelDetailActivity.this, "Error: No user logged in", Toast.LENGTH_SHORT).show();
-//                }
-
             }
         });
 

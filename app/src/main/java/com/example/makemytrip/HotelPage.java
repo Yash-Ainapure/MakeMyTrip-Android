@@ -227,7 +227,6 @@ public class HotelPage extends AppCompatActivity {
                                         if (hotelData.get("rating")==null){
                                             hotelData.put("rating",0.0);
                                         }
-                                        Log.d("hotel name", "onDataChange: "+ hotelData.get("name")+" "+hotelData.containsKey("ratings"));
                                         // Create a Hotel object from the Map
                                         Hotel hotel = new Hotel();
                                         hotel.setId(hotelSnapshot.getKey());
@@ -239,6 +238,8 @@ public class HotelPage extends AppCompatActivity {
 //                                       hotel.setRating(((Double) hotelData.get("rating")).floatValue());
                                        hotel.setCity((String) citySnapshot.getKey());
                                         hotel.setState((String) stateSnapshot.getKey());
+                                        hotel.setLocationUrl((String) hotelData.get("locationUrl"));
+
                                         if (hotelData.containsKey("ratings")) {
                                             Map<String, Object> ratingsData = (Map<String, Object>) hotelData.get("ratings");
 
@@ -255,7 +256,6 @@ public class HotelPage extends AppCompatActivity {
 
                                             }
                                         }
-                                        Log.d("city and state",""+hotel.getName()+" : "+hotel.getCity());
 //                                         Handle otherImages
                                         List<String> otherImages = (List<String>) hotelData.get("otherImages");
                                         if (otherImages != null) {
@@ -265,8 +265,8 @@ public class HotelPage extends AppCompatActivity {
                                         hotelList.add(hotel);
                                     }
                                     else {
-                                        Toast.makeText(HotelPage.this, "Null data " + hotelSnapshot.getValue().toString(), Toast.LENGTH_SHORT).show();}
-
+                                        Toast.makeText(HotelPage.this, "Null data " + hotelSnapshot.getValue().toString(), Toast.LENGTH_SHORT).show();
+                                    }
                                }
                             }
                         }

@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,14 +24,30 @@ public class Hotel implements Parcelable {
     private String state;
     private String city;
 
-    public String getlocationUrl() {
+
+
+    public void logAllVariables(Object object) {
+        Class<?> clazz = object.getClass();
+        Field[] fields = clazz.getDeclaredFields();
+
+        for (Field field : fields) {
+            field.setAccessible(true);
+            try {
+                Log.d("Hotel Classs", field.getName() + ": " + field.get(object));
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    public String getLocationUrl() {
         return locationUrl;
     }
 
-    public void setlocationUrl(String locationUrl) {
+    public void setLocationUrl(String locationUrl) {
         this.locationUrl = locationUrl;
     }
-
     public String getState() {
         return state;
     }
@@ -84,7 +101,21 @@ public class Hotel implements Parcelable {
     }
 
 
-    // Parcelable constructor
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(address);
+        dest.writeString(imageUrl);
+        dest.writeByte((byte) (isLiked ? 1 : 0));
+        dest.writeInt(price);
+        dest.writeString(state);
+        dest.writeString(city);
+        dest.writeString(locationUrl);
+        dest.writeList(otherImages);
+    }
+
+
     protected Hotel(Parcel in) {
         id = in.readString();
         name = in.readString();
@@ -92,14 +123,13 @@ public class Hotel implements Parcelable {
         imageUrl = in.readString();
         isLiked = in.readByte() != 0;
         price = in.readInt();
-        otherImages = new ArrayList<>();
-        in.readList(otherImages, String.class.getClassLoader());
-//        rating = in.readFloat();
         state = in.readString();
         city = in.readString();
         locationUrl = in.readString();
-
+        otherImages = new ArrayList<>();
+        in.readList(otherImages, String.class.getClassLoader());
     }
+
 
     // Parcelable creator
     public static final Creator<Hotel> CREATOR = new Creator<Hotel>() {
@@ -188,22 +218,6 @@ public class Hotel implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(name);
-        dest.writeString(address);
-        dest.writeString(imageUrl);
-        dest.writeByte((byte) (isLiked ? 1 : 0));
-        dest.writeInt(price);
-        dest.writeList(otherImages);
-//        dest.writeFloat(rating);
-        dest.writeString(state);
-        dest.writeString(city);
-        dest.writeString(locationUrl);
-    }
-
 
 }
 

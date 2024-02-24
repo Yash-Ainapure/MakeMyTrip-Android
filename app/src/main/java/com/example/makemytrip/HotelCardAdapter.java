@@ -93,7 +93,7 @@ public class HotelCardAdapter extends RecyclerView.Adapter<HotelCardAdapter.Hote
                         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(LoggedUserId).child("hotelsWishlist");
                         String UserId = databaseReference.push().getKey();
 //                        Hotel.Ratings ratings = hotel.getRatings();
-                        Hotel newHotel = new Hotel(hotel.getId(), hotel.getName(), hotel.getAddress(), hotel.getImageUrl(), hotel.isLiked(), hotel.getPrice(), hotel.getOtherImages(), hotel.getRating(), hotel.getState(), hotel.getCity(), hotel.getlocationUrl());
+                        Hotel newHotel = new Hotel(hotel.getId(), hotel.getName(), hotel.getAddress(), hotel.getImageUrl(), hotel.isLiked(), hotel.getPrice(), hotel.getOtherImages(), hotel.getRating(), hotel.getState(), hotel.getCity(), hotel.getLocationUrl());
                         databaseReference.child(UserId).setValue(newHotel);
 
                     } else {
@@ -182,7 +182,8 @@ public class HotelCardAdapter extends RecyclerView.Adapter<HotelCardAdapter.Hote
             //here hotel.getPrice() returns int which then is converted to string format
             hotelPrice.setText(String.valueOf(hotel.getPrice()));
 
-            Log.d("hotel123", "Hotel" + hotel.getlocationUrl());
+            Log.d("hotel123", "Hotel" + hotel.getLocationUrl());
+            hotel.logAllVariables(hotel);
 
             // Example using Picasso:
             Picasso.get().load(hotel.getImageUrl()).into(hotelImage);
