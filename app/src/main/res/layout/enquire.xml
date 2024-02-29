@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:background="@drawable/alert_bg"
+    >
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationView"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="enq.json"
+        app:lottie_loop="true"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="#8536F4"
+        android:text="Enquire Message Sent Successfully!"
+        android:gravity="center_horizontal"
+        android:textSize="20dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#3C3C3C"
+        android:textStyle="bold"
+        android:text=" We will get back to you soon."
+        android:gravity="center_horizontal"
+        android:textSize="15dp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Explore More Packages"
+        android:id="@+id/ok"
+        android:background="#8536F4"
+        android:textColor="#ffffff"
+        android:layout_marginHorizontal="60dp"
+        android:layout_marginVertical="10dp"
+        android:padding="10dp"
+        android:textSize="15dp"
+
+        />
+</LinearLayout>

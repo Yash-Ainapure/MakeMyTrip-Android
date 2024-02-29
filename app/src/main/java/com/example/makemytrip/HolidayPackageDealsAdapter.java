@@ -1,11 +1,13 @@
 package com.example.makemytrip;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
-        import android.widget.TextView;
+import android.widget.Button;
+import android.widget.TextView;
         import androidx.annotation.NonNull;
         import androidx.recyclerview.widget.RecyclerView;
         import java.util.List;
@@ -33,9 +35,33 @@ public class HolidayPackageDealsAdapter extends RecyclerView.Adapter<HolidayPack
 
         // Bind data to the ViewHolder
         holder.tvPackageName.setText(hotelPackage.getPackageName());
-        holder.tvPackageDetails.setText(hotelPackage.getPackageDetails());
+        holder.tvPackageDetails.setText(String.valueOf(hotelPackage.getPackageDetails().replace("\\n", "\n")));
         holder.tvPackageDuration.setText(hotelPackage.getPackageDuration());
-        holder.tvPrice.setText(String.valueOf(hotelPackage.getPrice()));
+        holder.tvPrice.setText("₹ " +String.valueOf(hotelPackage.getPrice()));
+        holder.enquireButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("TAG", "onClick: Enquire button clicked");
+                // Open the enquire dialog
+                // Create a new dialog
+                AlertDialog.Builder builderDialog = new AlertDialog.Builder(context);
+                // Set the custom layout
+                View view = LayoutInflater.from(context).inflate(R.layout.enquire, null);
+               Button okButton = view.findViewById(R.id.ok);
+                builderDialog.setView(view);
+                // Create the dialog
+                AlertDialog dialog = builderDialog.create();
+                // Show the dialog
+                dialog.show();
+                okButton.setOnClickListener(view1 -> {
+                    holder.enquireButton.setText("Enquired");
+                    holder.enquireButton.setEnabled(false);
+                    dialog.dismiss();
+                });
+            }
+        }
+        );
+
     }
 
     @Override
@@ -48,6 +74,7 @@ public class HolidayPackageDealsAdapter extends RecyclerView.Adapter<HolidayPack
         TextView tvPackageDetails;
         TextView tvPackageDuration;
         TextView tvPrice;
+        Button enquireButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -55,6 +82,7 @@ public class HolidayPackageDealsAdapter extends RecyclerView.Adapter<HolidayPack
             tvPackageDetails = itemView.findViewById(R.id.textViewHotelAddress);
             tvPackageDuration = itemView.findViewById(R.id.tvDuration);
             tvPrice = itemView.findViewById(R.id.tvPrice);
+            enquireButton = itemView.findViewById(R.id.enqbtn);
         }
     }
 }

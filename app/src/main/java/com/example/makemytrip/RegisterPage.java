@@ -92,7 +92,7 @@ public class RegisterPage extends AppCompatActivity {
                         saveAdditionalUserInfo(task.getResult().getUser().getUid(),fname, lname, mobno,emailid, selectedCountry);
 
                         startActivity(new Intent(RegisterPage.this, MainActivity.class));
-                        Toast.makeText(this, "registered successfully,now you can login with the credentials", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Registered successfully", Toast.LENGTH_SHORT).show();
                     }
                 });
 

@@ -323,7 +323,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="10dp"
+                        android:padding="16dp"
                         android:layout_marginVertical="20dp"
                         android:background="@drawable/tabs_bg">
                         <TextView
@@ -331,8 +331,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
-                            android:layout_marginVertical="8dp"
-                            android:textSize="16dp"
+                            android:layout_marginBottom="8dp"
+                            android:textSize="20dp"
                             android:textStyle="bold"
                             android:text="Voyago Description" />
 

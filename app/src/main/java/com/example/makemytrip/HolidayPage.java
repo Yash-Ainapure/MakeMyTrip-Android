@@ -46,8 +46,8 @@ public class HolidayPage extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             // Set your desired icon for the navigation drawer toggle
-        }
-        getSupportActionBar().setTitle("Holiday Packages");
+            getSupportActionBar().setTitle("Holiday Packages");      }
+
 
 
         package1IV = findViewById(R.id.imageView8);

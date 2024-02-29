@@ -71,6 +71,7 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="4dp"
                 android:textColor="@color/subtext"
+                android:lineHeight="23dp"
                 android:text="1) Round Trip Flights \n 2) 5 Star Hotel \n 3) Airport Transfers \n 4) Airport Pickup and Drop \n 5) 1 Activity \n 6) Selected Meal"
                 android:textSize="14dp" />
 
@@ -79,6 +80,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="end"
+                android:layout_marginVertical="10dp"
                 android:background="@drawable/holiday_price_bg"
                 android:padding="8dp">
 
@@ -106,6 +108,16 @@
                     android:textSize="16dp"
                     android:textStyle="bold" />
             </LinearLayout>
+
+            <Button
+                android:id="@+id/enqbtn"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:layout_marginVertical="5dp"
+                android:background="@drawable/custom_button_bg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Enquire" />
         </LinearLayout>
 
     </LinearLayout>
