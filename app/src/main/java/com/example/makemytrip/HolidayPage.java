@@ -6,8 +6,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +26,7 @@ import java.util.List;
 
 public class HolidayPage extends AppCompatActivity {
     ImageView package1IV,odishaPackage,bhutanPackage,bhutanPackage2,azerbijanPackage,goaPackage2;
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -37,12 +49,47 @@ public class HolidayPage extends AppCompatActivity {
         }
         getSupportActionBar().setTitle("Holiday Packages");
 
+
         package1IV = findViewById(R.id.imageView8);
         odishaPackage = findViewById(R.id.imageView12);
         bhutanPackage = findViewById(R.id.imageView11);
         azerbijanPackage = findViewById(R.id.imageView10);
         goaPackage2=findViewById(R.id.imageView64);
         bhutanPackage2=findViewById(R.id.imageView18);
+        LinearLayout parentLinearLayout = findViewById(R.id.parentLayout);
+
+        for (int i = 0; i < parentLinearLayout.getChildCount(); i++) {
+            View childLayout = parentLinearLayout.getChildAt(i);
+
+            // Assuming child layout is LinearLayout, you can change the type accordingly
+            if (childLayout instanceof LinearLayout) {
+                // Assuming your TextView is the second child of the LinearLayout
+                TextView textView = (TextView) ((LinearLayout) childLayout).getChildAt(1);
+
+                //final int clickedIndex = i;
+                final String textFromTextView = textView.getText().toString();
+
+                childLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Toast.makeText(HolidayPage.this, "clicked : "+textFromTextView, Toast.LENGTH_SHORT).show();
+                        Intent intent=new Intent(HolidayPage.this,HolidayPackageDeals.class);
+                        intent.putExtra("state",textFromTextView);
+                        startActivity(intent);
+                    }
+                });
+            }
+        }
+
+
+
+
+
+
+
+
+
 
         package1IV.setOnClickListener(v -> {
 
@@ -183,4 +230,5 @@ public class HolidayPage extends AppCompatActivity {
             startActivity(intent);
         });
     }
+
 }

@@ -51,6 +51,7 @@
                 android:textColor="@color/black"
                 />
             <TextView
+                android:id="@+id/tvDuration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="4N/5D"
@@ -68,6 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
                 android:textColor="@color/subtext"
                 android:text="1) Round Trip Flights \n 2) 5 Star Hotel \n 3) Airport Transfers \n 4) Airport Pickup and Drop \n 5) 1 Activity \n 6) Selected Meal"
                 android:textSize="14dp" />
@@ -95,7 +97,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-
+                    android:id="@+id/tvPrice"
                     android:layout_height="wrap_content"
                     android:gravity="end"
                     android:text="₹ 47,763 / Person"
