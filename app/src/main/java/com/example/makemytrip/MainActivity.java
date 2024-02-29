@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,15 +64,24 @@ public class MainActivity extends AppCompatActivity {
             mAuth.signInWithEmailAndPassword(username, password)
                     .addOnCompleteListener(MainActivity.this, task -> {
                         if (task.isSuccessful()) {
-                            Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                            Intent stm = new Intent(MainActivity.this, home.class);
-                            stm.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(stm);
+                            FirebaseUser user = mAuth.getCurrentUser();
+
+                            if (user != null && user.isEmailVerified()) {
+                                // Email is verified, proceed with login
+                                Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                Intent stm = new Intent(MainActivity.this, home.class);
+                                stm.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(stm);
+                            } else {
+                                // Email is not verified, show a message or take appropriate action
+                                Toast.makeText(MainActivity.this, "Please verify your email before Signing In", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
                             Toast.makeText(MainActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
                         }
                     });
         });
+
 
         registerbtn.setOnClickListener(view -> {
             Intent stm = new Intent(MainActivity.this, RegisterPage.class);

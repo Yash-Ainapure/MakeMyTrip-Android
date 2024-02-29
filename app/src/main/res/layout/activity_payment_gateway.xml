@@ -205,6 +205,7 @@
             android:textColor="@color/white"
             android:textSize="20dp"
             />
+    
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
