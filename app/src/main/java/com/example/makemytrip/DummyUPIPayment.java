@@ -150,7 +150,7 @@ public class DummyUPIPayment extends AppCompatActivity {
                     Toast.makeText(this, "Flight booked successfully", Toast.LENGTH_LONG).show();
                 }
             }
-            Intent homeIntent = new Intent(DummyUPIPayment.this, home.class);
+            Intent homeIntent = new Intent(DummyUPIPayment.this, ViewManageTrips.class);
             startActivity(homeIntent);
             finish();
         } else {

@@ -15,6 +15,9 @@
         android:theme="@style/Theme.MakeMyTrip"
         tools:targetApi="31">
         <activity
+            android:name=".cardpayment"
+            android:exported="false" />
+        <activity
             android:name=".HolidayPackageDeals"
             android:exported="false" />
         <activity

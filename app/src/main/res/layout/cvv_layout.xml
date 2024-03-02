@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    >
+
+    <ImageView
+        android:id="@+id/imageView17"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/cvv" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="16dp"
+
+        android:text="CVV is a three-digit security code at the back of your card, near the signature strip."/>
+
+    <Button
+            android:id="@+id/gotit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Got it"
+            android:textColor="@color/white"
+            android:layout_marginVertical="10dp"
+            android:textSize="14dp"
+            android:layout_gravity="center"
+            android:background="@drawable/custom_button_bg"
+            />
+</LinearLayout>
