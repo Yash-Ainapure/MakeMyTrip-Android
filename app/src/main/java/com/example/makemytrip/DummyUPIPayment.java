@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.wifi.hotspot2.pps.HomeSp;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class DummyUPIPayment extends AppCompatActivity {
 
     TextView totalAmountTextView;
+    private MediaPlayer mediaPlayer;
     Button payButton,One,Two,Three,Four,Five,Six,Seven,Eight,Nine,Zero;
     ImageButton Clrbtn;
     EditText upiPasswordEditText;
@@ -117,11 +119,27 @@ public class DummyUPIPayment extends AppCompatActivity {
         builderDialog.setView(layoutView);
         dialog = builderDialog.create();
         dialog.show();
-        okButton.setOnClickListener(view -> {
+        // Initialize MediaPlayer and start playing the music
+        mediaPlayer = MediaPlayer.create(this, R.raw.gpsound); // Replace with your music file in the "res/raw" folder
+        mediaPlayer.start();
+
+
+
+
+
+
+            okButton.setOnClickListener(view -> {
             dialog.dismiss();
+                // Stop the MediaPlayer when the alert is dismissed
+                if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                }
             if (intent != null) {
                 // Process booking and navigate to home
                 processBooking(intent, receivedBookedInfo, hotel);
+
             } else {
                 // Optionally handle other cases or just close the activity
 

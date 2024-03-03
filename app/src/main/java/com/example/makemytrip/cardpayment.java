@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -20,6 +21,7 @@ public class cardpayment extends AppCompatActivity {
     // Declare these variables at the top of your class
     private LinearLayout processingAlertLayout;
     private LinearLayout paymentSuccessfulLayout;
+    private MediaPlayer mediaPlayer;
     private Button doneButton;
     FirebaseAuth mAuth;
     DatabaseReference databaseReference;
@@ -53,6 +55,13 @@ public class cardpayment extends AppCompatActivity {
 
                 // Show payment success layout
                 paymentSuccessfulLayout.setVisibility(View.VISIBLE);
+                mediaPlayer = MediaPlayer.create(cardpayment.this, R.raw.gpsound); // Replace with your music file in the "res/raw" folder
+                mediaPlayer.start();
+
+
+
+
+
             }
         }, 8000); // Adjust the delay time as needed (in milliseconds)
         Intent intent = getIntent();
@@ -64,6 +73,11 @@ public class cardpayment extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 processBooking(intent, receivedBookedInfo, hotel);
+                if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                }
                 // Redirect to home page (replace HomeActivity.class with your actual home activity)
                 Intent intent = new Intent(cardpayment.this, ViewManageTrips.class);
                 startActivity(intent);
