@@ -184,8 +184,34 @@ public class MyAccount extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(UserId).child("userInfo");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+
+                UserInfo userInfo = snapshot.getValue(UserInfo.class);
+                selectedCountry = userInfo.getSelectedCountry();
+                if(selectedCountry ==null)
+                {
+                    selectedCountry = "India";
+
+                }else
+                {
+                    selectedCountry = userInfo.getSelectedCountry();
+
+                }
+//                Toast.makeText(MyAccount.this, "country "+ selectedCountry, Toast.LENGTH_SHORT).show();
+
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         saveButton.setOnClickListener(v->{
+
             UserInfo info=new UserInfo(FirebaseAuth.getInstance().getUid(),acc_name_edt.getText().toString(),acc_phone_edt.getText().toString()
                     ,acc_email_edt.getText().toString(),acc_gender_edt.getText().toString(),acc_city_edt.getText().toString()
                     ,acc_state_edt.getText().toString(),acc_nationality_edt.getText().toString()
@@ -193,7 +219,7 @@ public class MyAccount extends AppCompatActivity {
                     ,acc_PanNo_edt.getText().toString(),expiryPicker.getText().toString(),dobPicker.getText().toString(),selectedCountry);
 
             databaseReference.setValue(info);
-            Toast.makeText(this, "data saved successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Data saved Successfully", Toast.LENGTH_SHORT).show();
 
         });
 
