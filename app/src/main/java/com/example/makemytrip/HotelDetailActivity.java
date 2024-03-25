@@ -3,6 +3,8 @@ package com.example.makemytrip;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
@@ -10,12 +12,13 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
@@ -32,8 +35,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class HotelDetailActivity extends AppCompatActivity {
 
@@ -55,6 +62,9 @@ public class HotelDetailActivity extends AppCompatActivity {
     String selectedCountry;
 
     Ratings ratings;
+    private EditText editTextReview;
+    private Button buttonSubmitReview;
+    private DatabaseReference reviewsRef;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -102,8 +112,22 @@ public class HotelDetailActivity extends AppCompatActivity {
                    Picasso.get().load(hotel.getOtherImages().get(0)).into(otherImage1);
                    Picasso.get().load(hotel.getOtherImages().get(1)).into(otherImage2);
                }
+               editTextReview = findViewById(R.id.editTextReview);
+               buttonSubmitReview = findViewById(R.id.buttonSubmitReview);
 
-               FirebaseAuth mAuth = FirebaseAuth.getInstance();
+               reviewsRef = FirebaseDatabase.getInstance().getReference().child("users")
+                       .child(mAuth.getCurrentUser().getUid()).child("reviews").child(hotel.getId());
+
+               buttonSubmitReview.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) {
+                       submitReview();
+                   }
+               });
+
+
+
+
                FirebaseUser user = mAuth.getCurrentUser();
 
                if (user != null) {
@@ -129,7 +153,6 @@ public class HotelDetailActivity extends AppCompatActivity {
                                public void onDataChange(@NonNull DataSnapshot snapshot) {
                                    ratings =snapshot.getValue(Ratings.class);
                                    if (ratings !=null) {
-//                       Toast.makeText(HotelDetailActivity.this, "Ratings" + ratings.getAverageRating(), Toast.LENGTH_SHORT).show();
                                        averageRating = ratings.getAverageRating();
                                        numRatings = ratings.getNumRatings();
                                        totalRating = ratings.getTotalRating();
@@ -203,11 +226,6 @@ public class HotelDetailActivity extends AppCompatActivity {
                });
                Picasso.get().load(hotel.getImageUrl()).into(imageViewHotel);
            }
-        } else {
-            // Handle the case where no hotel details are provided
-            Toast.makeText(this, "Error: No hotel details found", Toast.LENGTH_SHORT).show();
-            finish(); // Finish the activity if there's an error
-        }
 
         //set min and max values to rooms picker
         numberPickerRooms = findViewById(R.id.numberPickerRooms);
@@ -292,6 +310,67 @@ public class HotelDetailActivity extends AppCompatActivity {
             }
             return false;
         });
+
+
+
+
+        // Assuming you have already fetched the hotel ID and initialized the RecyclerView
+        DatabaseReference reviewsRef = FirebaseDatabase.getInstance().getReference().child("users");
+
+        reviewsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Review> reviewList = new ArrayList<>();
+
+                // Iterate through users
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    DataSnapshot reviewsSnapshot = userSnapshot.child("reviews").child(hotel.getId());
+
+                    // Check if the user has reviewed this hotel
+                    if (reviewsSnapshot.exists()) {
+                        Review review = reviewsSnapshot.getValue(Review.class);
+                        String firstName=dataSnapshot.child(review.getUserId()).child("userInfo").child("firstName").getValue(String.class);
+                        String lastName=dataSnapshot.child(review.getUserId()).child("userInfo").child("lastName").getValue(String.class);
+                        review.setUserId(firstName+" "+lastName);
+                        reviewList.add(review);
+                    }
+                }
+
+                // Initialize RecyclerView and set the adapter
+                RecyclerView recyclerView = findViewById(R.id.reviewsRecyclerView);
+                recyclerView.setLayoutManager(new LinearLayoutManager(HotelDetailActivity.this));
+                ReviewAdapter adapter = new ReviewAdapter(reviewList);
+                recyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle onCancelled
+            }
+        });
+        } else {
+            // Handle the case where no hotel details are provided
+            Toast.makeText(this, "Error: No hotel details found", Toast.LENGTH_SHORT).show();
+            finish(); // Finish the activity if there's an error
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
     private void openWebPage(String url) {
@@ -394,6 +473,27 @@ public class HotelDetailActivity extends AppCompatActivity {
         scaleDownY.setDuration(150);
         scaleDownX.start();
         scaleDownY.start();
+    }
+
+    private void submitReview() {
+        String reviewText = editTextReview.getText().toString().trim();
+
+        if (TextUtils.isEmpty(reviewText)) {
+            Toast.makeText(this, "Please write your review", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Get current date and time
+        String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+
+
+        // Create a review object
+        Review review = new Review(currentDate, reviewText,mAuth.getUid());
+
+        // Save review to Firebase database
+            reviewsRef.setValue(review);
+            Toast.makeText(this, "Review submitted successfully", Toast.LENGTH_SHORT).show();
+            editTextReview.setText("");
     }
 
 }

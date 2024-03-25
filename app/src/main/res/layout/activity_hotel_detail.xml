@@ -432,36 +432,51 @@
                     android:textColor="@color/black"
                     android:textSize="20dp"
                     android:textStyle="bold" />
-                <TextView
+                <EditText
+                    android:id="@+id/editTextReview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Good Stay"
-                    android:textColor="@color/black"
-                    android:layout_marginVertical="4dp"
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Prasad N Mar 05,2023"
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Very Suitable for family stay , industrial visitors and business people. Very good service and food. Very good location. Very good staff. Very good cleanliness. Very good parking facility. Very good room service. Very good room. Very good amenities. Very good value for money."
-                    android:layout_marginVertical="4dp"
-                    android:textSize="14dp"
-                    android:textColor="@color/black"
-                    />
-                <TextView
-                    android:id="@+id/readall"
+                    android:hint="Write your review here" />
+
+                <Button
+                    android:id="@+id/buttonSubmitReview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textColor="@color/calbtn"
-                    android:text="Read All"
-                    />
+                    android:text="Submit Review" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/reviewsRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Good Stay"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:layout_marginVertical="4dp"-->
+<!--                    android:textSize="14dp"-->
+<!--                    android:textStyle="bold" />-->
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Prasad N Mar 05,2023"-->
+<!--                    android:textSize="14dp"-->
+<!--                    android:textStyle="bold" />-->
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Very Suitable for family stay , industrial visitors and business people. Very good service and food. Very good location. Very good staff. Very good cleanliness. Very good parking facility. Very good room service. Very good room. Very good amenities. Very good value for money."-->
+<!--                    android:layout_marginVertical="4dp"-->
+<!--                    android:textSize="14dp"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    />-->
+<!--                <TextView-->
+<!--                    android:id="@+id/readall"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:textColor="@color/calbtn"-->
+<!--                    android:text="Read All"-->
+<!--                    />-->
 
             </LinearLayout>
 
