@@ -4,29 +4,36 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="10dp">
 
     <TextView
         android:id="@+id/textViewUserId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="15dp"
         android:textStyle="bold"
-        android:textSize="16sp"
         android:text="User ID:" />
 
     <TextView
         android:id="@+id/textViewDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="italic"
-        android:textSize="14sp"
-        android:text="Date:" />
+        android:text="Date:"
+        android:textColor="@color/black"
+        android:textSize="12dp"
+        android:textStyle="italic" />
 
     <TextView
         android:id="@+id/textViewReview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:layout_margin="4dp"
         android:text="Review:" />
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="8dp"
+        android:background="@color/gray" />
 </LinearLayout>

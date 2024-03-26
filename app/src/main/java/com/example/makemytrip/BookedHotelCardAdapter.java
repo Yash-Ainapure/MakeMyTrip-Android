@@ -117,6 +117,13 @@ public class BookedHotelCardAdapter extends RecyclerView.Adapter<BookedHotelCard
         return bookedHotels.size();
     }
 
+    private void showPaymentTransferDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Payment Transfer");
+        builder.setMessage("Your payment will be transferred back to you in a few days.");
+        builder.setPositiveButton("OK", null);
+        builder.show();
+    }
     private void showConfirmationDialog(String hotelName) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Cancel Booking");
@@ -126,9 +133,12 @@ public class BookedHotelCardAdapter extends RecyclerView.Adapter<BookedHotelCard
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // User confirmed, proceed to cancel booking
+
                 cancelBooking(hotelName);
+                showPaymentTransferDialog();
             }
         });
+
 
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override

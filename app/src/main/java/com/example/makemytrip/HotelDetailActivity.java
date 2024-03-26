@@ -49,7 +49,6 @@ public class HotelDetailActivity extends AppCompatActivity {
     private int Price=0;
     Button buttonDatePicker, buttonBookHotel,buttonDatePicker2 ,submit;
     FirebaseAuth mAuth;
-
     String formattedAverageRating ;
     String formattedTotalRating ,  formattednewRating;
     DatabaseReference databaseReference;
@@ -121,7 +120,7 @@ public class HotelDetailActivity extends AppCompatActivity {
                buttonSubmitReview.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View v) {
-                       submitReview();
+                       submitReview(hotel.getId());
                    }
                });
 
@@ -313,41 +312,8 @@ public class HotelDetailActivity extends AppCompatActivity {
 
 
 
-
-        // Assuming you have already fetched the hotel ID and initialized the RecyclerView
-        DatabaseReference reviewsRef = FirebaseDatabase.getInstance().getReference().child("users");
-
-        reviewsRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<Review> reviewList = new ArrayList<>();
-
-                // Iterate through users
-                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    DataSnapshot reviewsSnapshot = userSnapshot.child("reviews").child(hotel.getId());
-
-                    // Check if the user has reviewed this hotel
-                    if (reviewsSnapshot.exists()) {
-                        Review review = reviewsSnapshot.getValue(Review.class);
-                        String firstName=dataSnapshot.child(review.getUserId()).child("userInfo").child("firstName").getValue(String.class);
-                        String lastName=dataSnapshot.child(review.getUserId()).child("userInfo").child("lastName").getValue(String.class);
-                        review.setUserId(firstName+" "+lastName);
-                        reviewList.add(review);
-                    }
-                }
-
-                // Initialize RecyclerView and set the adapter
-                RecyclerView recyclerView = findViewById(R.id.reviewsRecyclerView);
-                recyclerView.setLayoutManager(new LinearLayoutManager(HotelDetailActivity.this));
-                ReviewAdapter adapter = new ReviewAdapter(reviewList);
-                recyclerView.setAdapter(adapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle onCancelled
-            }
-        });
+            fetchReviewsForHotel(hotel.getId());
+            // Assuming you have already fetched the hotel ID and initialized the RecyclerView
         } else {
             // Handle the case where no hotel details are provided
             Toast.makeText(this, "Error: No hotel details found", Toast.LENGTH_SHORT).show();
@@ -373,6 +339,45 @@ public class HotelDetailActivity extends AppCompatActivity {
 
 
     }
+
+    private void fetchReviewsForHotel(String hotelId) {
+        DatabaseReference reviewsRef = FirebaseDatabase.getInstance().getReference().child("users");
+
+        reviewsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Review> reviewList = new ArrayList<>();
+
+                // Iterate through users
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    DataSnapshot reviewsSnapshot = userSnapshot.child("reviews").child(hotelId);
+
+                    // Check if the user has reviewed this hotel
+                    if (reviewsSnapshot.exists()) {
+                        Review review = reviewsSnapshot.getValue(Review.class);
+                        String userId = review.getUserId();
+                        DataSnapshot userInfoSnapshot = dataSnapshot.child(userId).child("userInfo");
+                        String firstName = userInfoSnapshot.child("firstName").getValue(String.class);
+                        String lastName = userInfoSnapshot.child("lastName").getValue(String.class);
+                        review.setUserId(firstName + " " + lastName);
+                        reviewList.add(review);
+                    }
+                }
+
+                // Initialize RecyclerView and set the adapter
+                RecyclerView recyclerView = findViewById(R.id.reviewsRecyclerView);
+                recyclerView.setLayoutManager(new LinearLayoutManager(HotelDetailActivity.this));
+                ReviewAdapter adapter = new ReviewAdapter(reviewList);
+                recyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle onCancelled
+            }
+        });
+    }
+
     private void openWebPage(String url) {
         Uri webpage = Uri.parse(url);
         Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
@@ -475,7 +480,7 @@ public class HotelDetailActivity extends AppCompatActivity {
         scaleDownY.start();
     }
 
-    private void submitReview() {
+    private void submitReview(String hotelId) {
         String reviewText = editTextReview.getText().toString().trim();
 
         if (TextUtils.isEmpty(reviewText)) {
@@ -494,6 +499,8 @@ public class HotelDetailActivity extends AppCompatActivity {
             reviewsRef.setValue(review);
             Toast.makeText(this, "Review submitted successfully", Toast.LENGTH_SHORT).show();
             editTextReview.setText("");
+        fetchReviewsForHotel(hotelId);
+
     }
 
 }
