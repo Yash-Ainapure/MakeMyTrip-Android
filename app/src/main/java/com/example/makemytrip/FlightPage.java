@@ -103,13 +103,6 @@ public class FlightPage extends AppCompatActivity {
                                 if (flight.getDepartureCity().equalsIgnoreCase(departureCity) &&
                                         flight.getDestinationCity().equalsIgnoreCase(destinationCity)) {
                                     filteredFlights.add(flight);
-                                } else {
-                                    if (containsKeyword(flight.getDepartureCity(), departureCity) ||
-                                            containsKeyword(flight.getDestinationCity(), destinationCity) ||
-                                            containsKeyword(flight.getAirline(), departureCity) || // Assuming airline is a relevant keyword
-                                            containsKeyword(flight.getAirline(), destinationCity)) {
-                                        filteredFlights.add(flight);
-                                    }
                                 }
                             }
                             LottieAnimationView animationView = findViewById(R.id.animationView);
